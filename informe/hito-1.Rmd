@@ -1,0 +1,12 @@
+---
+title: "R Notebook"
+author: "******************************* Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel Sanhueza *******************************"
+output: html_notebook
+---
+# Informe Hito 1
+
+```{r}
+thyroid.df <- data.frame("./data/thyroidDF.csv")
+sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
+```
+
