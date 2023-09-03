@@ -20,6 +20,5 @@ sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
 
 ```{r}
 numeric.attrs <- thyroid.df[,c(1, 18, 20, 22, 24, 26, 28, 31)]
-#pairs(numeric.attrs)
-ggpairs(numeric.attrs)
+pairs(numeric.attrs)
 ```
