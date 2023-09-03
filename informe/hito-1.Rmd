@@ -8,8 +8,50 @@ output:
 ---
 # Informe Hito 1
 
+## Librerias a importar
+
 ```{r}
-thyroid.df <- data.frame("./data/thyroidDF.csv")
-sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
+library(ggplot2)
+library(tidyr)
 ```
 
+## Introducción
+
+## Exploración de datos
+
+### Diagramas de Dispersion para Atributos Numericos
+
+```{r}
+numeric.attrs <- thyroid.df[,c(1, 18, 20, 22, 24, 26, 28)]
+pairs(numeric.attrs)
+```
+
+En base a lo observado en los distintos diagramas de dispersión nos concentraremos en los diagramas cuya relación sea entre los niveles de hormona TSH en la sangre y los niveles de hormona en la sangre para T3, T4 y la proteina TBG, esto pues son los principales agentes detectores de la enfermedad de la tiroides.
+
+```{r}
+ggplot(thyroid.df) + 
+  geom_point(aes(x=TSH, y=T3, color=target)) +
+  ggtitle("Nivel de hormona TSH vs T3 en la sangre") + xlab("TSH") + ylab("T3") + labs(color="Diagnóstico médico hipertiroidismo")
+
+ggplot(thyroid.df) +
+  geom_point(aes(x=TSH, y=TT4, color=target)) +
+  ggtitle("Nivel de hormona TSH vs T4 en la sangre") + xlab("TSH")  + ylab("T4") + labs(color="Diagnóstico médico hipertiroidismo")
+
+ggplot(thyroid.df) +
+  geom_point(aes(x=TSH, y=TBG, color=target)) +
+  ggtitle("Nivel de hormona TSH vs TBG en la sangre") + xlab("TSH") + ylab("TBG") + labs(color="Diagnóstico médico hipertiroidismo")
+```
+
+## Preguntas y Problemas
+
+## Anexo
+
+### Liempieza de datos
+
+A continuación se presenta la limpieza de datos correspondiente al dataset *Thyroid Disease Data*. En este caso el dataset posee mediciones en la sangre para distintas hormonas y proteínas, sin embargo no todos los pacientes se realizaron tales exámenes por tanto existen valos no disponibles para estas mediciones, en nuestro caso consideraremos tales valores como 0 (cero), esto no afectará a las mediciones que posean un valor ninguno de estos examenes a la sangre puede resultar en valor de 0.
+
+```{r}
+thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
+thyroid.df <- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0, TBG=0))
+sprintf("Cantidad de valores nulos en el dataset: %d", sum(is.na(thyroid.df)))
+```
