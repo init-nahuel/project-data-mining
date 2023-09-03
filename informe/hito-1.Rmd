@@ -5,8 +5,21 @@ output: html_notebook
 ---
 # Informe Hito 1
 
+## Librerias a importar
+
 ```{r}
-thyroid.df <- data.frame("./data/thyroidDF.csv")
-sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
+library(ggplot2)
 ```
 
+
+```{r}
+thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
+sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
+```
+## Diagramas de Dispersion para Atributos Numericos
+
+```{r}
+numeric.attrs <- thyroid.df[,c(1, 18, 20, 22, 24, 26, 28, 31)]
+#pairs(numeric.attrs)
+ggpairs(numeric.attrs)
+```

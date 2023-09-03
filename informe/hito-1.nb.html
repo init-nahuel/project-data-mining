@@ -1758,21 +1758,43 @@ Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel Sanhueza
 <!-- rnb-text-begin -->
 <div id="informe-hito-1" class="section level1">
 <h1>Informe Hito 1</h1>
+<div id="librerias-a-importar" class="section level2">
+<h2>Librerias a importar</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGh5cm9pZC5kZiA8LSBkYXRhLmZyYW1lKFwiLi9kYXRhL3RoeXJvaWRERi5jc3ZcIilcbnNwcmludGYoXCJDYW50aWRhZCBkZSB2YWxvcmVzIG51bG9zOiAlZFwiLCBzdW0oaXMubmEodGh5cm9pZC5kZikpKVxuYGBgIn0= -->
-<pre class="r"><code>thyroid.df &lt;- data.frame(&quot;./data/thyroidDF.csv&quot;)
-sprintf(&quot;Cantidad de valores nulos: %d&quot;, sum(is.na(thyroid.df)))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxuYGBgIn0= -->
+<pre class="r"><code>library(ggplot2)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQ2FudGlkYWQgZGUgdmFsb3JlcyBudWxvczogMFwiXG4ifQ== -->
-<pre><code>[1] &quot;Cantidad de valores nulos: 0&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGh5cm9pZC5kZiA8LSByZWFkLmNzdihcImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9pbml0LW5haHVlbC9wcm9qZWN0LWRhdGEtbWluaW5nL21haW4vZGF0YS90aHlyb2lkREYuY3N2XCIpXG5zcHJpbnRmKFwiQ2FudGlkYWQgZGUgdmFsb3JlcyBudWxvczogJWRcIiwgc3VtKGlzLm5hKHRoeXJvaWQuZGYpKSlcbmBgYCJ9 -->
+<pre class="r"><code>thyroid.df &lt;- read.csv(&quot;https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv&quot;)
+sprintf(&quot;Cantidad de valores nulos: %d&quot;, sum(is.na(thyroid.df)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQ2FudGlkYWQgZGUgdmFsb3JlcyBudWxvczogMTQzMjJcIlxuIn0= -->
+<pre><code>[1] &quot;Cantidad de valores nulos: 14322&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="diagramas-de-dispersion-para-atributos-numericos" class="section level2">
+<h2>Diagramas de Dispersion para Atributos Numericos</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtZXJpYy5hdHRycyA8LSB0aHlyb2lkLmRmWyxjKDEsIDE4LCAyMCwgMjIsIDI0LCAyNiwgMjgsIDMxKV1cbmdncGFpcnMobnVtZXJpYy5hdHRycylcbmBgYCJ9 -->
+<pre class="r"><code>numeric.attrs &lt;- thyroid.df[,c(1, 18, 20, 22, 24, 26, 28, 31)]
+ggpairs(numeric.attrs)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gZ2dwYWlycyhudW1lcmljLmF0dHJzKSA6IGNvdWxkIG5vdCBmaW5kIGZ1bmN0aW9uIFwiZ2dwYWlyc1wiXG4ifQ== -->
+<pre><code>Error in ggpairs(numeric.attrs) : could not find function &quot;ggpairs&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+</div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKYXV0aG9yOiAiKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiBDYXRhbGluYSBDYXJyYXNjbywgSmF2aWVyYSBEb25vc28sIEpvYXF1w61uIEhlcnJlcmEsIE1hY2FyZW5hIFLDrW9zLCBOYWh1ZWwgU2FuaHVlemEgKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQojIEluZm9ybWUgSGl0byAxCgpgYGB7cn0KdGh5cm9pZC5kZiA8LSBkYXRhLmZyYW1lKCIuL2RhdGEvdGh5cm9pZERGLmNzdiIpCnNwcmludGYoIkNhbnRpZGFkIGRlIHZhbG9yZXMgbnVsb3M6ICVkIiwgc3VtKGlzLm5hKHRoeXJvaWQuZGYpKSkKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKYXV0aG9yOiAiKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiBDYXRhbGluYSBDYXJyYXNjbywgSmF2aWVyYSBEb25vc28sIEpvYXF1w61uIEhlcnJlcmEsIE1hY2FyZW5hIFLDrW9zLCBOYWh1ZWwgU2FuaHVlemEgKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQojIEluZm9ybWUgSGl0byAxCgojIyBMaWJyZXJpYXMgYSBpbXBvcnRhcgoKYGBge3J9CmxpYnJhcnkoZ2dwbG90MikKYGBgCgoKYGBge3J9CnRoeXJvaWQuZGYgPC0gcmVhZC5jc3YoImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9pbml0LW5haHVlbC9wcm9qZWN0LWRhdGEtbWluaW5nL21haW4vZGF0YS90aHlyb2lkREYuY3N2IikKc3ByaW50ZigiQ2FudGlkYWQgZGUgdmFsb3JlcyBudWxvczogJWQiLCBzdW0oaXMubmEodGh5cm9pZC5kZikpKQpgYGAKIyMgRGlhZ3JhbWFzIGRlIERpc3BlcnNpb24gcGFyYSBBdHJpYnV0b3MgTnVtZXJpY29zCgpgYGB7cn0KbnVtZXJpYy5hdHRycyA8LSB0aHlyb2lkLmRmWyxjKDEsIDE4LCAyMCwgMjIsIDI0LCAyNiwgMjgsIDMxKV0KI3BhaXJzKG51bWVyaWMuYXR0cnMpCmdncGFpcnMobnVtZXJpYy5hdHRycykKYGBgCg==</div>
 
 
 
