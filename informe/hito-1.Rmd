@@ -1,7 +1,10 @@
 ---
 title: "R Notebook"
-author: "******************************* Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel Sanhueza *******************************"
-output: html_notebook
+author: "**Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel Sanhueza**"
+output: 
+  html_notebook:
+        toc: yes
+        theme: united
 ---
 # Informe Hito 1
 
