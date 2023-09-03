@@ -19,6 +19,6 @@ sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
 ## Diagramas de Dispersion para Atributos Numericos
 
 ```{r}
-numeric.attrs <- thyroid.df[,c(1, 18, 20, 22, 24, 26, 28, 31)]
+numeric.attrs <- thyroid.df[,c(1, 18, 20, 22, 24, 26, 28)]
 pairs(numeric.attrs)
 ```
