@@ -1,10 +1,16 @@
 ---
 title: "R Notebook"
-author: "**Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel Sanhueza**"
-output: 
+author: '**Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel
+  Sanhueza**'
+output:
+  html_document:
+    toc: yes
+    df_print: paged
   html_notebook:
-        toc: yes
-        theme: united
+    toc: yes
+    theme: united
+  pdf_document:
+    toc: yes
 ---
 # Informe Hito 1
 
@@ -13,6 +19,7 @@ output:
 ```{r}
 library(ggplot2)
 library(tidyr)
+thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
 ```
 
 ## Introducción
@@ -22,6 +29,44 @@ La tiroides es una glándula ubicada en la base del cuello que produce hormonas 
 A continuación se estudiará un dataset estructurado sobre esta afección denominado "Thyroid Disease Data". En él se pueden encontrar diversos datos asociados a los pacientes, junto a sus respectivos resultados de análisis de sangre y diagnóstico efectuado por un profesional.
 
 ## Exploración de datos
+
+### Liempieza de datos
+
+### Valores faltantes
+
+Total de valores nulos en el dataset:
+```{r}
+sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
+```
+
+Valores nulos por atributo:
+```{r}
+sapply(thyroid.df, function(x) sum(is.na(x)))
+```
+
+Esta información sirve para realizar un posterior procesamiento de datos según se estime conveniente.
+
+### Valores duplicados
+
+```{r}
+sum(duplicated(thyroid.df))
+```
+
+Se observa que no existen valores duplicados en el conjunto de datos.
+
+A continuación se presenta la limpieza de datos correspondiente al dataset *Thyroid Disease Data*.
+
+Para la limpieza de datos se aplicó el método de imputación de datos, para esto se reemplaza los valores `NA` de los atributos numéricos *TSH, T3, TT4, TU4 y FTI* por valores cero (0), esto tendrá un efecto no menor al momento de analizar el data, sin embargo se debe tener en cuenta que todos los atributos mencionados corresponden a exámenes médicos donde se mide el nivel de hormonas y proteínas en la sangre, por tanto no es posible obtener como resultado un valor cero, esta imputación se realiza con el fin de no eliminar la instancia completa del dataset, puesto que en muchos casos esta misma instancia posee valores no nulos para los demás atributos, adicionalmente la cantidad de valores `NA` no es demasiada en comparación con la cantidad de filas (instancias) del dataset como se observa en el anterior código adjunto. Dada la imputación de estos valores para los correspondientes atributos, es necesario mencionar que como consecuencia es posible eliminar los atributos *TSH_measured, T3_measured, TT4_measured, T4U_measured, FTI_measured *, debido a que no será necesario conocer si un paciente se realizó o no un examen médico, esto ahora se analizará observando las instancias para las cuales los correspondientes atributos posean un valor cero
+
+Asimismo, se eliminaron los atributos categóricos *TBG, TBG_measured* dado que la cantidad de valores `NA` para el atributo *TBG* era 8823, por tanto no era posible una imputación de datos sin afectar de manera considerable el dataset. Por último, se eliminaron los atributos *referral_source y patient_id* debido a que la información entregada por estos atributos no es provechosa.
+
+```{r}
+thyroid.df <- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0)) # Imputacion
+thyroid.df <- thyroid.df[,!names(thyroid.df) %in% c("TSH_measured", "T3_measured", "TT4_measured", "T4U_measured", "FTI_measured", "TBG_measured", "TBG", "referral_source", "patient_id")] # Eliminacion atributos
+sprintf("Cantidad de valores nulos en el dataset: %d", sum(is.na(thyroid.df)))
+```
+
+### Características de los datos
 
 Los distintos atributos que contiene el dataset se presentan a continuación:
 
@@ -91,32 +136,10 @@ Como se puede apreciar, la mayoría de los atributos son categóricos (de tipo b
 
 Por último, para tener un mejor entendimiento de la situación es importante mencionar las principales características de las hormonas a estudiar. La triyodotironina (T3) y la tiroxina (TT4 o T4) son hormonas extremadamente importantes en el sistema endocrino, y cumplen varias funciones clave en el organismo, tales como la regulación del metabolismo, la regulación de la temperatura corporal, el desarrollo y crecimiento, entre otros. Por otro lado, la hormona estimulante de la tiroides (TSH) tiene como función principal la de estimular la glándula tiroides para que produzca y libere las hormonas tiroideas (T3 y T4) en la sangre. Los valores asociados a T4U, FTI y TBG son índices que muestran los niveles de: captación de tiroxina, tiroxina libre (en la sangre) y globulina transportadora de tiroxina (proteína que se encuentra en el torrente sanguíneo y tiene la función específica de unir y transportar las hormonas tiroideas), respectivamente.
 
-### Valores faltantes
-
-Total de valores nulos en el dataset:
-```{r}
-sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
-```
-
-Valores nulos por atributo:
-```{r}
-sapply(thyroid.df, function(x) sum(is.na(x)))
-```
-
-Esta información sirve para realizar un posterior procesamiento de datos según se estime conveniente.
-
-### Valores duplicados
-
-```{r}
-sum(duplicated(thyroid.df))
-```
-
-Se observa que no existen valores duplicados en el conjunto de datos.
-
 ### Diagramas de Dispersion para Atributos Numericos
 
 ```{r}
-numeric.attrs <- thyroid.df[,c(1, 18, 20, 22, 24, 26, 28)]
+numeric.attrs <- thyroid.df[,c("age", "TSH", "T3", "TT4", "T4U", "FTI")]
 pairs(numeric.attrs)
 ```
 
@@ -130,26 +153,10 @@ ggplot(thyroid.df) +
 ggplot(thyroid.df) +
   geom_point(aes(x=TSH, y=TT4, color=target)) +
   ggtitle("Nivel de hormona TSH vs T4 en la sangre") + xlab("TSH")  + ylab("T4") + labs(color="Diagnóstico médico hipertiroidismo")
-
-ggplot(thyroid.df) +
-  geom_point(aes(x=TSH, y=TBG, color=target)) +
-  ggtitle("Nivel de hormona TSH vs TBG en la sangre") + xlab("TSH") + ylab("TBG") + labs(color="Diagnóstico médico hipertiroidismo")
 ```
 
 ## Preguntas y Problemas
 
 ## Anexo
 
-### Liempieza de datos
 
-A continuación se presenta la limpieza de datos correspondiente al dataset *Thyroid Disease Data*.
-
-Para la limpieza de datos se aplicó el método de imputación de datos, para esto se reemplaza los valores `NA` de los atributos numéricos *TSH, T3, TT4, TU4 y FTI* por valores cero (0), esto tendrá un efecto no menor al momento de analizar el data, sin embargo se debe tener en cuenta que todos los atributos mencionados corresponden a exámenes médicos donde se mide el nivel de hormonas y proteínas en la sangre, por tanto no es posible obtener como resultado un valor cero, esta imputación se realiza con el fin de no eliminar la instancia completa del dataset, puesto que en muchos casos esta misma instancia posee valores no nulos para los demás atributos, adicionalmente la cantidad de valores `NA` no es demasiada en comparación con la cantidad de filas (instancias) del dataset como se observa en el código adjunto. Dada la imputación de estos valores para los correspondientes atributos, es necesario mencionar que como consecuencia es posible eliminar los atributos *TSH_measured, T3_measured, TT4_measured, T4U_measured, FTI_measured *, debido a que no será necesario conocer si un paciente se realizó o no un examen médico, esto ahora se analizará observando las instancias para las cuales los correspondientes atributos posean un valor nulo.
-
-Asimismo, se eliminaron los atributos categóricos *TBG, TBG_measured* dado que la cantidad de valores `NA` para el atributo *TBG* era 8823, por tanto no era posible una imputación de datos sin afectar de manera considerable el dataset. Por último, se eliminaron los atributos *referral_source y patient_id* debido a que la información entregada por estos atributos no es provechosa.
-
-```{r}
-thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
-thyroid.df <- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0, TBG=0))
-sprintf("Cantidad de valores nulos en el dataset: %d", sum(is.na(thyroid.df)))
-```
