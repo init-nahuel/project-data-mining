@@ -142,7 +142,11 @@ ggplot(thyroid.df) +
 
 ### Liempieza de datos
 
-A continuación se presenta la limpieza de datos correspondiente al dataset *Thyroid Disease Data*. En este caso el dataset posee mediciones en la sangre para distintas hormonas y proteínas, sin embargo no todos los pacientes se realizaron tales exámenes por tanto existen valos no disponibles para estas mediciones, en nuestro caso consideraremos tales valores como 0 (cero), esto no afectará a las mediciones que posean un valor ninguno de estos examenes a la sangre puede resultar en valor de 0.
+A continuación se presenta la limpieza de datos correspondiente al dataset *Thyroid Disease Data*.
+
+Para la limpieza de datos se aplicó el método de imputación de datos, para esto se reemplaza los valores `NA` de los atributos numéricos *TSH, T3, TT4, TU4 y FTI* por valores cero (0), esto tendrá un efecto no menor al momento de analizar el data, sin embargo se debe tener en cuenta que todos los atributos mencionados corresponden a exámenes médicos donde se mide el nivel de hormonas y proteínas en la sangre, por tanto no es posible obtener como resultado un valor cero, esta imputación se realiza con el fin de no eliminar la instancia completa del dataset, puesto que en muchos casos esta misma instancia posee valores no nulos para los demás atributos, adicionalmente la cantidad de valores `NA` no es demasiada en comparación con la cantidad de filas (instancias) del dataset como se observa en el código adjunto. Dada la imputación de estos valores para los correspondientes atributos, es necesario mencionar que como consecuencia es posible eliminar los atributos *TSH_measured, T3_measured, TT4_measured, T4U_measured, FTI_measured *, debido a que no será necesario conocer si un paciente se realizó o no un examen médico, esto ahora se analizará observando las instancias para las cuales los correspondientes atributos posean un valor nulo.
+
+Asimismo, se eliminaron los atributos categóricos *TBG, TBG_measured* dado que la cantidad de valores `NA` para el atributo *TBG* era 8823, por tanto no era posible una imputación de datos sin afectar de manera considerable el dataset. Por último, se eliminaron los atributos *referral_source y patient_id* debido a que la información entregada por estos atributos no es provechosa.
 
 ```{r}
 thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
