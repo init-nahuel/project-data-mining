@@ -31,9 +31,9 @@ Los distintos atributos que contiene el dataset se presentan a continuación:
 
 3. on_thyroxine : si el paciente está tomando tiroxina (bool)
 
-4. query on thyroxine : si el paciente está tomando tiroxina (bool)
+4. query_on_thyroxine : si el paciente está tomando tiroxina (bool)
 
-5. on antithyroid meds : si el paciente está tomando medicamentos antitiroideos (bool)
+5. on_antithyroid_meds : si el paciente está tomando medicamentos antitiroideos (bool)
 
 6. sick : si el paciente está enfermo (bool)
 
@@ -41,7 +41,7 @@ Los distintos atributos que contiene el dataset se presentan a continuación:
 
 8. thyroid_surgery : si el paciente se ha sometido a una cirugía de tiroides (bool)
 
-9. I131_treatment : si el paciente está recibiendo tratamiento I131 (bool)
+9. I131_treatment : si el paciente está recibiendo tratamiento I131 (para el manejo de trastornos tiroideos) (bool)
 
 10. query_hypotoideo : si el paciente cree que tiene hipotiroidismo (bool)
 
@@ -88,6 +88,8 @@ Los distintos atributos que contiene el dataset se presentan a continuación:
 31. patient_id : identificación única del paciente (str)
 
 Como se puede apreciar, la mayoría de los atributos son categóricos (de tipo bool). Por otro lado, los datos de tipo float asociados a los niveles en el análisis de sangre se podrían comparar (previa normalización) para extraer resultados.
+
+Por último, para tener un mejor entendimiento de la situación es importante mencionar las principales características de las hormonas a estudiar. La triyodotironina (T3) y la tiroxina (TT4 o T4) son hormonas extremadamente importantes en el sistema endocrino, y cumplen varias funciones clave en el organismo, tales como la regulación del metabolismo, la regulación de la temperatura corporal, el desarrollo y crecimiento, entre otros. Por otro lado, la hormona estimulante de la tiroides (TSH) tiene como función principal la de estimular la glándula tiroides para que produzca y libere las hormonas tiroideas (T3 y T4) en la sangre. Los valores asociados a T4U, FTI y TBG son índices que muestran los niveles de: captación de tiroxina, tiroxina libre (en la sangre) y globulina transportadora de tiroxina (proteína que se encuentra en el torrente sanguíneo y tiene la función específica de unir y transportar las hormonas tiroideas), respectivamente.
 
 ### Valores faltantes
 
