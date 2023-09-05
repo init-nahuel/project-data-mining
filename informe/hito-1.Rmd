@@ -53,7 +53,7 @@ Los distintos atributos que contiene el dataset se presentan a continuación:
 
 14. tumor : si el paciente tiene tumor (bool)
 
-15. hypopituitary : si el paciente * glándula hiperpituitaria (float)
+15. hypopituitary : si el paciente * glándula hiperpituitaria (bool)
 
 16. psych : si paciente * psych (bool)
 
