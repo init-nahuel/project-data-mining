@@ -30,7 +30,7 @@ A continuación se estudiará un dataset estructurado sobre esta afección denom
 
 ## Exploración de datos
 
-### Liempieza de datos
+### Limpieza de datos
 
 ### Valores faltantes
 
