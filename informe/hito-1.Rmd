@@ -17,7 +17,99 @@ library(tidyr)
 
 ## Introducción
 
+La tiroides es una glándula ubicada en la base del cuello que produce hormonas esenciales para el funcionamiento del cuerpo. Los trastornos de la tiroides pueden afectar a personas de todas las edades y géneros. Por ejemplo, el hipotiroidismo no tratado puede llevar a problemas como la fatiga crónica, la depresión y la ganancia de peso. Por otro lado, el hipertiroidismo no controlado puede afectar el corazón y otros órganos. De esta manera, el diagnóstico (para un posterior tratamiento) de estas enfermedades es fundamental para mantener una salud óptima.
+
+A continuación se estudiará un dataset estructurado sobre esta afección denominado "Thyroid Disease Data". En él se pueden encontrar diversos datos asociados a los pacientes, junto a sus respectivos resultados de análisis de sangre y diagnóstico efectuado por un profesional.
+
 ## Exploración de datos
+
+Los distintos atributos que contiene el dataset se presentan a continuación:
+
+1. age : edad del paciente (int)
+
+2. sex : el sexo del paciente (str)
+
+3. on_thyroxine : si el paciente está tomando tiroxina (bool)
+
+4. query on thyroxine : si el paciente está tomando tiroxina (bool)
+
+5. on antithyroid meds : si el paciente está tomando medicamentos antitiroideos (bool)
+
+6. sick : si el paciente está enfermo (bool)
+
+7. pregnant : si la paciente está embarazada (bool)
+
+8. thyroid_surgery : si el paciente se ha sometido a una cirugía de tiroides (bool)
+
+9. I131_treatment : si el paciente está recibiendo tratamiento I131 (bool)
+
+10. query_hypotoideo : si el paciente cree que tiene hipotiroidismo (bool)
+
+11. query_hyperthyroid : si el paciente cree que tiene hipertiroidismo (bool)
+
+12. lithium : si el paciente * litio (bool)
+
+13. goitre : si el paciente tiene bocio (bool)
+
+14. tumor : si el paciente tiene tumor (bool)
+
+15. hypopituitary : si el paciente * glándula hiperpituitaria (float)
+
+16. psych : si paciente * psych (bool)
+
+17. TSH_measured : si la TSH se midió en la sangre (bool)
+
+18. TSH : nivel de TSH en sangre según análisis de laboratorio (float)
+
+19. T3_measured : si se midió T3 en la sangre (bool)
+
+20. T3 : nivel de T3 en sangre según análisis de laboratorio (float)
+
+21. TT4_measured : si se midió TT4 en la sangre (bool)
+
+22. TT4 : nivel de TT4 en sangre procedente de análisis de laboratorio (float)
+
+23. T4U_measured : si se midió T4U en la sangre (bool)
+
+24. T4U : nivel de T4U en sangre según análisis de laboratorio (float)
+
+25. FTI_measured : si el FTI se midió en la sangre (bool)
+
+26. FTI : nivel de FTI en sangre según análisis de laboratorio (float)
+
+27. TBG_measured : si se midió TBG en la sangre (bool)
+
+28. TBG : nivel de TBG en sangre según análisis de laboratorio (float)
+
+29. referral_source : (str)
+
+30. target : diagnóstico médico de hipertiroidismo (str)
+
+31. patient_id : identificación única del paciente (str)
+
+Como se puede apreciar, la mayoría de los atributos son categóricos (de tipo bool). Por otro lado, los datos de tipo float asociados a los niveles en el análisis de sangre se podrían comparar (previa normalización) para extraer resultados.
+
+### Valores faltantes
+
+Total de valores nulos en el dataset:
+```{r}
+sprintf("Cantidad de valores nulos: %d", sum(is.na(thyroid.df)))
+```
+
+Valores nulos por atributo:
+```{r}
+sapply(thyroid.df, function(x) sum(is.na(x)))
+```
+
+Esta información sirve para realizar un posterior procesamiento de datos según se estime conveniente.
+
+### Valores duplicados
+
+```{r}
+sum(duplicated(thyroid.df))
+```
+
+Se observa que no existen valores duplicados en el conjunto de datos.
 
 ### Diagramas de Dispersion para Atributos Numericos
 
