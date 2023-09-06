@@ -22,9 +22,10 @@ library(tidyr)
 thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
 ```
 
-## Introducción
+## Contexto y Motivación 
 
 La tiroides es una glándula ubicada en la base del cuello que produce hormonas esenciales para el funcionamiento del cuerpo. Los trastornos de la tiroides pueden afectar a personas de todas las edades y géneros. Por ejemplo, el hipotiroidismo no tratado puede llevar a problemas como la fatiga crónica, la depresión y la ganancia de peso. Por otro lado, el hipertiroidismo no controlado puede afectar el corazón y otros órganos. De esta manera, el diagnóstico (para un posterior tratamiento) de estas enfermedades es fundamental para mantener una salud óptima.
+
 
 A continuación se estudiará un dataset estructurado sobre esta afección denominado "Thyroid Disease Data". En él se pueden encontrar diversos datos asociados a los pacientes, junto a sus respectivos resultados de análisis de sangre y diagnóstico efectuado por un profesional.
 
@@ -154,7 +155,36 @@ ggplot(thyroid.df) +
   geom_point(aes(x=TSH, y=TT4, color=target)) +
   ggtitle("Nivel de hormona TSH vs T4 en la sangre") + xlab("TSH")  + ylab("T4") + labs(color="Diagnóstico médico hipertiroidismo")
 ```
+### Histogramas 
+```{r}
+# Primero se crea una columna donde se tengan los años por rangos
+rangos <- c(0, 18, 30, 40, 50, 60,70,80,90, Inf)
+etiquetas <- c("0-18", "19-30", "31-40", "41-50", "51-60","61-70","71-80","81-90" ,"91+")
+# Agrupa las edades por rangos
+thyroid.df$grupo_edad <- cut(thyroid.df$age, breaks = rangos, labels = etiquetas, right = FALSE)
+```
+```{r}
+# Histograma de género por rango de edades
+ggplot(thyroid.df, aes(x = grupo_edad, fill = sex)) +
+  geom_bar(position = "stack") +
+  labs(title = "Distribución de Género por Rango de Edad",x = "Rango de Edad",y = "Frecuencia", fill= "Género") +
+  theme_minimal() +
+  scale_fill_manual(values = c("M" = "#00798c", "F" = "#d1495b"))
+```
+```{r}
+#Se deja una nueva data eliminando los datos sin responder
+datos_limpios <- thyroid.df %>%
+  filter(!grepl("-", target))
 
+# se crea el histograma con los datos limpios
+ggplot(datos_limpios, aes(x = target)) +
+  geom_bar(binwidth = 5, fill = "#00798c", color = "black") +
+  labs(title = "Histograma de Diagnósticos",
+       x = "Tipo de diagnóstico",
+       y = "Frecuencia") +
+  theme_minimal()
+
+```
 ## Preguntas y Problemas
 
 ## Anexo
