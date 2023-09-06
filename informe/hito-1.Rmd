@@ -175,7 +175,7 @@ cramersV <- function(chi2, n, phi = NULL) {
   return(V)
 }
 
-data <- select(thyroid.df, -c("age","TSH","T3","TT4", "T4U", "FTI"))
+data <- select(thyroid.df, -c("TSH","T3","TT4", "T4U", "FTI"))
 
 correlation_matrix <- matrix(0, ncol(data), ncol(data))
 colnames(correlation_matrix) <- names(data)
@@ -209,7 +209,7 @@ Para poder obtener una relación entre variables numéricas y categóricas, util
 df<- thyroid.df
 
 #Especificar variables numéricas
-numerical_vars <- c("age", "TSH", "T3", "TT4","T4U", "FTI")
+numerical_vars <- c("TSH", "T3", "TT4","T4U", "FTI")
 
 
 #Variables categóricas
