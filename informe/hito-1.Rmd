@@ -307,7 +307,40 @@ ggplot(thyroid.df, aes(x=target, y=age)) +
   labs(title="Boxplot de edad", x="Target", y="Edad")+
   theme(plot.title = element_text(hjust = 0.5))
 ```
+### Histogramas 
+```{r}
+#Se observa que hay 4 filas que tienen errores en la columna "age" por lo que se decide eliminarlas.
+thyroid.df <- subset(thyroid.df, age <= 100)
+```
+```{r}
+# Primero se crea una columna donde se tengan los años por rangos
+rangos <- c(0, 18, 30, 40, 50, 60,70,80,90, Inf)
+etiquetas <- c("0-18", "19-30", "31-40", "41-50", "51-60","61-70","71-80","81-90" ,"91+")
+# Agrupa las edades por rangos
+thyroid.df$grupo_edad <- cut(thyroid.df$age, breaks = rangos, labels = etiquetas, right = FALSE)
+```
+```{r}
+# Histograma de género por rango de edades
+ggplot(thyroid.df, aes(x = grupo_edad, fill = sex)) +
+  geom_bar(position = "stack") +
+  labs(title = "Distribución de Género por Rango de Edad",x = "Rango de Edad",y = "Frecuencia", fill= "Género") +
+  theme_minimal() +
+  scale_fill_manual(values = c("M" = "#00798c", "F" = "#d1495b"))
+```
+```{r}
+#Se deja una nueva data eliminando los datos sin responder
+datos_limpios <- thyroid.df %>%
+  filter(!grepl("-", target))
 
+# se crea el histograma con los datos limpios
+ggplot(datos_limpios, aes(x = target)) +
+  geom_bar(binwidth = 5, fill = "#00798c", color = "black") +
+  labs(title = "Histograma de Diagnósticos",
+       x = "Tipo de diagnóstico",
+       y = "Frecuencia") +
+  theme_minimal()
+
+```
 
 ## Preguntas y Problemas
 
