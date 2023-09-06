@@ -88,7 +88,7 @@ Los distintos atributos que contiene el dataset se presentan a continuación:
 
 9. I131_treatment : si el paciente está recibiendo tratamiento I131 (para el manejo de trastornos tiroideos) (bool)
 
-10. query_hypotoideo : si el paciente cree que tiene hipotiroidismo (bool)
+10. query_hypothyroid : si el paciente cree que tiene hipotiroidismo (bool)
 
 11. query_hyperthyroid : si el paciente cree que tiene hipertiroidismo (bool)
 
