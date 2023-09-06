@@ -165,6 +165,7 @@ ggplot(thyroid.df) +
 
 Dado que muchas de nuestras variables son categóricas, no podemos calcular la correlación entre variables como lo hacemos con las variables numéricas. Es por ello, que utilizamos Cramer's V. Cramer's V mide la fuerza de asociación entre dos variables categóricas. Va entre 0 y 1, donde 0 representa una asociación débil, y 1 una fuerte.
 
+```{r}
 cramersV <- function(chi2, n, phi = NULL) {
   k <- min(dim(phi)[1] - 1, dim(phi)[2] - 1)
   V <- sqrt(chi2 / (n * k))
