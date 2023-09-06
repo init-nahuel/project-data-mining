@@ -28,16 +28,20 @@ library(corrplot)
 thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
 ```
 
-## Introducción
+## Contexto y motivación
+El contexto gira en torno a la enfermedad de la tiroides, una glándula ubicada en la base del cuello que desempeña un papel crítico en la producción de hormonas esenciales para el funcionamiento del cuerpo. Esta glándula es de vital importancia, ya que influye en la generación de energía, la regulación del metabolismo y la temperatura corporal, entre otras funciones fundamentales. En la actualidad, según la Organización Mundial de la Salud (OMS) estima que aproximadamente unas 750 millones de personas padecen de alguna patología tiroidea, de las cuales un 60% lo desconoce. 
 
-La tiroides es una glándula ubicada en la base del cuello que produce hormonas esenciales para el funcionamiento del cuerpo. Los trastornos de la tiroides pueden afectar a personas de todas las edades y géneros. Por ejemplo, el hipotiroidismo no tratado puede llevar a problemas como la fatiga crónica, la depresión y la ganancia de peso. Por otro lado, el hipertiroidismo no controlado puede afectar el corazón y otros órganos. De esta manera, el diagnóstico (para un posterior tratamiento) de estas enfermedades es fundamental para mantener una salud óptima.
+La importancia de este tema se basa principalmente en la prevalencia, ya que esta enfermedad es común en todo el mundo, y afecta a un gran número de personas. Comprender mejor esta afección es esencial para la salud pública y la atención médica. Además, es de suma importancia comprender los factores de riesgo, como la edad, el género y los antecedentes familiares, puede ayudar a identificar grupos de población con mayor probabilidad de desarrollar enfermedades tiroideas y permitir una intervención preventiva más efectiva.
 
 A continuación se estudiará un dataset estructurado sobre esta afección denominado "Thyroid Disease Data". En él se pueden encontrar diversos datos asociados a los pacientes, junto a sus respectivos resultados de análisis de sangre y diagnóstico efectuado por un profesional.
 
 ## Exploración de datos
 
-### Liempieza de datos
-
+### Limpieza de datos
+Se observa que hay 4 filas que tienen errores en la columna "age" por lo que se decide eliminarlas.
+```{r}
+thyroid.df <- subset(thyroid.df, age <= 100)
+```
 ### Valores faltantes
 
 Total de valores nulos en el dataset:
@@ -71,10 +75,7 @@ thyroid.df <- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0)) # I
 thyroid.df <- thyroid.df[,!names(thyroid.df) %in% c("TSH_measured", "T3_measured", "TT4_measured", "T4U_measured", "FTI_measured", "TBG_measured", "TBG", "referral_source", "patient_id")] # Eliminacion atributos
 sprintf("Cantidad de valores nulos en el dataset: %d", sum(is.na(thyroid.df)))
 ```
-Se observa que hay 4 filas que tienen errores en la columna "age" por lo que se decide eliminarlas.
-```{r}
-thyroid.df <- subset(thyroid.df, age <= 100)
-```
+
 ### Características de los datos
 
 Los distintos atributos que contiene el dataset se presentan a continuación:
