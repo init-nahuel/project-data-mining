@@ -19,6 +19,12 @@ output:
 ```{r}
 library(ggplot2)
 library(tidyr)
+library(GGally)
+library(gtools)
+library(reshape2)
+library(dplyr)
+library(corrplot)
+
 thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
 ```
 
@@ -136,7 +142,7 @@ Como se puede apreciar, la mayoría de los atributos son categóricos (de tipo b
 
 Por último, para tener un mejor entendimiento de la situación es importante mencionar las principales características de las hormonas a estudiar. La triyodotironina (T3) y la tiroxina (TT4 o T4) son hormonas extremadamente importantes en el sistema endocrino, y cumplen varias funciones clave en el organismo, tales como la regulación del metabolismo, la regulación de la temperatura corporal, el desarrollo y crecimiento, entre otros. Por otro lado, la hormona estimulante de la tiroides (TSH) tiene como función principal la de estimular la glándula tiroides para que produzca y libere las hormonas tiroideas (T3 y T4) en la sangre. Los valores asociados a T4U, FTI y TBG son índices que muestran los niveles de: captación de tiroxina, tiroxina libre (en la sangre) y globulina transportadora de tiroxina (proteína que se encuentra en el torrente sanguíneo y tiene la función específica de unir y transportar las hormonas tiroideas), respectivamente.
 
-### Diagramas de Dispersion para Atributos Numericos
+### Diagramas de Dispersion para Atributos Numéricos
 
 ```{r}
 numeric.attrs <- thyroid.df[,c("age", "TSH", "T3", "TT4", "T4U", "FTI")]
@@ -154,6 +160,153 @@ ggplot(thyroid.df) +
   geom_point(aes(x=TSH, y=TT4, color=target)) +
   ggtitle("Nivel de hormona TSH vs T4 en la sangre") + xlab("TSH")  + ylab("T4") + labs(color="Diagnóstico médico hipertiroidismo")
 ```
+
+## Relación entre variables: Cramer's V, ANOVA Test y Correlación Lineal
+
+Dado que muchas de nuestras variables son categóricas, no podemos calcular la correlación entre variables como lo hacemos con las variables numéricas. Es por ello, que utilizamos Cramer's V. Cramer's V mide la fuerza de asociación entre dos variables categóricas. Va entre 0 y 1, donde 0 representa una asociación débil, y 1 una fuerte.
+
+cramersV <- function(chi2, n, phi = NULL) {
+  k <- min(dim(phi)[1] - 1, dim(phi)[2] - 1)
+  V <- sqrt(chi2 / (n * k))
+  return(V)
+}
+
+data <- select(thyroid.df, -c("age","TSH","T3","TT4", "T4U", "FTI"))
+
+correlation_matrix <- matrix(0, ncol(data), ncol(data))
+colnames(correlation_matrix) <- names(data)
+rownames(correlation_matrix) <- names(data)
+
+for(i in 1:ncol(data)) {
+  for(j in 1:ncol(data)) {
+    contingency_table <- table(data[,i], data[,j])
+    chi2 <- chisq.test(contingency_table)$statistic
+    correlation_matrix[i, j] <- cramersV(chi2, nrow(data), contingency_table)
+  }
+}
+
+melted_correlation <- melt(correlation_matrix)
+
+ggplot(data = melted_correlation, aes(x=Var1, y=Var2)) +
+  geom_tile(aes(fill=value), color='white') +
+  scale_fill_gradient(low="white", high="blue") +
+  theme_minimal() +
+  ggtitle("Cramer's V entre variables categóricas") +
+  theme(axis.text.x = element_text(angle = 45, hjust=1), plot.title = element_text(hjust = 0.5))
+
+```
+
+Como se puede observar, las variables que tienen una fuerza de asociación mayor son las que tienen un color más azul/morado oscuro. Un ejemplo es target con on_thyroxine, o target con thyroid_surgery.
+
+Para poder obtener una relación entre variables numéricas y categóricas, utillizamos el test ANOVA, el cual analiza la relación una variable numérica y otra categórica. En este, se testea la hipótesis nula, que corresponde a que la media de la variable numérica es la misma para todas las categorías de la variable categórica. Luego, si el p-value es cercano a 0, menor a un nivel de significancia, se rechaza la hipótesis nula. Esto sugerería que hay una diferencia significativa en las medias de la variable numérica para cada categoría de la variable categórica. Además, se obtiene el effect size, que nos entrega información sobre la fuerza o magnitud de esta diferencia.
+
+```{r}
+
+df<- thyroid.df
+
+#Especificar variables numéricas
+numerical_vars <- c("age", "TSH", "T3", "TT4","T4U", "FTI")
+
+
+#Variables categóricas
+categorical_vars <- setdiff(names(df), numerical_vars)
+
+results <- data.frame()
+
+#Para cada combinación de var categórica y numérica
+for(num_var in numerical_vars) {
+    p_values <- numeric()
+    effect_sizes <- numeric()
+  
+    for(cat_var in categorical_vars) {
+        formula_str <- paste(num_var, "~", cat_var)
+        anova_result <- aov(as.formula(formula_str), data=df)
+      
+        #p-value
+        p_values <- c(p_values, summary(anova_result)[[1]][["Pr(>F)"]][1])
+      
+        #effect size (eta squared)
+        ss_total <- sum((df[[num_var]] - mean(df[[num_var]]))^2)
+        eta_squared <- summary(anova_result)[[1]]["Sum Sq"][1,] / ss_total
+        effect_sizes <- c(effect_sizes, eta_squared)
+    }
+
+    temp_results <- data.frame(Numerical=num_var, Categorical=categorical_vars, P_Value=p_values, Effect_Size=effect_sizes)
+    results <- rbind(results, temp_results)
+}
+
+
+melted_results <- melt(results, id.vars=c("Numerical", "Categorical"))
+
+# Plot 
+ggplot(melted_results, aes(x=Categorical, y=Numerical, fill=value)) + 
+    geom_tile() +
+    facet_wrap(~ variable, scales="free", ncol=1) +
+    scale_fill_gradient2(low="blue", mid="white", high="red", midpoint=0.5, limit=c(0,1)) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+    labs(title="ANOVA test entre datos categóricos y numéricos",fill="Association Strength")+
+    theme(plot.title = element_text(hjust = 0.7))
+```
+
+Luego, se observa que para la variable categórica target, que contiene los diferentes diagnósticos médicos dados al paciente, se obtuvo un bajo p-value para las variables numéricas FTI, TT4, TSH, T4U, T3, los que fueron medidos en la sangre de los pacientes. Pero además, fueron donde se obtuvo un mayor effect size.
+
+También, para obtener qué tan relacionados linealmente enter sí están las variables numéricas, podemos calcular la tabla de correlación entre ellas. Mientras más cercanos a 1, están más relacionadas entre sí, y cuando se acercan a 0, están menos relacionadas. Cuando son negativas, representa que por ejemplo, cuando una variable aumenta, la otra disminuye.
+
+```{r}
+data<-thyroid.df[c("TT4","TSH","T3","FTI","T4U")]
+M <- cor(data)
+title <- "Correlación entre variables numéricas"
+corrplot(M, method = "ellipse",col=colorRampPalette(c("red","white","purple"))(100),title=title,mar=c(0,0,1,0))
+theme(plot.title = element_text(hjust = 0.7))
+
+```
+
+## Boxplot: Variables numéricas v/s Target
+
+Podemos utilizar boxplots, para visualizar de mejor manera la distribución de los datos numéricos entre los distintos tipos de diagnóstico médico (atributo "target").
+
+```{r}
+ggplot(thyroid.df, aes(x=target, y=TT4)) + 
+  geom_boxplot() +
+  labs(title="Boxplot de TT4", x="Target", y="Valor de TT4")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+ggplot(thyroid.df, aes(x=target, y=TSH)) + 
+  geom_boxplot() +
+  labs(title="Boxplot de TSH", x="Target", y="Valor de TSH")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+ggplot(thyroid.df, aes(x=target, y=T3)) + 
+  geom_boxplot() +
+  labs(title="Boxplot de T3", x="Target", y="Valor de T3")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+ggplot(thyroid.df, aes(x=target, y=FTI)) + 
+  geom_boxplot() +
+  labs(title="Boxplot de FTI", x="Target", y="Valor de FTI")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+```{r}
+ggplot(thyroid.df, aes(x=target, y=T4U)) + 
+  geom_boxplot() +
+  labs(title="Boxplot de T4U", x="Target", y="T4U")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+ggplot(thyroid.df, aes(x=target, y=age)) + 
+  geom_boxplot() +
+  labs(title="Boxplot de edad", x="Target", y="Edad")+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
 
 ## Preguntas y Problemas
 
