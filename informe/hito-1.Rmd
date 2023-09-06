@@ -71,7 +71,10 @@ thyroid.df <- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0)) # I
 thyroid.df <- thyroid.df[,!names(thyroid.df) %in% c("TSH_measured", "T3_measured", "TT4_measured", "T4U_measured", "FTI_measured", "TBG_measured", "TBG", "referral_source", "patient_id")] # Eliminacion atributos
 sprintf("Cantidad de valores nulos en el dataset: %d", sum(is.na(thyroid.df)))
 ```
-
+Se observa que hay 4 filas que tienen errores en la columna "age" por lo que se decide eliminarlas.
+```{r}
+thyroid.df <- subset(thyroid.df, age <= 100)
+```
 ### Características de los datos
 
 Los distintos atributos que contiene el dataset se presentan a continuación:
@@ -308,10 +311,7 @@ ggplot(thyroid.df, aes(x=target, y=age)) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 ### Histogramas 
-```{r}
-#Se observa que hay 4 filas que tienen errores en la columna "age" por lo que se decide eliminarlas.
-thyroid.df <- subset(thyroid.df, age <= 100)
-```
+
 ```{r}
 # Primero se crea una columna donde se tengan los años por rangos
 rangos <- c(0, 18, 30, 40, 50, 60,70,80,90, Inf)
