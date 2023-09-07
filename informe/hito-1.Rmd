@@ -29,7 +29,7 @@ thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-da
 ```
 
 ## Contexto y motivación
-El contexto gira en torno a la enfermedad de la tiroides, una glándula ubicada en la base del cuello que desempeña un papel crítico en la producción de hormonas esenciales para el funcionamiento del cuerpo. Esta glándula es de vital importancia, ya que influye en la generación de energía, la regulación del metabolismo y la temperatura corporal, entre otras funciones fundamentales. En la actualidad, según la Organización Mundial de la Salud (OMS) estima que aproximadamente unas 750 millones de personas padecen de alguna patología tiroidea, de las cuales un 60% lo desconoce. 
+El contexto gira en torno a la enfermedad de la tiroides, una glándula ubicada en la base del cuello que desempeña un papel crítico en la producción de hormonas esenciales para el funcionamiento del cuerpo. Esta glándula es de vital importancia, ya que influye en la generación de energía, la regulación del metabolismo y la temperatura corporal, entre otras funciones fundamentales. En la actualidad, según la Organización Mundial de la Salud (OMS) se estima que aproximadamente unas 750 millones de personas padecen de alguna patología tiroidea, de las cuales un 60% lo desconoce. 
 
 La importancia de este tema se basa principalmente en la prevalencia, ya que esta enfermedad es común en todo el mundo, y afecta a un gran número de personas. Comprender mejor esta afección es esencial para la salud pública y la atención médica. Además, es de suma importancia comprender los factores de riesgo, como la edad, el género y los antecedentes familiares, puede ayudar a identificar grupos de población con mayor probabilidad de desarrollar enfermedades tiroideas y permitir una intervención preventiva más efectiva.
 
@@ -37,11 +37,135 @@ A continuación se estudiará un dataset estructurado sobre esta afección denom
 
 ## Exploración de datos
 
-### Limpieza de datos
-Se observa que hay 4 filas que tienen errores en la columna "age" por lo que se decide eliminarlas.
+### Dimensiones del dataset
 ```{r}
-thyroid.df <- subset(thyroid.df, age <= 100)
+dim(thyroid.df)
 ```
+Es decir, se tienen 9172 records y 31 atributos.
+
+### Características de los atributos
+
+Los distintos atributos que contiene el dataset se presentan a continuación:
+
+  1. age : edad del paciente (int)
+  
+  2. sex : el sexo del paciente (str)
+  
+  3. on_thyroxine : si el paciente está tomando tiroxina (bool)
+  
+  4. query_on_thyroxine : si el paciente está tomando tiroxina (bool)
+  
+  5. on_antithyroid_meds : si el paciente está tomando medicamentos antitiroideos (bool)
+  
+  6. sick : si el paciente está enfermo (bool)
+  
+  7. pregnant : si la paciente está embarazada (bool)
+  
+  8. thyroid_surgery : si el paciente se ha sometido a una cirugía de tiroides (bool)
+  
+  9. I131_treatment : si el paciente está recibiendo tratamiento I131 (para el manejo de trastornos tiroideos) (bool)
+  
+  10. query_hypotoideo : si el paciente cree que tiene hipotiroidismo (bool)
+  
+  11. query_hyperthyroid : si el paciente cree que tiene hipertiroidismo (bool)
+  
+  12. lithium : si el paciente * litio (bool)
+  
+  13. goitre : si el paciente tiene bocio (bool)
+  
+  14. tumor : si el paciente tiene tumor (bool)
+  
+  15. hypopituitary : si el paciente * glándula hipopituitaria (bool)
+  
+  16. psych : si paciente * psych (bool)
+  
+  17. TSH_measured : si la TSH se midió en la sangre (bool)
+  
+  18. TSH : nivel de TSH en sangre según análisis de laboratorio (float)
+  
+  19. T3_measured : si se midió T3 en la sangre (bool)
+  
+  20. T3 : nivel de T3 en sangre según análisis de laboratorio (float)
+  
+  21. TT4_measured : si se midió TT4 en la sangre (bool)
+  
+  22. TT4 : nivel de TT4 en sangre procedente de análisis de laboratorio (float)
+  
+  23. T4U_measured : si se midió T4U en la sangre (bool)
+  
+  24. T4U : nivel de T4U en sangre según análisis de laboratorio (float)
+  
+  25. FTI_measured : si el FTI se midió en la sangre (bool)
+  
+  26. FTI : nivel de FTI en sangre según análisis de laboratorio (float)
+  
+  27. TBG_measured : si se midió TBG en la sangre (bool)
+  
+  28. TBG : nivel de TBG en sangre según análisis de laboratorio (float)
+  
+  29. referral_source : (str)
+  
+  30. target : diagnóstico médico de hipertiroidismo (str)
+  
+  31. patient_id : identificación única del paciente (str)
+
+Como se puede apreciar, la mayoría de los atributos son categóricos (de tipo bool). Por otro lado, los datos de tipo float asociados a los niveles en el análisis de sangre se podrían comparar (previa normalización) para extraer resultados.
+
+De manera más específica, para el atributo "target" existen diversas letras que indican los distintos diagnósticos (aquellos que son de la forma "X|Y" se interpretan como "consistente con X, pero más probable Y"):
+
+  1. "-" no hay comentarios sobre un diagnóstico específico
+  
+  Condiciones de hipertiroidismo:
+  
+  2. "A" hipertiroidismo
+  3. "B" T3 tóxico
+  4. "C" bocio tóxico
+  5. "D" tóxico secundario
+  
+  Condiciones de hipotiroidismo:
+  
+  6. "E" hipotiroidismo
+  7. "F" hipotiroidismo primario
+  8. "G" Hipotiroidismo compensado
+  9. "H" hipotiroidismo secundario
+  
+  Proteína de unión:
+  
+  10. "I" proteína de unión aumentada
+  11. "J" proteína de unión disminuida
+  
+  Salud general:
+  
+  12. "K" enfermedad no tiroidea concurrente
+  
+  Terapia de reemplazo:
+  
+  13. "L" compatible con terapia de reemplazo
+  14. "M" insuficientemente reemplazado
+  15. "N" sobrereemplazado
+  
+  Tratamiento antitiroideo:
+  
+  16. "O" medicamentos antitiroideos
+  17. "P" tratamiento I131
+  18. "Q" cirugía
+  
+  Misceláneas:
+  
+  19. "R" resultados de ensayo discordantes
+  20. "S" TBG elevada
+  21. "T" hormonas tiroideas elevadas
+
+Por último, para tener un mejor entendimiento de la situación es importante mencionar las principales características de las hormonas a estudiar. La triyodotironina (T3) y la tiroxina (TT4 o T4) son hormonas extremadamente importantes en el sistema endocrino, y cumplen varias funciones clave en el organismo, tales como la regulación del metabolismo, la regulación de la temperatura corporal, el desarrollo y crecimiento, entre otros. Por otro lado, la hormona estimulante de la tiroides (TSH) tiene como función principal la de estimular la glándula tiroides para que produzca y libere las hormonas tiroideas (T3 y T4) en la sangre. Los valores asociados a T4U, FTI y TBG son índices que muestran los niveles de: captación de tiroxina, tiroxina libre (en la sangre) y globulina transportadora de tiroxina (proteína que se encuentra en el torrente sanguíneo y tiene la función específica de unir y transportar las hormonas tiroideas), respectivamente.
+
+### Valores duplicados
+
+```{r}
+sum(duplicated(thyroid.df))
+```
+
+Se observa que no existen valores duplicados en el conjunto de datos.
+
 ### Valores faltantes
 
 Total de valores nulos en el dataset:
@@ -54,97 +178,23 @@ Valores nulos por atributo:
 sapply(thyroid.df, function(x) sum(is.na(x)))
 ```
 
-Esta información sirve para realizar un posterior procesamiento de datos según se estime conveniente.
+Se observa que existen nulos, algunos de ellos concentrados en ciertos atributos. Ésta información servirá para el procedimiento de limpieza de datos.
 
-### Valores duplicados
-
+### Limpieza de datos
+Se observa que hay 4 filas que tienen errores en la columna "age" por lo que se decide eliminarlas.
 ```{r}
-sum(duplicated(thyroid.df))
+thyroid.df <- subset(thyroid.df, age <= 100)
 ```
 
-Se observa que no existen valores duplicados en el conjunto de datos.
+Por otro lado, para enfrentar los valores faltantes se aplicó el método de imputación de datos. Para esto se reemplaza los valores `NA` de los atributos numéricos *TSH, T3, TT4, TU4 y FTI* por valores cero (0), esto tendrá un efecto no menor al momento de analizar el data, sin embargo se debe tener en cuenta que todos los atributos mencionados corresponden a exámenes médicos donde se mide el nivel de hormonas y proteínas en la sangre, por tanto no es posible obtener como resultado un valor cero, esta imputación se realiza con el fin de no eliminar la instancia completa del dataset, puesto que en muchos casos esta misma instancia posee valores no nulos para los demás atributos, adicionalmente la cantidad de valores `NA` no es demasiada en comparación con la cantidad de filas (instancias) del dataset como se observa en el anterior código adjunto. Dada la imputación de estos valores para los correspondientes atributos, es necesario mencionar que como consecuencia es posible eliminar los atributos *TSH_measured, T3_measured, TT4_measured, T4U_measured, FTI_measured *, debido a que no será necesario conocer si un paciente se realizó o no un examen médico, esto ahora se analizará observando las instancias para las cuales los correspondientes atributos posean un valor cero
 
-A continuación se presenta la limpieza de datos correspondiente al dataset *Thyroid Disease Data*.
-
-Para la limpieza de datos se aplicó el método de imputación de datos, para esto se reemplaza los valores `NA` de los atributos numéricos *TSH, T3, TT4, TU4 y FTI* por valores cero (0), esto tendrá un efecto no menor al momento de analizar el data, sin embargo se debe tener en cuenta que todos los atributos mencionados corresponden a exámenes médicos donde se mide el nivel de hormonas y proteínas en la sangre, por tanto no es posible obtener como resultado un valor cero, esta imputación se realiza con el fin de no eliminar la instancia completa del dataset, puesto que en muchos casos esta misma instancia posee valores no nulos para los demás atributos, adicionalmente la cantidad de valores `NA` no es demasiada en comparación con la cantidad de filas (instancias) del dataset como se observa en el anterior código adjunto. Dada la imputación de estos valores para los correspondientes atributos, es necesario mencionar que como consecuencia es posible eliminar los atributos *TSH_measured, T3_measured, TT4_measured, T4U_measured, FTI_measured *, debido a que no será necesario conocer si un paciente se realizó o no un examen médico, esto ahora se analizará observando las instancias para las cuales los correspondientes atributos posean un valor cero
-
-Asimismo, se eliminaron los atributos categóricos *TBG, TBG_measured* dado que la cantidad de valores `NA` para el atributo *TBG* era 8823, por tanto no era posible una imputación de datos sin afectar de manera considerable el dataset. Por último, se eliminaron los atributos *referral_source y patient_id* debido a que la información entregada por estos atributos no es provechosa.
+Asímismo, se eliminaron los atributos categóricos *TBG, TBG_measured* dado que la cantidad de valores `NA` para el atributo *TBG* era 8823, por tanto no era posible una imputación de datos sin afectar de manera considerable el dataset. Por último, se eliminaron los atributos *referral_source y patient_id* debido a que la información entregada por estos atributos no es provechosa.
 
 ```{r}
 thyroid.df <- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0)) # Imputacion
 thyroid.df <- thyroid.df[,!names(thyroid.df) %in% c("TSH_measured", "T3_measured", "TT4_measured", "T4U_measured", "FTI_measured", "TBG_measured", "TBG", "referral_source", "patient_id")] # Eliminacion atributos
 sprintf("Cantidad de valores nulos en el dataset: %d", sum(is.na(thyroid.df)))
 ```
-
-### Características de los datos
-
-Los distintos atributos que contiene el dataset se presentan a continuación:
-
-1. age : edad del paciente (int)
-
-2. sex : el sexo del paciente (str)
-
-3. on_thyroxine : si el paciente está tomando tiroxina (bool)
-
-4. query_on_thyroxine : si el paciente está tomando tiroxina (bool)
-
-5. on_antithyroid_meds : si el paciente está tomando medicamentos antitiroideos (bool)
-
-6. sick : si el paciente está enfermo (bool)
-
-7. pregnant : si la paciente está embarazada (bool)
-
-8. thyroid_surgery : si el paciente se ha sometido a una cirugía de tiroides (bool)
-
-9. I131_treatment : si el paciente está recibiendo tratamiento I131 (para el manejo de trastornos tiroideos) (bool)
-
-10. query_hypotoideo : si el paciente cree que tiene hipotiroidismo (bool)
-
-11. query_hyperthyroid : si el paciente cree que tiene hipertiroidismo (bool)
-
-12. lithium : si el paciente * litio (bool)
-
-13. goitre : si el paciente tiene bocio (bool)
-
-14. tumor : si el paciente tiene tumor (bool)
-
-15. hypopituitary : si el paciente * glándula hipopituitaria (bool)
-
-16. psych : si paciente * psych (bool)
-
-17. TSH_measured : si la TSH se midió en la sangre (bool)
-
-18. TSH : nivel de TSH en sangre según análisis de laboratorio (float)
-
-19. T3_measured : si se midió T3 en la sangre (bool)
-
-20. T3 : nivel de T3 en sangre según análisis de laboratorio (float)
-
-21. TT4_measured : si se midió TT4 en la sangre (bool)
-
-22. TT4 : nivel de TT4 en sangre procedente de análisis de laboratorio (float)
-
-23. T4U_measured : si se midió T4U en la sangre (bool)
-
-24. T4U : nivel de T4U en sangre según análisis de laboratorio (float)
-
-25. FTI_measured : si el FTI se midió en la sangre (bool)
-
-26. FTI : nivel de FTI en sangre según análisis de laboratorio (float)
-
-27. TBG_measured : si se midió TBG en la sangre (bool)
-
-28. TBG : nivel de TBG en sangre según análisis de laboratorio (float)
-
-29. referral_source : (str)
-
-30. target : diagnóstico médico de hipertiroidismo (str)
-
-31. patient_id : identificación única del paciente (str)
-
-Como se puede apreciar, la mayoría de los atributos son categóricos (de tipo bool). Por otro lado, los datos de tipo float asociados a los niveles en el análisis de sangre se podrían comparar (previa normalización) para extraer resultados.
-
-Por último, para tener un mejor entendimiento de la situación es importante mencionar las principales características de las hormonas a estudiar. La triyodotironina (T3) y la tiroxina (TT4 o T4) son hormonas extremadamente importantes en el sistema endocrino, y cumplen varias funciones clave en el organismo, tales como la regulación del metabolismo, la regulación de la temperatura corporal, el desarrollo y crecimiento, entre otros. Por otro lado, la hormona estimulante de la tiroides (TSH) tiene como función principal la de estimular la glándula tiroides para que produzca y libere las hormonas tiroideas (T3 y T4) en la sangre. Los valores asociados a T4U, FTI y TBG son índices que muestran los niveles de: captación de tiroxina, tiroxina libre (en la sangre) y globulina transportadora de tiroxina (proteína que se encuentra en el torrente sanguíneo y tiene la función específica de unir y transportar las hormonas tiroideas), respectivamente.
 
 ### Diagramas de Dispersion para Atributos Numéricos
 
@@ -164,7 +214,8 @@ ggplot(thyroid.df) +
   geom_point(aes(x=TSH, y=TT4, color=target)) +
   ggtitle("Nivel de hormona TSH vs T4 en la sangre") + xlab("TSH")  + ylab("T4") + labs(color="Diagnóstico médico hipertiroidismo")
 ```
-## Histogramas 
+
+### Histogramas 
 
 ```{r}
 # Primero se crea una columna donde se tengan los años por rangos
@@ -193,9 +244,8 @@ ggplot(datos_limpios, aes(x = target)) +
        x = "Tipo de diagnóstico",
        y = "Frecuencia") +
   theme_minimal()
-
 ```
-## Relación entre variables: Cramer's V, ANOVA Test y Correlación Lineal
+### Relación entre variables: Cramer's V, ANOVA Test y Correlación Lineal
 
 Dado que muchas de nuestras variables son categóricas, no podemos calcular la correlación entre variables como lo hacemos con las variables numéricas. Es por ello, que utilizamos Cramer's V. Cramer's V mide la fuerza de asociación entre dos variables categóricas. Va entre 0 y 1, donde 0 representa una asociación débil, y 1 una fuerte.
 
@@ -297,7 +347,7 @@ theme(plot.title = element_text(hjust = 0.7))
 
 ```
 
-## Boxplot: Variables numéricas v/s Target
+### Boxplot: Variables numéricas v/s Target
 
 Podemos utilizar boxplots, para visualizar de mejor manera la distribución de los datos numéricos entre los distintos tipos de diagnóstico médico (atributo "target").
 
@@ -346,6 +396,6 @@ ggplot(thyroid.df, aes(x=target, y=age)) +
 ## Preguntas y Problemas
 
 ## Contribución de cada integrante
-Nahuel Sanhueza se encargó de la parte de limpieza de datos y los diagramas de dispersion para atributos numéricos. Catalina Carrasco se encargó de la realización de Bloxplots y tablas correlacion (Cramer's V, ANOVA test y correlación). Joaquín Herrera se encargó de realizar el contexto, motivación y características de los datos, cálculo de valores nulos por atributo y totales. Javiera Donoso se encargó de la creación de los histogramas, el proceso de agregacion (promedio valores examenes medicos) agrupando por rango etario y la formulación de preguntas y problemas. Macarena Ríos
+Nahuel Sanhueza se encargó de la parte de limpieza de datos y los diagramas de dispersion para atributos numéricos. Catalina Carrasco se encargó de la realización de Bloxplots y tablas correlacion (Cramer's V, ANOVA test y correlación). Joaquín Herrera se encargó de realizar el contexto, motivación y características principales de los datos. Javiera Donoso se encargó de la creación de los histogramas, el proceso de agregacion (promedio valores examenes medicos) agrupando por rango etario y la formulación de preguntas y problemas. Macarena Ríos
 
 
