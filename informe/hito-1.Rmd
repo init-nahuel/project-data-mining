@@ -435,5 +435,5 @@ Nahuel Sanhueza se encargó de la parte de limpieza de datos y los diagramas de 
 ## Bibliografía
 [1]https://www.comunicaciontucuman.gob.ar/noticia/salud/219811/dia-internacional-tiroides-buscan-concientizar-acerca-importancia
 [2]https://salud.nih.gov/recursos-de-salud/nih-noticias-de-salud/problemas-en-la-tiroides
-[3] https://www.cancer.net/es/tipos-de-c%C3%A1ncer/c%C3%A1ncer-de-tiroides/estad%C3%ADsticas#:~:text=En%20el%20caso%20del%20c%C3%A1ncer%20folicular%20tiroideo%20metast%C3%A1sico%2C%20la%20tasa,la%20tasa%20es%20del%204%20%25.
+[3]https://www.cancer.net/es/tipos-de-cancer/c%C3%A1ncer-de-tiroides
 
