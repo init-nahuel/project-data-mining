@@ -413,6 +413,6 @@ Cada una de estas preguntas se responderán posteriormente, a partir de distinto
 
 
 ## Contribución de cada integrante
-Nahuel Sanhueza se encargó de la parte de limpieza de datos y los diagramas de dispersion para atributos numéricos. Catalina Carrasco se encargó de la realización de Bloxplots y tablas correlacion (Cramer's V, ANOVA test y correlación). Joaquín Herrera se encargó de realizar el contexto, motivación y características principales de los datos. Javiera Donoso se encargó de la creación de los histogramas, el proceso de agregacion (promedio valores examenes medicos) agrupando por rango etario y la formulación de preguntas y problemas. 
+Nahuel Sanhueza se encargó de la parte de limpieza de datos y los diagramas de dispersion para atributos numéricos. Catalina Carrasco se encargó de la realización de Bloxplots y tablas correlacion (Cramer's V, ANOVA test y correlación). Joaquín Herrera se encargó de realizar el contexto, motivación y características principales de los datos. Javiera Donoso se encargó de la creación de los histogramas, el proceso de agregacion (promedio valores examenes medicos) agrupando por rango etario y la formulación de preguntas y problemas. Macarena Ríos se encargó de realizar la presentación y agregar los datos obtenidos por los demás compañeros.
 
 
