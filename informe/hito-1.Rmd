@@ -15,7 +15,7 @@ output:
 ```{r setup, include=FALSE} 
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
-# Informe Hito 1 - Grupo 19
+# Informe 
 
 ## Librerias a importar
 
