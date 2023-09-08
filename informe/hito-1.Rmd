@@ -1,6 +1,6 @@
 ---
-title: "R Notebook"
-author: '**Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel
+title: "Hito 1 - Minería de Datos CC5205"
+author: '**Grupo 19: Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel
   Sanhueza**'
 output:
   html_document:
@@ -35,6 +35,8 @@ thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-da
 
 ## Contexto y motivación
 El contexto gira en torno a la enfermedad de la tiroides, una glándula ubicada en la base del cuello que desempeña un papel crítico en la producción de hormonas esenciales para el funcionamiento del cuerpo. Esta glándula es de vital importancia, ya que influye en la generación de energía, la regulación del metabolismo y la temperatura corporal, entre otras funciones fundamentales. En la actualidad, según la Organización Mundial de la Salud (OMS) se estima que aproximadamente unas 750 millones de personas padecen de alguna patología tiroidea, de las cuales un 60% lo desconoce. 
+
+Este tema toma relevancia en la actualidad dada las innovaciones que existen hoy en día para el tratamiento tanto de hipotiroidismo como de hipertiroidismo. Además, cabe destacar al tener un diagnóstico a temprana edad, disminuye las probabilidades de tener cáncer de tiroides, el cáncer de tiroides fue el diagnóstico de cáncer que aumentó más rápidamente en los Estados Unidos. Los investigadores creen que parte del motivo de este aumento fue que las pruebas de diagnóstico nuevas y altamente sensibles llevaron a una mayor detección de cánceres más pequeños.
 
 La importancia de este tema se basa principalmente en la prevalencia, ya que esta enfermedad es común en todo el mundo, y afecta a un gran número de personas. Comprender mejor esta afección es esencial para la salud pública y la atención médica. Además, es de suma importancia comprender los factores de riesgo, como la edad, el género y los antecedentes familiares, puede ayudar a identificar grupos de población con mayor probabilidad de desarrollar enfermedades tiroideas y permitir una intervención preventiva más efectiva.
 
@@ -418,8 +420,20 @@ ggplot(thyroid.df, aes(x=target, y=age)) +
 
 
 ## Preguntas y Problemas
+- ¿Será posible predecir un resultado positivo en la hormona TT4 en función de pares de síntomas?
+
+- ¿Se puede identificar un patrón de síntomas clínicos comunes en pacientes con niveles de TSH anormales?
+
+- ¿Existen pacientes con características similares en función de algún criterio? ¿Será posible agruparlos?
+
+Cada una de estas preguntas se responderán posteriormente, a partir de distintos métodos de clasificación, clustering, etc.
+
 
 ## Contribución de cada integrante
-Nahuel Sanhueza se encargó de la parte de limpieza de datos y los diagramas de dispersion para atributos numéricos. Catalina Carrasco se encargó de la realización de Bloxplots y tablas correlacion (Cramer's V, ANOVA test y correlación). Joaquín Herrera se encargó de realizar el contexto, motivación y características principales de los datos. Javiera Donoso se encargó de la creación de los histogramas, el proceso de agregacion (promedio valores examenes medicos) agrupando por rango etario y la formulación de preguntas y problemas. Macarena Ríos
+Nahuel Sanhueza se encargó de la parte de limpieza de datos y los diagramas de dispersion para atributos numéricos. Catalina Carrasco se encargó de la realización de Bloxplots y tablas correlacion (Cramer's V, ANOVA test y correlación). Joaquín Herrera se encargó de realizar el contexto, motivación y características principales de los datos. Javiera Donoso se encargó de la creación de los histogramas, el proceso de agregacion (promedio valores examenes medicos) agrupando por rango etario y la formulación de preguntas y problemas. Macarena Ríos se encargó de realizar la presentación y agregar los datos obtenidos por los demás compañeros.
 
+## Bibliografía
+[1]https://www.comunicaciontucuman.gob.ar/noticia/salud/219811/dia-internacional-tiroides-buscan-concientizar-acerca-importancia
+[2]https://salud.nih.gov/recursos-de-salud/nih-noticias-de-salud/problemas-en-la-tiroides
+[3] https://www.cancer.net/es/tipos-de-c%C3%A1ncer/c%C3%A1ncer-de-tiroides/estad%C3%ADsticas#:~:text=En%20el%20caso%20del%20c%C3%A1ncer%20folicular%20tiroideo%20metast%C3%A1sico%2C%20la%20tasa,la%20tasa%20es%20del%204%20%25.
 
