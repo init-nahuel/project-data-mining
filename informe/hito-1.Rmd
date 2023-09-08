@@ -163,7 +163,7 @@ De manera más específica, para el atributo "target" existen diversas letras qu
   20. "S" TBG elevada
   21. "T" hormonas tiroideas elevadas
 
-Por último, para tener un mejor entendimiento de la situación es importante mencionar las principales características de las hormonas a estudiar. La triyodotironina (T3) y la tiroxina (TT4 o T4) son hormonas extremadamente importantes en el sistema endocrino, y cumplen varias funciones clave en el organismo, tales como la regulación del metabolismo, la regulación de la temperatura corporal, el desarrollo y crecimiento, entre otros. Por otro lado, la hormona estimulante de la tiroides (TSH) tiene como función principal la de estimular la glándula tiroides para que produzca y libere las hormonas tiroideas (T3 y T4) en la sangre. Los valores asociados a T4U, FTI y TBG son índices que muestran los niveles de: captación de tiroxina, tiroxina libre (en la sangre) y globulina transportadora de tiroxina (proteína que se encuentra en el torrente sanguíneo y tiene la función específica de unir y transportar las hormonas tiroideas), respectivamente.
+Por último, para tener un mejor entendimiento de la situación es importante mencionar las principales características de las hormonas a estudiar. La triyodotironina (T3) y la tiroxina (TT4) son hormonas extremadamente importantes en el sistema endocrino, y cumplen varias funciones clave en el organismo, tales como la regulación del metabolismo, la regulación de la temperatura corporal, el desarrollo y crecimiento, entre otros. Por otro lado, la hormona estimulante de la tiroides (TSH) tiene como función principal la de estimular la glándula tiroides para que produzca y libere las hormonas tiroideas (T3 y TT4) en la sangre. Los valores asociados a T4U, FTI y TBG son índices que muestran los niveles de: captación de tiroxina, tiroxina libre (en la sangre) y globulina transportadora de tiroxina (proteína que se encuentra en el torrente sanguíneo y tiene la función específica de unir y transportar las hormonas tiroideas), respectivamente.
 
 A continuación se presente un resumen con las medidas de tendencia central en conjunto con la proporcion de valores `NA` para los atributos numéricos del dataset:
 
@@ -222,7 +222,7 @@ numeric.attrs <- thyroid.df[,c("age", "TSH", "T3", "TT4", "T4U", "FTI")]
 pairs(numeric.attrs)
 ```
 
-En base a lo observado en los distintos diagramas de dispersión nos concentraremos en los diagramas cuya relación sea entre los niveles de hormona TSH en la sangre y los niveles de hormona en la sangre para T3, T4 y la proteina TBG, esto pues son los principales agentes detectores de la enfermedad de la tiroides.
+En base a lo observado en los distintos diagramas de dispersión nos concentraremos en los diagramas cuya relación sea entre los niveles de hormona TSH en la sangre y los niveles de hormona en la sangre para T3 y TT4. Esto ya que son los principales agentes detectores de la enfermedad de la tiroides.
 
 ```{r}
 ggplot(thyroid.df) + 
@@ -231,7 +231,7 @@ ggplot(thyroid.df) +
 
 ggplot(thyroid.df) +
   geom_point(aes(x=TSH, y=TT4, color=target)) +
-  ggtitle("Nivel de hormona TSH vs T4 en la sangre") + xlab("TSH")  + ylab("T4") + labs(color="Diagnóstico médico hipertiroidismo")
+  ggtitle("Nivel de hormona TSH vs TT4 en la sangre") + xlab("TSH")  + ylab("TT4") + labs(color="Diagnóstico médico hipertiroidismo")
 ```
 
 ### Histogramas 
@@ -252,6 +252,7 @@ ggplot(thyroid.df, aes(x = grupo_edad, fill = sex)) +
   theme_minimal() +
   scale_fill_manual(values = c("M" = "#00798c", "F" = "#d1495b"))
 ```
+
 A partir del histograma, se observa que gran parte de los pacientes son del sexo femenino, además, se tiene que la población con mayor frecuencia dentro de los datos es la de entre 61-70 años, es decir, este estudio se concentra en adultos mayores, y la mayoría de ellos son del sexo femenino. Por otra parte, se tiene algunas barras de color gris, los cuales presentan información desconocida o no entregada por parte de los pacientes.
 
 A continuación, se presenta un histograma que muestra la frecuencia de los diagnósticos, cabe destacar que en un principio se decide alterar la base de datos, de manera que los datos que aparecen "-" se eliminan para así poder visualizar de mejor manera los datos.
@@ -268,6 +269,7 @@ ggplot(datos_limpios, aes(x = target)) +
        y = "Frecuencia") +
   theme_minimal()
 ```
+
 A partir del histograma, se observa que la mayoría de los pacientes están diagnósticados con "K - enfermedad no tiroidea concurrente" y luego le sigue "G - Hipotiroidismo compensado".
 
 
