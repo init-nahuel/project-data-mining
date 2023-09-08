@@ -12,7 +12,7 @@ output:
   pdf_document:
     toc: yes
 ---
-# Informe Hito 1
+# Informe Hito 1 - Grupo 19
 
 ## Librerias a importar
 
