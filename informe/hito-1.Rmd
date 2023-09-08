@@ -1,6 +1,6 @@
 ---
-title: "R Notebook"
-author: '**Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel
+title: "Hito 1 - Minería de Datos CC5205"
+author: '**Grupo 19: Catalina Carrasco, Javiera Donoso, Joaquín Herrera, Macarena Ríos, Nahuel
   Sanhueza**'
 output:
   html_document:
@@ -12,7 +12,7 @@ output:
   pdf_document:
     toc: yes
 ---
-# Informe Hito 1 - Grupo 19
+# Informe 
 
 ## Librerias a importar
 
