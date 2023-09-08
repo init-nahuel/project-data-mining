@@ -12,6 +12,9 @@ output:
   pdf_document:
     toc: yes
 ---
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
 # Informe Hito 1 - Grupo 19
 
 ## Librerias a importar
@@ -24,6 +27,8 @@ library(gtools)
 library(reshape2)
 library(dplyr)
 library(corrplot)
+library(kableExtra)
+library(vtable)
 
 thyroid.df <- read.csv("https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv")
 ```
@@ -158,6 +163,13 @@ De manera más específica, para el atributo "target" existen diversas letras qu
 
 Por último, para tener un mejor entendimiento de la situación es importante mencionar las principales características de las hormonas a estudiar. La triyodotironina (T3) y la tiroxina (TT4 o T4) son hormonas extremadamente importantes en el sistema endocrino, y cumplen varias funciones clave en el organismo, tales como la regulación del metabolismo, la regulación de la temperatura corporal, el desarrollo y crecimiento, entre otros. Por otro lado, la hormona estimulante de la tiroides (TSH) tiene como función principal la de estimular la glándula tiroides para que produzca y libere las hormonas tiroideas (T3 y T4) en la sangre. Los valores asociados a T4U, FTI y TBG son índices que muestran los niveles de: captación de tiroxina, tiroxina libre (en la sangre) y globulina transportadora de tiroxina (proteína que se encuentra en el torrente sanguíneo y tiene la función específica de unir y transportar las hormonas tiroideas), respectivamente.
 
+A continuación se presente un resumen con las medidas de tendencia central en conjunto con la proporcion de valores `NA` para los atributos numéricos del dataset:
+
+```{r}
+sumtable(thyroid.df[,c("age", "TSH", "T3", "TT4", "T4U", "FTI")], summ = c('median(x)', 'mean(x)',   'sd(x)', 'min(x)', 'pctile(x)[25]', 'pctile(x)[75]', 'max(x)', 'notNA(x)', 'propNA(x)'), title = "Medidas de Tendencia Central para datos numericos")
+```
+
+
 ### Valores duplicados
 
 ```{r}
@@ -194,6 +206,11 @@ Asímismo, se eliminaron los atributos categóricos *TBG, TBG_measured* dado que
 thyroid.df <- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0)) # Imputacion
 thyroid.df <- thyroid.df[,!names(thyroid.df) %in% c("TSH_measured", "T3_measured", "TT4_measured", "T4U_measured", "FTI_measured", "TBG_measured", "TBG", "referral_source", "patient_id")] # Eliminacion atributos
 sprintf("Cantidad de valores nulos en el dataset: %d", sum(is.na(thyroid.df)))
+```
+
+Posterior a esta limpieza podemos observar nuevamente las medidas de tendencia central para los respectivos atributos numéricos:
+```{r}
+sumtable(thyroid.df[,c("age", "TSH", "T3", "TT4", "T4U", "FTI")], summ = c('median(x)', 'mean(x)',   'sd(x)', 'min(x)', 'pctile(x)[25]', 'pctile(x)[75]', 'max(x)', 'notNA(x)', 'propNA(x)'), title = "Medidas de Tendencia Central para datos numericos")
 ```
 
 ### Diagramas de Dispersion para Atributos Numéricos

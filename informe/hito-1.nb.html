@@ -1761,53 +1761,80 @@ Herrera, Macarena Ríos, Nahuel Sanhueza</strong></h4>
 
 <div id="TOC">
 <ul>
-<li><a href="#informe-hito-1" id="toc-informe-hito-1">Informe Hito 1</a>
+<li><a href="#informe-hito-1---grupo-19" id="toc-informe-hito-1---grupo-19">Informe Hito 1 - Grupo 19</a>
 <ul>
 <li><a href="#librerias-a-importar" id="toc-librerias-a-importar">Librerias a importar</a></li>
-<li><a href="#introducción" id="toc-introducción">Introducción</a></li>
+<li><a href="#contexto-y-motivación" id="toc-contexto-y-motivación">Contexto y motivación</a></li>
 <li><a href="#exploración-de-datos" id="toc-exploración-de-datos">Exploración de datos</a>
 <ul>
-<li><a href="#liempieza-de-datos" id="toc-liempieza-de-datos">Liempieza
-de datos</a></li>
-<li><a href="#valores-faltantes" id="toc-valores-faltantes">Valores
-faltantes</a></li>
+<li><a href="#dimensiones-del-dataset" id="toc-dimensiones-del-dataset">Dimensiones del dataset</a></li>
+<li><a href="#características-de-los-atributos" id="toc-características-de-los-atributos">Características de los
+atributos</a></li>
 <li><a href="#valores-duplicados" id="toc-valores-duplicados">Valores
 duplicados</a></li>
-<li><a href="#características-de-los-datos" id="toc-características-de-los-datos">Características de los
+<li><a href="#valores-faltantes" id="toc-valores-faltantes">Valores
+faltantes</a></li>
+<li><a href="#limpieza-de-datos" id="toc-limpieza-de-datos">Limpieza de
 datos</a></li>
-<li><a href="#diagramas-de-dispersion-para-atributos-numericos" id="toc-diagramas-de-dispersion-para-atributos-numericos">Diagramas de
-Dispersion para Atributos Numericos</a></li>
+<li><a href="#diagramas-de-dispersion-para-atributos-numéricos" id="toc-diagramas-de-dispersion-para-atributos-numéricos">Diagramas de
+Dispersion para Atributos Numéricos</a></li>
+<li><a href="#histogramas" id="toc-histogramas">Histogramas</a></li>
+<li><a href="#relación-entre-variables-cramers-v-anova-test-y-correlación-lineal" id="toc-relación-entre-variables-cramers-v-anova-test-y-correlación-lineal">Relación
+entre variables: Cramer’s V, ANOVA Test y Correlación Lineal</a></li>
+<li><a href="#boxplot-variables-numéricas-vs-target" id="toc-boxplot-variables-numéricas-vs-target">Boxplot: Variables
+numéricas v/s Target</a></li>
 </ul></li>
 <li><a href="#preguntas-y-problemas" id="toc-preguntas-y-problemas">Preguntas y Problemas</a></li>
-<li><a href="#anexo" id="toc-anexo">Anexo</a></li>
+<li><a href="#contribución-de-cada-integrante" id="toc-contribución-de-cada-integrante">Contribución de cada
+integrante</a></li>
 </ul></li>
 </ul>
 </div>
 
 <!-- rnb-text-begin -->
-<div id="informe-hito-1" class="section level1">
-<h1>Informe Hito 1</h1>
+<!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+<div id="informe-hito-1---grupo-19" class="section level1">
+<h1>Informe Hito 1 - Grupo 19</h1>
 <div id="librerias-a-importar" class="section level2">
 <h2>Librerias a importar</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeSh0aWR5cilcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeSh0aWR5cilcbmxpYnJhcnkoR0dhbGx5KVxubGlicmFyeShndG9vbHMpXG5saWJyYXJ5KHJlc2hhcGUyKVxubGlicmFyeShkcGx5cilcbmxpYnJhcnkoY29ycnBsb3QpXG5saWJyYXJ5KGthYmxlRXh0cmEpXG5saWJyYXJ5KHZ0YWJsZSlcblxudGh5cm9pZC5kZiA8LSByZWFkLmNzdihcImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9pbml0LW5haHVlbC9wcm9qZWN0LWRhdGEtbWluaW5nL21haW4vZGF0YS90aHlyb2lkREYuY3N2XCIpXG5gYGAifQ== -->
 <pre class="r"><code>library(ggplot2)
-library(tidyr)</code></pre>
+library(tidyr)
+library(GGally)
+library(gtools)
+library(reshape2)
+library(dplyr)
+library(corrplot)
+library(kableExtra)
+library(vtable)
+
+thyroid.df &lt;- read.csv(&quot;https://raw.githubusercontent.com/init-nahuel/project-data-mining/main/data/thyroidDF.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="introducción" class="section level2">
-<h2>Introducción</h2>
-<p>La tiroides es una glándula ubicada en la base del cuello que produce
-hormonas esenciales para el funcionamiento del cuerpo. Los trastornos de
-la tiroides pueden afectar a personas de todas las edades y géneros. Por
-ejemplo, el hipotiroidismo no tratado puede llevar a problemas como la
-fatiga crónica, la depresión y la ganancia de peso. Por otro lado, el
-hipertiroidismo no controlado puede afectar el corazón y otros órganos.
-De esta manera, el diagnóstico (para un posterior tratamiento) de estas
-enfermedades es fundamental para mantener una salud óptima.</p>
+<div id="contexto-y-motivación" class="section level2">
+<h2>Contexto y motivación</h2>
+<p>El contexto gira en torno a la enfermedad de la tiroides, una
+glándula ubicada en la base del cuello que desempeña un papel crítico en
+la producción de hormonas esenciales para el funcionamiento del cuerpo.
+Esta glándula es de vital importancia, ya que influye en la generación
+de energía, la regulación del metabolismo y la temperatura corporal,
+entre otras funciones fundamentales. En la actualidad, según la
+Organización Mundial de la Salud (OMS) se estima que aproximadamente
+unas 750 millones de personas padecen de alguna patología tiroidea, de
+las cuales un 60% lo desconoce.</p>
+<p>La importancia de este tema se basa principalmente en la prevalencia,
+ya que esta enfermedad es común en todo el mundo, y afecta a un gran
+número de personas. Comprender mejor esta afección es esencial para la
+salud pública y la atención médica. Además, es de suma importancia
+comprender los factores de riesgo, como la edad, el género y los
+antecedentes familiares, puede ayudar a identificar grupos de población
+con mayor probabilidad de desarrollar enfermedades tiroideas y permitir
+una intervención preventiva más efectiva.</p>
 <p>A continuación se estudiará un dataset estructurado sobre esta
 afección denominado “Thyroid Disease Data”. En él se pueden encontrar
 diversos datos asociados a los pacientes, junto a sus respectivos
@@ -1816,84 +1843,22 @@ profesional.</p>
 </div>
 <div id="exploración-de-datos" class="section level2">
 <h2>Exploración de datos</h2>
-<div id="liempieza-de-datos" class="section level3">
-<h3>Liempieza de datos</h3>
-</div>
-<div id="valores-faltantes" class="section level3">
-<h3>Valores faltantes</h3>
-<p>Total de valores nulos en el dataset:</p>
+<div id="dimensiones-del-dataset" class="section level3">
+<h3>Dimensiones del dataset</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3ByaW50ZihcIkNhbnRpZGFkIGRlIHZhbG9yZXMgbnVsb3M6ICVkXCIsIHN1bShpcy5uYSh0aHlyb2lkLmRmKSkpXG5gYGAifQ== -->
-<pre class="r"><code>sprintf(&quot;Cantidad de valores nulos: %d&quot;, sum(is.na(thyroid.df)))</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKHRoeXJvaWQuZGYpXG5gYGAifQ== -->
+<pre class="r"><code>dim(thyroid.df)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Valores nulos por atributo:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5KHRoeXJvaWQuZGYsIGZ1bmN0aW9uKHgpIHN1bShpcy5uYSh4KSkpXG5gYGAifQ== -->
-<pre class="r"><code>sapply(thyroid.df, function(x) sum(is.na(x)))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Esta información sirve para realizar un posterior procesamiento de
-datos según se estime conveniente.</p>
-</div>
-<div id="valores-duplicados" class="section level3">
-<h3>Valores duplicados</h3>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGR1cGxpY2F0ZWQodGh5cm9pZC5kZikpXG5gYGAifQ== -->
-<pre class="r"><code>sum(duplicated(thyroid.df))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Se observa que no existen valores duplicados en el conjunto de
-datos.</p>
-<p>A continuación se presenta la limpieza de datos correspondiente al
-dataset <em>Thyroid Disease Data</em>.</p>
-<p>Para la limpieza de datos se aplicó el método de imputación de datos,
-para esto se reemplaza los valores <code>NA</code> de los atributos
-numéricos <em>TSH, T3, TT4, TU4 y FTI</em> por valores cero (0), esto
-tendrá un efecto no menor al momento de analizar el data, sin embargo se
-debe tener en cuenta que todos los atributos mencionados corresponden a
-exámenes médicos donde se mide el nivel de hormonas y proteínas en la
-sangre, por tanto no es posible obtener como resultado un valor cero,
-esta imputación se realiza con el fin de no eliminar la instancia
-completa del dataset, puesto que en muchos casos esta misma instancia
-posee valores no nulos para los demás atributos, adicionalmente la
-cantidad de valores <code>NA</code> no es demasiada en comparación con
-la cantidad de filas (instancias) del dataset como se observa en el
-anterior código adjunto. Dada la imputación de estos valores para los
-correspondientes atributos, es necesario mencionar que como consecuencia
-es posible eliminar los atributos <em>TSH_measured, T3_measured,
-TT4_measured, T4U_measured, FTI_measured </em>, debido a que no será
-necesario conocer si un paciente se realizó o no un examen médico, esto
-ahora se analizará observando las instancias para las cuales los
-correspondientes atributos posean un valor cero</p>
-<p>Asimismo, se eliminaron los atributos categóricos <em>TBG,
-TBG_measured</em> dado que la cantidad de valores <code>NA</code> para
-el atributo <em>TBG</em> era 8823, por tanto no era posible una
-imputación de datos sin afectar de manera considerable el dataset. Por
-último, se eliminaron los atributos <em>referral_source y
-patient_id</em> debido a que la información entregada por estos
-atributos no es provechosa.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGh5cm9pZC5kZiA8LSByZXBsYWNlX25hKHRoeXJvaWQuZGYsIGxpc3QoVFNIPTAsIFQzPTAsIFRUND0wLCBUNFU9MCwgRlRJPTApKSAjIEltcHV0YWNpb25cbnRoeXJvaWQuZGYgPC0gdGh5cm9pZC5kZlssIW5hbWVzKHRoeXJvaWQuZGYpICVpbiUgYyhcIlRTSF9tZWFzdXJlZFwiLCBcIlQzX21lYXN1cmVkXCIsIFwiVFQ0X21lYXN1cmVkXCIsIFwiVDRVX21lYXN1cmVkXCIsIFwiRlRJX21lYXN1cmVkXCIsIFwiVEJHX21lYXN1cmVkXCIsIFwiVEJHXCIsIFwicmVmZXJyYWxfc291cmNlXCIsIFwicGF0aWVudF9pZFwiKV0gIyBFbGltaW5hY2lvbiBhdHJpYnV0b3NcbnNwcmludGYoXCJDYW50aWRhZCBkZSB2YWxvcmVzIG51bG9zIGVuIGVsIGRhdGFzZXQ6ICVkXCIsIHN1bShpcy5uYSh0aHlyb2lkLmRmKSkpXG5gYGAifQ== -->
-<pre class="r"><code>thyroid.df &lt;- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0)) # Imputacion
-thyroid.df &lt;- thyroid.df[,!names(thyroid.df) %in% c(&quot;TSH_measured&quot;, &quot;T3_measured&quot;, &quot;TT4_measured&quot;, &quot;T4U_measured&quot;, &quot;FTI_measured&quot;, &quot;TBG_measured&quot;, &quot;TBG&quot;, &quot;referral_source&quot;, &quot;patient_id&quot;)] # Eliminacion atributos
-sprintf(&quot;Cantidad de valores nulos en el dataset: %d&quot;, sum(is.na(thyroid.df)))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQ2FudGlkYWQgZGUgdmFsb3JlcyBudWxvcyBlbiBlbCBkYXRhc2V0OiAwXCJcbiJ9 -->
-<pre><code>[1] &quot;Cantidad de valores nulos en el dataset: 0&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDkxNzIgICAzMVxuIn0= -->
+<pre><code>[1] 9172   31</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Es decir, se tienen 9172 records y 31 atributos.</p>
 </div>
-<div id="características-de-los-datos" class="section level3">
-<h3>Características de los datos</h3>
+<div id="características-de-los-atributos" class="section level3">
+<h3>Características de los atributos</h3>
 <p>Los distintos atributos que contiene el dataset se presentan a
 continuación:</p>
 <ol style="list-style-type: decimal">
@@ -1947,6 +1912,54 @@ laboratorio (float)</p></li>
 (de tipo bool). Por otro lado, los datos de tipo float asociados a los
 niveles en el análisis de sangre se podrían comparar (previa
 normalización) para extraer resultados.</p>
+<p>De manera más específica, para el atributo “target” existen diversas
+letras que indican los distintos diagnósticos (aquellos que son de la
+forma “X|Y” se interpretan como “consistente con X, pero más probable
+Y”):</p>
+<ol style="list-style-type: decimal">
+<li>“-” no hay comentarios sobre un diagnóstico específico</li>
+</ol>
+<p>Condiciones de hipertiroidismo:</p>
+<ol start="2" style="list-style-type: decimal">
+<li>“A” hipertiroidismo</li>
+<li>“B” T3 tóxico</li>
+<li>“C” bocio tóxico</li>
+<li>“D” tóxico secundario</li>
+</ol>
+<p>Condiciones de hipotiroidismo:</p>
+<ol start="6" style="list-style-type: decimal">
+<li>“E” hipotiroidismo</li>
+<li>“F” hipotiroidismo primario</li>
+<li>“G” Hipotiroidismo compensado</li>
+<li>“H” hipotiroidismo secundario</li>
+</ol>
+<p>Proteína de unión:</p>
+<ol start="10" style="list-style-type: decimal">
+<li>“I” proteína de unión aumentada</li>
+<li>“J” proteína de unión disminuida</li>
+</ol>
+<p>Salud general:</p>
+<ol start="12" style="list-style-type: decimal">
+<li>“K” enfermedad no tiroidea concurrente</li>
+</ol>
+<p>Terapia de reemplazo:</p>
+<ol start="13" style="list-style-type: decimal">
+<li>“L” compatible con terapia de reemplazo</li>
+<li>“M” insuficientemente reemplazado</li>
+<li>“N” sobrereemplazado</li>
+</ol>
+<p>Tratamiento antitiroideo:</p>
+<ol start="16" style="list-style-type: decimal">
+<li>“O” medicamentos antitiroideos</li>
+<li>“P” tratamiento I131</li>
+<li>“Q” cirugía</li>
+</ol>
+<p>Misceláneas:</p>
+<ol start="19" style="list-style-type: decimal">
+<li>“R” resultados de ensayo discordantes</li>
+<li>“S” TBG elevada</li>
+<li>“T” hormonas tiroideas elevadas</li>
+</ol>
 <p>Por último, para tener un mejor entendimiento de la situación es
 importante mencionar las principales características de las hormonas a
 estudiar. La triyodotironina (T3) y la tiroxina (TT4 o T4) son hormonas
@@ -1961,9 +1974,131 @@ muestran los niveles de: captación de tiroxina, tiroxina libre (en la
 sangre) y globulina transportadora de tiroxina (proteína que se
 encuentra en el torrente sanguíneo y tiene la función específica de unir
 y transportar las hormonas tiroideas), respectivamente.</p>
+<p>A continuación se presente un resumen con las medidas de tendencia
+central en conjunto con la proporcion de valores <code>NA</code> para
+los atributos numéricos del dataset:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtdGFibGUodGh5cm9pZC5kZlssYyhcImFnZVwiLCBcIlRTSFwiLCBcIlQzXCIsIFwiVFQ0XCIsIFwiVDRVXCIsIFwiRlRJXCIpXSwgc3VtbSA9IGMoJ21lZGlhbih4KScsICdtZWFuKHgpJywgICAnc2QoeCknLCAnbWluKHgpJywgJ3BjdGlsZSh4KVsyNV0nLCAncGN0aWxlKHgpWzc1XScsICdtYXgoeCknLCAnbm90TkEoeCknLCAncHJvcE5BKHgpJyksIHRpdGxlID0gXCJNZWRpZGFzIGRlIFRlbmRlbmNpYSBDZW50cmFsIHBhcmEgZGF0b3MgbnVtZXJpY29zXCIpXG5gYGAifQ== -->
+<pre class="r"><code>sumtable(thyroid.df[,c(&quot;age&quot;, &quot;TSH&quot;, &quot;T3&quot;, &quot;TT4&quot;, &quot;T4U&quot;, &quot;FTI&quot;)], summ = c(&#39;median(x)&#39;, &#39;mean(x)&#39;,   &#39;sd(x)&#39;, &#39;min(x)&#39;, &#39;pctile(x)[25]&#39;, &#39;pctile(x)[75]&#39;, &#39;max(x)&#39;, &#39;notNA(x)&#39;, &#39;propNA(x)&#39;), title = &quot;Medidas de Tendencia Central para datos numericos&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
-<div id="diagramas-de-dispersion-para-atributos-numericos" class="section level3">
-<h3>Diagramas de Dispersion para Atributos Numericos</h3>
+<div id="valores-duplicados" class="section level3">
+<h3>Valores duplicados</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKGR1cGxpY2F0ZWQodGh5cm9pZC5kZikpXG5gYGAifQ== -->
+<pre class="r"><code>sum(duplicated(thyroid.df))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDBcbiJ9 -->
+<pre><code>[1] 0</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Se observa que no existen valores duplicados en el conjunto de
+datos.</p>
+</div>
+<div id="valores-faltantes" class="section level3">
+<h3>Valores faltantes</h3>
+<p>Total de valores nulos en el dataset:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3ByaW50ZihcIkNhbnRpZGFkIGRlIHZhbG9yZXMgbnVsb3M6ICVkXCIsIHN1bShpcy5uYSh0aHlyb2lkLmRmKSkpXG5gYGAifQ== -->
+<pre class="r"><code>sprintf(&quot;Cantidad de valores nulos: %d&quot;, sum(is.na(thyroid.df)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQ2FudGlkYWQgZGUgdmFsb3JlcyBudWxvczogMTQzMjJcIlxuIn0= -->
+<pre><code>[1] &quot;Cantidad de valores nulos: 14322&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Valores nulos por atributo:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5KHRoeXJvaWQuZGYsIGZ1bmN0aW9uKHgpIHN1bShpcy5uYSh4KSkpXG5gYGAifQ== -->
+<pre class="r"><code>sapply(thyroid.df, function(x) sum(is.na(x)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgIGFnZSAgICAgICAgICAgICAgICAgc2V4ICAgICAgICBvbl90aHlyb3hpbmUgIHF1ZXJ5X29uX3RoeXJveGluZSBvbl9hbnRpdGh5cm9pZF9tZWRzICAgICAgICAgICAgICAgIHNpY2sgICAgICAgICAgICBwcmVnbmFudCBcbiAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgICAgMCAgICAgICAgICAgICAgICAgICAwICAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgICAgMCAgICAgICAgICAgICAgICAgICAwICAgICAgICAgICAgICAgICAgIDAgXG4gICAgdGh5cm9pZF9zdXJnZXJ5ICAgICAgSTEzMV90cmVhdG1lbnQgICBxdWVyeV9oeXBvdGh5cm9pZCAgcXVlcnlfaHlwZXJ0aHlyb2lkICAgICAgICAgICAgIGxpdGhpdW0gICAgICAgICAgICAgIGdvaXRyZSAgICAgICAgICAgICAgIHR1bW9yIFxuICAgICAgICAgICAgICAgICAgMCAgICAgICAgICAgICAgICAgICAwICAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgICAgMCAgICAgICAgICAgICAgICAgICAwICAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgICAgMCBcbiAgICAgIGh5cG9waXR1aXRhcnkgICAgICAgICAgICAgICBwc3ljaCAgICAgICAgVFNIX21lYXN1cmVkICAgICAgICAgICAgICAgICBUU0ggICAgICAgICBUM19tZWFzdXJlZCAgICAgICAgICAgICAgICAgIFQzICAgICAgICBUVDRfbWVhc3VyZWQgXG4gICAgICAgICAgICAgICAgICAwICAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgICAgMCAgICAgICAgICAgICAgICAgODQyICAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgMjYwNCAgICAgICAgICAgICAgICAgICAwIFxuICAgICAgICAgICAgICAgIFRUNCAgICAgICAgVDRVX21lYXN1cmVkICAgICAgICAgICAgICAgICBUNFUgICAgICAgIEZUSV9tZWFzdXJlZCAgICAgICAgICAgICAgICAgRlRJICAgICAgICBUQkdfbWVhc3VyZWQgICAgICAgICAgICAgICAgIFRCRyBcbiAgICAgICAgICAgICAgICA0NDIgICAgICAgICAgICAgICAgICAgMCAgICAgICAgICAgICAgICAgODA5ICAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgIDgwMiAgICAgICAgICAgICAgICAgICAwICAgICAgICAgICAgICAgIDg4MjMgXG4gICAgcmVmZXJyYWxfc291cmNlICAgICAgICAgICAgICB0YXJnZXQgICAgICAgICAgcGF0aWVudF9pZCBcbiAgICAgICAgICAgICAgICAgIDAgICAgICAgICAgICAgICAgICAgMCAgICAgICAgICAgICAgICAgICAwIFxuIn0= -->
+<pre><code>                age                 sex        on_thyroxine  query_on_thyroxine on_antithyroid_meds                sick            pregnant 
+                  0                   0                   0                   0                   0                   0                   0 
+    thyroid_surgery      I131_treatment   query_hypothyroid  query_hyperthyroid             lithium              goitre               tumor 
+                  0                   0                   0                   0                   0                   0                   0 
+      hypopituitary               psych        TSH_measured                 TSH         T3_measured                  T3        TT4_measured 
+                  0                   0                   0                 842                   0                2604                   0 
+                TT4        T4U_measured                 T4U        FTI_measured                 FTI        TBG_measured                 TBG 
+                442                   0                 809                   0                 802                   0                8823 
+    referral_source              target          patient_id 
+                  0                   0                   0 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Se observa que existen nulos, algunos de ellos concentrados en
+ciertos atributos. Ésta información servirá para el procedimiento de
+limpieza de datos.</p>
+</div>
+<div id="limpieza-de-datos" class="section level3">
+<h3>Limpieza de datos</h3>
+<p>Se observa que hay 4 filas que tienen errores en la columna “age” por
+lo que se decide eliminarlas.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGh5cm9pZC5kZiA8LSBzdWJzZXQodGh5cm9pZC5kZiwgYWdlIDw9IDEwMClcbmBgYCJ9 -->
+<pre class="r"><code>thyroid.df &lt;- subset(thyroid.df, age &lt;= 100)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Por otro lado, para enfrentar los valores faltantes se aplicó el
+método de imputación de datos. Para esto se reemplaza los valores
+<code>NA</code> de los atributos numéricos <em>TSH, T3, TT4, TU4 y
+FTI</em> por valores cero (0), esto tendrá un efecto no menor al momento
+de analizar el data, sin embargo se debe tener en cuenta que todos los
+atributos mencionados corresponden a exámenes médicos donde se mide el
+nivel de hormonas y proteínas en la sangre, por tanto no es posible
+obtener como resultado un valor cero, esta imputación se realiza con el
+fin de no eliminar la instancia completa del dataset, puesto que en
+muchos casos esta misma instancia posee valores no nulos para los demás
+atributos, adicionalmente la cantidad de valores <code>NA</code> no es
+demasiada en comparación con la cantidad de filas (instancias) del
+dataset como se observa en el anterior código adjunto. Dada la
+imputación de estos valores para los correspondientes atributos, es
+necesario mencionar que como consecuencia es posible eliminar los
+atributos <em>TSH_measured, T3_measured, TT4_measured, T4U_measured,
+FTI_measured </em>, debido a que no será necesario conocer si un
+paciente se realizó o no un examen médico, esto ahora se analizará
+observando las instancias para las cuales los correspondientes atributos
+posean un valor cero</p>
+<p>Asímismo, se eliminaron los atributos categóricos <em>TBG,
+TBG_measured</em> dado que la cantidad de valores <code>NA</code> para
+el atributo <em>TBG</em> era 8823, por tanto no era posible una
+imputación de datos sin afectar de manera considerable el dataset. Por
+último, se eliminaron los atributos <em>referral_source y
+patient_id</em> debido a que la información entregada por estos
+atributos no es provechosa.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGh5cm9pZC5kZiA8LSByZXBsYWNlX25hKHRoeXJvaWQuZGYsIGxpc3QoVFNIPTAsIFQzPTAsIFRUND0wLCBUNFU9MCwgRlRJPTApKSAjIEltcHV0YWNpb25cbnRoeXJvaWQuZGYgPC0gdGh5cm9pZC5kZlssIW5hbWVzKHRoeXJvaWQuZGYpICVpbiUgYyhcIlRTSF9tZWFzdXJlZFwiLCBcIlQzX21lYXN1cmVkXCIsIFwiVFQ0X21lYXN1cmVkXCIsIFwiVDRVX21lYXN1cmVkXCIsIFwiRlRJX21lYXN1cmVkXCIsIFwiVEJHX21lYXN1cmVkXCIsIFwiVEJHXCIsIFwicmVmZXJyYWxfc291cmNlXCIsIFwicGF0aWVudF9pZFwiKV0gIyBFbGltaW5hY2lvbiBhdHJpYnV0b3NcbnNwcmludGYoXCJDYW50aWRhZCBkZSB2YWxvcmVzIG51bG9zIGVuIGVsIGRhdGFzZXQ6ICVkXCIsIHN1bShpcy5uYSh0aHlyb2lkLmRmKSkpXG5gYGAifQ== -->
+<pre class="r"><code>thyroid.df &lt;- replace_na(thyroid.df, list(TSH=0, T3=0, TT4=0, T4U=0, FTI=0)) # Imputacion
+thyroid.df &lt;- thyroid.df[,!names(thyroid.df) %in% c(&quot;TSH_measured&quot;, &quot;T3_measured&quot;, &quot;TT4_measured&quot;, &quot;T4U_measured&quot;, &quot;FTI_measured&quot;, &quot;TBG_measured&quot;, &quot;TBG&quot;, &quot;referral_source&quot;, &quot;patient_id&quot;)] # Eliminacion atributos
+sprintf(&quot;Cantidad de valores nulos en el dataset: %d&quot;, sum(is.na(thyroid.df)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQ2FudGlkYWQgZGUgdmFsb3JlcyBudWxvcyBlbiBlbCBkYXRhc2V0OiAwXCJcbiJ9 -->
+<pre><code>[1] &quot;Cantidad de valores nulos en el dataset: 0&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Posterior a esta limpieza podemos observar nuevamente las medidas de
+tendencia central para los respectivos atributos numéricos:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtdGFibGUodGh5cm9pZC5kZlssYyhcImFnZVwiLCBcIlRTSFwiLCBcIlQzXCIsIFwiVFQ0XCIsIFwiVDRVXCIsIFwiRlRJXCIpXSwgc3VtbSA9IGMoJ21lZGlhbih4KScsICdtZWFuKHgpJywgICAnc2QoeCknLCAnbWluKHgpJywgJ3BjdGlsZSh4KVsyNV0nLCAncGN0aWxlKHgpWzc1XScsICdtYXgoeCknLCAnbm90TkEoeCknLCAncHJvcE5BKHgpJyksIHRpdGxlID0gXCJNZWRpZGFzIGRlIFRlbmRlbmNpYSBDZW50cmFsIHBhcmEgZGF0b3MgbnVtZXJpY29zXCIpXG5gYGAifQ== -->
+<pre class="r"><code>sumtable(thyroid.df[,c(&quot;age&quot;, &quot;TSH&quot;, &quot;T3&quot;, &quot;TT4&quot;, &quot;T4U&quot;, &quot;FTI&quot;)], summ = c(&#39;median(x)&#39;, &#39;mean(x)&#39;,   &#39;sd(x)&#39;, &#39;min(x)&#39;, &#39;pctile(x)[25]&#39;, &#39;pctile(x)[75]&#39;, &#39;max(x)&#39;, &#39;notNA(x)&#39;, &#39;propNA(x)&#39;), title = &quot;Medidas de Tendencia Central para datos numericos&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="diagramas-de-dispersion-para-atributos-numéricos" class="section level3">
+<h3>Diagramas de Dispersion para Atributos Numéricos</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtZXJpYy5hdHRycyA8LSB0aHlyb2lkLmRmWyxjKFwiYWdlXCIsIFwiVFNIXCIsIFwiVDNcIiwgXCJUVDRcIiwgXCJUNFVcIiwgXCJGVElcIildXG5wYWlycyhudW1lcmljLmF0dHJzKVxuYGBgIn0= -->
@@ -1991,17 +2126,281 @@ ggplot(thyroid.df) +
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
+<div id="histogramas" class="section level3">
+<h3>Histogramas</h3>
+<p>Se realizan los histogramas basados en edad y género, además se
+incluye un histograma que considera los diagnósticos previamente
+descritos. En la primera parte, se decide crear una nueva columna que
+tenga consigo las edades pero distribuidas en rangos, todo esto con el
+fin de poder encontrar mejores resultados posteriormente.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQcmltZXJvIHNlIGNyZWEgdW5hIGNvbHVtbmEgZG9uZGUgc2UgdGVuZ2FuIGxvcyBhw7FvcyBwb3IgcmFuZ29zXG5yYW5nb3MgPC0gYygwLCAxOCwgMzAsIDQwLCA1MCwgNjAsNzAsODAsOTAsIEluZilcbmV0aXF1ZXRhcyA8LSBjKFwiMC0xOFwiLCBcIjE5LTMwXCIsIFwiMzEtNDBcIiwgXCI0MS01MFwiLCBcIjUxLTYwXCIsXCI2MS03MFwiLFwiNzEtODBcIixcIjgxLTkwXCIgLFwiOTErXCIpXG4jIEFncnVwYSBsYXMgZWRhZGVzIHBvciByYW5nb3NcbnRoeXJvaWQuZGYkZ3J1cG9fZWRhZCA8LSBjdXQodGh5cm9pZC5kZiRhZ2UsIGJyZWFrcyA9IHJhbmdvcywgbGFiZWxzID0gZXRpcXVldGFzLCByaWdodCA9IEZBTFNFKVxuYGBgIn0= -->
+<pre class="r"><code># Primero se crea una columna donde se tengan los años por rangos
+rangos &lt;- c(0, 18, 30, 40, 50, 60,70,80,90, Inf)
+etiquetas &lt;- c(&quot;0-18&quot;, &quot;19-30&quot;, &quot;31-40&quot;, &quot;41-50&quot;, &quot;51-60&quot;,&quot;61-70&quot;,&quot;71-80&quot;,&quot;81-90&quot; ,&quot;91+&quot;)
+# Agrupa las edades por rangos
+thyroid.df$grupo_edad &lt;- cut(thyroid.df$age, breaks = rangos, labels = etiquetas, right = FALSE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBIaXN0b2dyYW1hIGRlIGfDqW5lcm8gcG9yIHJhbmdvIGRlIGVkYWRlc1xuZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4ID0gZ3J1cG9fZWRhZCwgZmlsbCA9IHNleCkpICtcbiAgZ2VvbV9iYXIocG9zaXRpb24gPSBcInN0YWNrXCIpICtcbiAgbGFicyh0aXRsZSA9IFwiRGlzdHJpYnVjacOzbiBkZSBHw6luZXJvIHBvciBSYW5nbyBkZSBFZGFkXCIseCA9IFwiUmFuZ28gZGUgRWRhZFwiLHkgPSBcIkZyZWN1ZW5jaWFcIiwgZmlsbD0gXCJHw6luZXJvXCIpICtcbiAgdGhlbWVfbWluaW1hbCgpICtcbiAgc2NhbGVfZmlsbF9tYW51YWwodmFsdWVzID0gYyhcIk1cIiA9IFwiIzAwNzk4Y1wiLCBcIkZcIiA9IFwiI2QxNDk1YlwiKSlcbmBgYCJ9 -->
+<pre class="r"><code># Histograma de género por rango de edades
+ggplot(thyroid.df, aes(x = grupo_edad, fill = sex)) +
+  geom_bar(position = &quot;stack&quot;) +
+  labs(title = &quot;Distribución de Género por Rango de Edad&quot;,x = &quot;Rango de Edad&quot;,y = &quot;Frecuencia&quot;, fill= &quot;Género&quot;) +
+  theme_minimal() +
+  scale_fill_manual(values = c(&quot;M&quot; = &quot;#00798c&quot;, &quot;F&quot; = &quot;#d1495b&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>A partir del histograma, se observa que gran parte de los pacientes
+son del sexo femenino, además, se tiene que la población con mayor
+frecuencia dentro de los datos es la de entre 61-70 años, es decir, este
+estudio se concentra en adultos mayores, y la mayoría de ellos son del
+sexo femenino. Por otra parte, se tiene algunas barras de color gris,
+los cuales presentan información desconocida o no entregada por parte de
+los pacientes.</p>
+<p>A continuación, se presenta un histograma que muestra la frecuencia
+de los diagnósticos, cabe destacar que en un principio se decide alterar
+la base de datos, de manera que los datos que aparecen “-” se eliminan
+para así poder visualizar de mejor manera los datos.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1NlIGRlamEgdW5hIG51ZXZhIGRhdGEgZWxpbWluYW5kbyBsb3MgZGF0b3Mgc2luIHJlc3BvbmRlclxuZGF0b3NfbGltcGlvcyA8LSB0aHlyb2lkLmRmICU+JVxuICBmaWx0ZXIoIWdyZXBsKFwiLVwiLCB0YXJnZXQpKVxuXG4jIHNlIGNyZWEgZWwgaGlzdG9ncmFtYSBjb24gbG9zIGRhdG9zIGxpbXBpb3NcbmdncGxvdChkYXRvc19saW1waW9zLCBhZXMoeCA9IHRhcmdldCkpICtcbiAgZ2VvbV9iYXIoYmlud2lkdGggPSA1LCBmaWxsID0gXCIjMDA3OThjXCIsIGNvbG9yID0gXCJibGFja1wiKSArXG4gIGxhYnModGl0bGUgPSBcIkhpc3RvZ3JhbWEgZGUgRGlhZ27Ds3N0aWNvc1wiLFxuICAgICAgIHggPSBcIlRpcG8gZGUgZGlhZ27Ds3N0aWNvXCIsXG4gICAgICAgeSA9IFwiRnJlY3VlbmNpYVwiKSArXG4gIHRoZW1lX21pbmltYWwoKVxuYGBgIn0= -->
+<pre class="r"><code>#Se deja una nueva data eliminando los datos sin responder
+datos_limpios &lt;- thyroid.df %&gt;%
+  filter(!grepl(&quot;-&quot;, target))
+
+# se crea el histograma con los datos limpios
+ggplot(datos_limpios, aes(x = target)) +
+  geom_bar(binwidth = 5, fill = &quot;#00798c&quot;, color = &quot;black&quot;) +
+  labs(title = &quot;Histograma de Diagnósticos&quot;,
+       x = &quot;Tipo de diagnóstico&quot;,
+       y = &quot;Frecuencia&quot;) +
+  theme_minimal()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>A partir del histograma, se observa que la mayoría de los pacientes
+están diagnósticados con “K - enfermedad no tiroidea concurrente” y
+luego le sigue “G - Hipotiroidismo compensado”.</p>
+</div>
+<div id="relación-entre-variables-cramers-v-anova-test-y-correlación-lineal" class="section level3">
+<h3>Relación entre variables: Cramer’s V, ANOVA Test y Correlación
+Lineal</h3>
+<p>Dado que muchas de nuestras variables son categóricas, no podemos
+calcular la correlación entre variables como lo hacemos con las
+variables numéricas. Es por ello, que utilizamos Cramer’s V. Cramer’s V
+mide la fuerza de asociación entre dos variables categóricas. Va entre 0
+y 1, donde 0 representa una asociación débil, y 1 una fuerte.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JhbWVyc1YgPC0gZnVuY3Rpb24oY2hpMiwgbiwgcGhpID0gTlVMTCkge1xuICBrIDwtIG1pbihkaW0ocGhpKVsxXSAtIDEsIGRpbShwaGkpWzJdIC0gMSlcbiAgViA8LSBzcXJ0KGNoaTIgLyAobiAqIGspKVxuICByZXR1cm4oVilcbn1cblxuZGF0YSA8LSBzZWxlY3QodGh5cm9pZC5kZiwgLWMoXCJUU0hcIixcIlQzXCIsXCJUVDRcIiwgXCJUNFVcIiwgXCJGVElcIiwgXCJncnVwb19lZGFkXCIpKVxuXG5jb3JyZWxhdGlvbl9tYXRyaXggPC0gbWF0cml4KDAsIG5jb2woZGF0YSksIG5jb2woZGF0YSkpXG5jb2xuYW1lcyhjb3JyZWxhdGlvbl9tYXRyaXgpIDwtIG5hbWVzKGRhdGEpXG5yb3duYW1lcyhjb3JyZWxhdGlvbl9tYXRyaXgpIDwtIG5hbWVzKGRhdGEpXG5cbmZvcihpIGluIDE6bmNvbChkYXRhKSkge1xuICBmb3IoaiBpbiAxOm5jb2woZGF0YSkpIHtcbiAgICBjb250aW5nZW5jeV90YWJsZSA8LSB0YWJsZShkYXRhWyxpXSwgZGF0YVssal0pXG4gICAgY2hpMiA8LSBjaGlzcS50ZXN0KGNvbnRpbmdlbmN5X3RhYmxlKSRzdGF0aXN0aWNcbiAgICBjb3JyZWxhdGlvbl9tYXRyaXhbaSwgal0gPC0gY3JhbWVyc1YoY2hpMiwgbnJvdyhkYXRhKSwgY29udGluZ2VuY3lfdGFibGUpXG4gIH1cbn1cblxubWVsdGVkX2NvcnJlbGF0aW9uIDwtIG1lbHQoY29ycmVsYXRpb25fbWF0cml4KVxuXG5nZ3Bsb3QoZGF0YSA9IG1lbHRlZF9jb3JyZWxhdGlvbiwgYWVzKHg9VmFyMSwgeT1WYXIyKSkgK1xuICBnZW9tX3RpbGUoYWVzKGZpbGw9dmFsdWUpLCBjb2xvcj0nd2hpdGUnKSArXG4gIHNjYWxlX2ZpbGxfZ3JhZGllbnQobG93PVwid2hpdGVcIiwgaGlnaD1cImJsdWVcIikgK1xuICB0aGVtZV9taW5pbWFsKCkgK1xuICBnZ3RpdGxlKFwiQ3JhbWVyJ3MgViBlbnRyZSB2YXJpYWJsZXMgY2F0ZWfDs3JpY2FzXCIpICtcbiAgdGhlbWUoYXhpcy50ZXh0LnggPSBlbGVtZW50X3RleHQoYW5nbGUgPSA0NSwgaGp1c3Q9MSksIHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKVxuXG5gYGAifQ== -->
+<pre class="r"><code>cramersV &lt;- function(chi2, n, phi = NULL) {
+  k &lt;- min(dim(phi)[1] - 1, dim(phi)[2] - 1)
+  V &lt;- sqrt(chi2 / (n * k))
+  return(V)
+}
+
+data &lt;- select(thyroid.df, -c(&quot;TSH&quot;,&quot;T3&quot;,&quot;TT4&quot;, &quot;T4U&quot;, &quot;FTI&quot;, &quot;grupo_edad&quot;))
+
+correlation_matrix &lt;- matrix(0, ncol(data), ncol(data))
+colnames(correlation_matrix) &lt;- names(data)
+rownames(correlation_matrix) &lt;- names(data)
+
+for(i in 1:ncol(data)) {
+  for(j in 1:ncol(data)) {
+    contingency_table &lt;- table(data[,i], data[,j])
+    chi2 &lt;- chisq.test(contingency_table)$statistic
+    correlation_matrix[i, j] &lt;- cramersV(chi2, nrow(data), contingency_table)
+  }
+}
+
+melted_correlation &lt;- melt(correlation_matrix)
+
+ggplot(data = melted_correlation, aes(x=Var1, y=Var2)) +
+  geom_tile(aes(fill=value), color=&#39;white&#39;) +
+  scale_fill_gradient(low=&quot;white&quot;, high=&quot;blue&quot;) +
+  theme_minimal() +
+  ggtitle(&quot;Cramer&#39;s V entre variables categóricas&quot;) +
+  theme(axis.text.x = element_text(angle = 45, hjust=1), plot.title = element_text(hjust = 0.5))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Como se puede observar, las variables que tienen una fuerza de
+asociación mayor son las que tienen un color más azul/morado oscuro. Un
+ejemplo es target con on_thyroxine, o target con thyroid_surgery.</p>
+<p>Para poder obtener una relación entre variables numéricas y
+categóricas, utillizamos el test ANOVA, el cual analiza la relación una
+variable numérica y otra categórica. En este, se testea la hipótesis
+nula, que corresponde a que la media de la variable numérica es la misma
+para todas las categorías de la variable categórica. Luego, si el
+p-value es cercano a 0, menor a un nivel de significancia, se rechaza la
+hipótesis nula. Esto sugerería que hay una diferencia significativa en
+las medias de la variable numérica para cada categoría de la variable
+categórica. Además, se obtiene el effect size, que nos entrega
+información sobre la fuerza o magnitud de esta diferencia.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5kZjwtIHNlbGVjdCh0aHlyb2lkLmRmLC1jKFwiZ3J1cG9fZWRhZFwiKSlcblxuI0VzcGVjaWZpY2FyIHZhcmlhYmxlcyBudW3DqXJpY2FzXG5udW1lcmljYWxfdmFycyA8LSBjKFwiVFNIXCIsIFwiVDNcIiwgXCJUVDRcIixcIlQ0VVwiLCBcIkZUSVwiKVxuXG5cbiNWYXJpYWJsZXMgY2F0ZWfDs3JpY2FzXG5jYXRlZ29yaWNhbF92YXJzIDwtIHNldGRpZmYobmFtZXMoZGYpLCBudW1lcmljYWxfdmFycylcblxucmVzdWx0cyA8LSBkYXRhLmZyYW1lKClcblxuI1BhcmEgY2FkYSBjb21iaW5hY2nDs24gZGUgdmFyIGNhdGVnw7NyaWNhIHkgbnVtw6lyaWNhXG5mb3IobnVtX3ZhciBpbiBudW1lcmljYWxfdmFycykge1xuICAgIHBfdmFsdWVzIDwtIG51bWVyaWMoKVxuICAgIGVmZmVjdF9zaXplcyA8LSBudW1lcmljKClcbiAgXG4gICAgZm9yKGNhdF92YXIgaW4gY2F0ZWdvcmljYWxfdmFycykge1xuICAgICAgICBmb3JtdWxhX3N0ciA8LSBwYXN0ZShudW1fdmFyLCBcIn5cIiwgY2F0X3ZhcilcbiAgICAgICAgYW5vdmFfcmVzdWx0IDwtIGFvdihhcy5mb3JtdWxhKGZvcm11bGFfc3RyKSwgZGF0YT1kZilcbiAgICAgIFxuICAgICAgICAjcC12YWx1ZVxuICAgICAgICBwX3ZhbHVlcyA8LSBjKHBfdmFsdWVzLCBzdW1tYXJ5KGFub3ZhX3Jlc3VsdClbWzFdXVtbXCJQcig+RilcIl1dWzFdKVxuICAgICAgXG4gICAgICAgICNlZmZlY3Qgc2l6ZSAoZXRhIHNxdWFyZWQpXG4gICAgICAgIHNzX3RvdGFsIDwtIHN1bSgoZGZbW251bV92YXJdXSAtIG1lYW4oZGZbW251bV92YXJdXSkpXjIpXG4gICAgICAgIGV0YV9zcXVhcmVkIDwtIHN1bW1hcnkoYW5vdmFfcmVzdWx0KVtbMV1dW1wiU3VtIFNxXCJdWzEsXSAvIHNzX3RvdGFsXG4gICAgICAgIGVmZmVjdF9zaXplcyA8LSBjKGVmZmVjdF9zaXplcywgZXRhX3NxdWFyZWQpXG4gICAgfVxuXG4gICAgdGVtcF9yZXN1bHRzIDwtIGRhdGEuZnJhbWUoTnVtZXJpY2FsPW51bV92YXIsIENhdGVnb3JpY2FsPWNhdGVnb3JpY2FsX3ZhcnMsIFBfVmFsdWU9cF92YWx1ZXMsIEVmZmVjdF9TaXplPWVmZmVjdF9zaXplcylcbiAgICByZXN1bHRzIDwtIHJiaW5kKHJlc3VsdHMsIHRlbXBfcmVzdWx0cylcbn1cblxuXG5tZWx0ZWRfcmVzdWx0cyA8LSBtZWx0KHJlc3VsdHMsIGlkLnZhcnM9YyhcIk51bWVyaWNhbFwiLCBcIkNhdGVnb3JpY2FsXCIpKVxuXG4jIFBsb3QgXG5nZ3Bsb3QobWVsdGVkX3Jlc3VsdHMsIGFlcyh4PUNhdGVnb3JpY2FsLCB5PU51bWVyaWNhbCwgZmlsbD12YWx1ZSkpICsgXG4gICAgZ2VvbV90aWxlKCkgK1xuICAgIGZhY2V0X3dyYXAofiB2YXJpYWJsZSwgc2NhbGVzPVwiZnJlZVwiLCBuY29sPTEpICtcbiAgICBzY2FsZV9maWxsX2dyYWRpZW50Mihsb3c9XCJibHVlXCIsIG1pZD1cIndoaXRlXCIsIGhpZ2g9XCJyZWRcIiwgbWlkcG9pbnQ9MC41LCBsaW1pdD1jKDAsMSkpICtcbiAgICB0aGVtZV9taW5pbWFsKCkgK1xuICAgIHRoZW1lKGF4aXMudGV4dC54ID0gZWxlbWVudF90ZXh0KGFuZ2xlID0gNDUsIGhqdXN0PTEpKSArXG4gICAgbGFicyh0aXRsZT1cIkFOT1ZBIHRlc3QgZW50cmUgZGF0b3MgY2F0ZWfDs3JpY29zIHkgbnVtw6lyaWNvc1wiLGZpbGw9XCJBc3NvY2lhdGlvbiBTdHJlbmd0aFwiKStcbiAgICB0aGVtZShwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC43KSlcbmBgYCJ9 -->
+<pre class="r"><code>
+df&lt;- select(thyroid.df,-c(&quot;grupo_edad&quot;))
+
+#Especificar variables numéricas
+numerical_vars &lt;- c(&quot;TSH&quot;, &quot;T3&quot;, &quot;TT4&quot;,&quot;T4U&quot;, &quot;FTI&quot;)
+
+
+#Variables categóricas
+categorical_vars &lt;- setdiff(names(df), numerical_vars)
+
+results &lt;- data.frame()
+
+#Para cada combinación de var categórica y numérica
+for(num_var in numerical_vars) {
+    p_values &lt;- numeric()
+    effect_sizes &lt;- numeric()
+  
+    for(cat_var in categorical_vars) {
+        formula_str &lt;- paste(num_var, &quot;~&quot;, cat_var)
+        anova_result &lt;- aov(as.formula(formula_str), data=df)
+      
+        #p-value
+        p_values &lt;- c(p_values, summary(anova_result)[[1]][[&quot;Pr(&gt;F)&quot;]][1])
+      
+        #effect size (eta squared)
+        ss_total &lt;- sum((df[[num_var]] - mean(df[[num_var]]))^2)
+        eta_squared &lt;- summary(anova_result)[[1]][&quot;Sum Sq&quot;][1,] / ss_total
+        effect_sizes &lt;- c(effect_sizes, eta_squared)
+    }
+
+    temp_results &lt;- data.frame(Numerical=num_var, Categorical=categorical_vars, P_Value=p_values, Effect_Size=effect_sizes)
+    results &lt;- rbind(results, temp_results)
+}
+
+
+melted_results &lt;- melt(results, id.vars=c(&quot;Numerical&quot;, &quot;Categorical&quot;))
+
+# Plot 
+ggplot(melted_results, aes(x=Categorical, y=Numerical, fill=value)) + 
+    geom_tile() +
+    facet_wrap(~ variable, scales=&quot;free&quot;, ncol=1) +
+    scale_fill_gradient2(low=&quot;blue&quot;, mid=&quot;white&quot;, high=&quot;red&quot;, midpoint=0.5, limit=c(0,1)) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+    labs(title=&quot;ANOVA test entre datos categóricos y numéricos&quot;,fill=&quot;Association Strength&quot;)+
+    theme(plot.title = element_text(hjust = 0.7))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Luego, se observa que para la variable categórica target, que
+contiene los diferentes diagnósticos médicos dados al paciente, se
+obtuvo un bajo p-value para las variables numéricas FTI, TT4, TSH, T4U,
+T3, los que fueron medidos en la sangre de los pacientes. Pero además,
+fueron donde se obtuvo un mayor effect size.</p>
+<p>También, para obtener qué tan relacionados linealmente enter sí están
+las variables numéricas, podemos calcular la tabla de correlación entre
+ellas. Mientras más cercanos a 1, están más relacionadas entre sí, y
+cuando se acercan a 0, están menos relacionadas. Cuando son negativas,
+representa que por ejemplo, cuando una variable aumenta, la otra
+disminuye.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YTwtdGh5cm9pZC5kZltjKFwiVFQ0XCIsXCJUU0hcIixcIlQzXCIsXCJGVElcIixcIlQ0VVwiKV1cbk0gPC0gY29yKGRhdGEpXG50aXRsZSA8LSBcIkNvcnJlbGFjacOzbiBlbnRyZSB2YXJpYWJsZXMgbnVtw6lyaWNhc1wiXG5jb3JycGxvdChNLCBtZXRob2QgPSBcImVsbGlwc2VcIixjb2w9Y29sb3JSYW1wUGFsZXR0ZShjKFwicmVkXCIsXCJ3aGl0ZVwiLFwicHVycGxlXCIpKSgxMDApLHRpdGxlPXRpdGxlLG1hcj1jKDAsMCwxLDApKVxudGhlbWUocGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNykpXG5cbmBgYCJ9 -->
+<pre class="r"><code>data&lt;-thyroid.df[c(&quot;TT4&quot;,&quot;TSH&quot;,&quot;T3&quot;,&quot;FTI&quot;,&quot;T4U&quot;)]
+M &lt;- cor(data)
+title &lt;- &quot;Correlación entre variables numéricas&quot;
+corrplot(M, method = &quot;ellipse&quot;,col=colorRampPalette(c(&quot;red&quot;,&quot;white&quot;,&quot;purple&quot;))(100),title=title,mar=c(0,0,1,0))
+theme(plot.title = element_text(hjust = 0.7))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="boxplot-variables-numéricas-vs-target" class="section level3">
+<h3>Boxplot: Variables numéricas v/s Target</h3>
+<p>Podemos utilizar boxplots, para visualizar de mejor manera la
+distribución de los datos numéricos entre los distintos tipos de
+diagnóstico médico (atributo “target”).</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1UVDQpKSArIFxuICBnZW9tX2JveHBsb3QoKSArXG4gIGxhYnModGl0bGU9XCJCb3hwbG90IGRlIFRUNFwiLCB4PVwiVGFyZ2V0XCIsIHk9XCJWYWxvciBkZSBUVDRcIikrXG4gIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(thyroid.df, aes(x=target, y=TT4)) + 
+  geom_boxplot() +
+  labs(title=&quot;Boxplot de TT4&quot;, x=&quot;Target&quot;, y=&quot;Valor de TT4&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1UU0gpKSArIFxuICBnZW9tX2JveHBsb3QoKSArXG4gIGxhYnModGl0bGU9XCJCb3hwbG90IGRlIFRTSFwiLCB4PVwiVGFyZ2V0XCIsIHk9XCJWYWxvciBkZSBUU0hcIikrXG4gIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(thyroid.df, aes(x=target, y=TSH)) + 
+  geom_boxplot() +
+  labs(title=&quot;Boxplot de TSH&quot;, x=&quot;Target&quot;, y=&quot;Valor de TSH&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1UMykpICsgXG4gIGdlb21fYm94cGxvdCgpICtcbiAgbGFicyh0aXRsZT1cIkJveHBsb3QgZGUgVDNcIiwgeD1cIlRhcmdldFwiLCB5PVwiVmFsb3IgZGUgVDNcIikrXG4gIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(thyroid.df, aes(x=target, y=T3)) + 
+  geom_boxplot() +
+  labs(title=&quot;Boxplot de T3&quot;, x=&quot;Target&quot;, y=&quot;Valor de T3&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1GVEkpKSArIFxuICBnZW9tX2JveHBsb3QoKSArXG4gIGxhYnModGl0bGU9XCJCb3hwbG90IGRlIEZUSVwiLCB4PVwiVGFyZ2V0XCIsIHk9XCJWYWxvciBkZSBGVElcIikrXG4gIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(thyroid.df, aes(x=target, y=FTI)) + 
+  geom_boxplot() +
+  labs(title=&quot;Boxplot de FTI&quot;, x=&quot;Target&quot;, y=&quot;Valor de FTI&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1UNFUpKSArIFxuICBnZW9tX2JveHBsb3QoKSArXG4gIGxhYnModGl0bGU9XCJCb3hwbG90IGRlIFQ0VVwiLCB4PVwiVGFyZ2V0XCIsIHk9XCJUNFVcIikrXG4gIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(thyroid.df, aes(x=target, y=T4U)) + 
+  geom_boxplot() +
+  labs(title=&quot;Boxplot de T4U&quot;, x=&quot;Target&quot;, y=&quot;T4U&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1hZ2UpKSArIFxuICBnZW9tX2JveHBsb3QoKSArXG4gIGxhYnModGl0bGU9XCJCb3hwbG90IGRlIGVkYWRcIiwgeD1cIlRhcmdldFwiLCB5PVwiRWRhZFwiKStcbiAgdGhlbWUocGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpXG5gYGAifQ== -->
+<pre class="r"><code>ggplot(thyroid.df, aes(x=target, y=age)) + 
+  geom_boxplot() +
+  labs(title=&quot;Boxplot de edad&quot;, x=&quot;Target&quot;, y=&quot;Edad&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
 </div>
 <div id="preguntas-y-problemas" class="section level2">
 <h2>Preguntas y Problemas</h2>
 </div>
-<div id="anexo" class="section level2">
-<h2>Anexo</h2>
+<div id="contribución-de-cada-integrante" class="section level2">
+<h2>Contribución de cada integrante</h2>
+<p>Nahuel Sanhueza se encargó de la parte de limpieza de datos y los
+diagramas de dispersion para atributos numéricos. Catalina Carrasco se
+encargó de la realización de Bloxplots y tablas correlacion (Cramer’s V,
+ANOVA test y correlación). Joaquín Herrera se encargó de realizar el
+contexto, motivación y características principales de los datos. Javiera
+Donoso se encargó de la creación de los histogramas, el proceso de
+agregacion (promedio valores examenes medicos) agrupando por rango
+etario y la formulación de preguntas y problemas. Macarena Ríos</p>
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKYXV0aG9yOiAnKipDYXRhbGluYSBDYXJyYXNjbywgSmF2aWVyYSBEb25vc28sIEpvYXF1w61uIEhlcnJlcmEsIE1hY2FyZW5hIFLDrW9zLCBOYWh1ZWwKICBTYW5odWV6YSoqJwpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIHRvYzogeWVzCiAgICBkZl9wcmludDogcGFnZWQKICBodG1sX25vdGVib29rOgogICAgdG9jOiB5ZXMKICAgIHRoZW1lOiB1bml0ZWQKICBwZGZfZG9jdW1lbnQ6CiAgICB0b2M6IHllcwotLS0KIyBJbmZvcm1lIEhpdG8gMQoKIyMgTGlicmVyaWFzIGEgaW1wb3J0YXIKCmBgYHtyfQpsaWJyYXJ5KGdncGxvdDIpCmxpYnJhcnkodGlkeXIpCnRoeXJvaWQuZGYgPC0gcmVhZC5jc3YoImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9pbml0LW5haHVlbC9wcm9qZWN0LWRhdGEtbWluaW5nL21haW4vZGF0YS90aHlyb2lkREYuY3N2IikKYGBgCgojIyBJbnRyb2R1Y2Npw7NuCgpMYSB0aXJvaWRlcyBlcyB1bmEgZ2zDoW5kdWxhIHViaWNhZGEgZW4gbGEgYmFzZSBkZWwgY3VlbGxvIHF1ZSBwcm9kdWNlIGhvcm1vbmFzIGVzZW5jaWFsZXMgcGFyYSBlbCBmdW5jaW9uYW1pZW50byBkZWwgY3VlcnBvLiBMb3MgdHJhc3Rvcm5vcyBkZSBsYSB0aXJvaWRlcyBwdWVkZW4gYWZlY3RhciBhIHBlcnNvbmFzIGRlIHRvZGFzIGxhcyBlZGFkZXMgeSBnw6luZXJvcy4gUG9yIGVqZW1wbG8sIGVsIGhpcG90aXJvaWRpc21vIG5vIHRyYXRhZG8gcHVlZGUgbGxldmFyIGEgcHJvYmxlbWFzIGNvbW8gbGEgZmF0aWdhIGNyw7NuaWNhLCBsYSBkZXByZXNpw7NuIHkgbGEgZ2FuYW5jaWEgZGUgcGVzby4gUG9yIG90cm8gbGFkbywgZWwgaGlwZXJ0aXJvaWRpc21vIG5vIGNvbnRyb2xhZG8gcHVlZGUgYWZlY3RhciBlbCBjb3JhesOzbiB5IG90cm9zIMOzcmdhbm9zLiBEZSBlc3RhIG1hbmVyYSwgZWwgZGlhZ27Ds3N0aWNvIChwYXJhIHVuIHBvc3RlcmlvciB0cmF0YW1pZW50bykgZGUgZXN0YXMgZW5mZXJtZWRhZGVzIGVzIGZ1bmRhbWVudGFsIHBhcmEgbWFudGVuZXIgdW5hIHNhbHVkIMOzcHRpbWEuCgpBIGNvbnRpbnVhY2nDs24gc2UgZXN0dWRpYXLDoSB1biBkYXRhc2V0IGVzdHJ1Y3R1cmFkbyBzb2JyZSBlc3RhIGFmZWNjacOzbiBkZW5vbWluYWRvICJUaHlyb2lkIERpc2Vhc2UgRGF0YSIuIEVuIMOpbCBzZSBwdWVkZW4gZW5jb250cmFyIGRpdmVyc29zIGRhdG9zIGFzb2NpYWRvcyBhIGxvcyBwYWNpZW50ZXMsIGp1bnRvIGEgc3VzIHJlc3BlY3Rpdm9zIHJlc3VsdGFkb3MgZGUgYW7DoWxpc2lzIGRlIHNhbmdyZSB5IGRpYWduw7NzdGljbyBlZmVjdHVhZG8gcG9yIHVuIHByb2Zlc2lvbmFsLgoKIyMgRXhwbG9yYWNpw7NuIGRlIGRhdG9zCgojIyMgTGllbXBpZXphIGRlIGRhdG9zCgojIyMgVmFsb3JlcyBmYWx0YW50ZXMKClRvdGFsIGRlIHZhbG9yZXMgbnVsb3MgZW4gZWwgZGF0YXNldDoKYGBge3J9CnNwcmludGYoIkNhbnRpZGFkIGRlIHZhbG9yZXMgbnVsb3M6ICVkIiwgc3VtKGlzLm5hKHRoeXJvaWQuZGYpKSkKYGBgCgpWYWxvcmVzIG51bG9zIHBvciBhdHJpYnV0bzoKYGBge3J9CnNhcHBseSh0aHlyb2lkLmRmLCBmdW5jdGlvbih4KSBzdW0oaXMubmEoeCkpKQpgYGAKCkVzdGEgaW5mb3JtYWNpw7NuIHNpcnZlIHBhcmEgcmVhbGl6YXIgdW4gcG9zdGVyaW9yIHByb2Nlc2FtaWVudG8gZGUgZGF0b3Mgc2Vnw7puIHNlIGVzdGltZSBjb252ZW5pZW50ZS4KCiMjIyBWYWxvcmVzIGR1cGxpY2Fkb3MKCmBgYHtyfQpzdW0oZHVwbGljYXRlZCh0aHlyb2lkLmRmKSkKYGBgCgpTZSBvYnNlcnZhIHF1ZSBubyBleGlzdGVuIHZhbG9yZXMgZHVwbGljYWRvcyBlbiBlbCBjb25qdW50byBkZSBkYXRvcy4KCkEgY29udGludWFjacOzbiBzZSBwcmVzZW50YSBsYSBsaW1waWV6YSBkZSBkYXRvcyBjb3JyZXNwb25kaWVudGUgYWwgZGF0YXNldCAqVGh5cm9pZCBEaXNlYXNlIERhdGEqLgoKUGFyYSBsYSBsaW1waWV6YSBkZSBkYXRvcyBzZSBhcGxpY8OzIGVsIG3DqXRvZG8gZGUgaW1wdXRhY2nDs24gZGUgZGF0b3MsIHBhcmEgZXN0byBzZSByZWVtcGxhemEgbG9zIHZhbG9yZXMgYE5BYCBkZSBsb3MgYXRyaWJ1dG9zIG51bcOpcmljb3MgKlRTSCwgVDMsIFRUNCwgVFU0IHkgRlRJKiBwb3IgdmFsb3JlcyBjZXJvICgwKSwgZXN0byB0ZW5kcsOhIHVuIGVmZWN0byBubyBtZW5vciBhbCBtb21lbnRvIGRlIGFuYWxpemFyIGVsIGRhdGEsIHNpbiBlbWJhcmdvIHNlIGRlYmUgdGVuZXIgZW4gY3VlbnRhIHF1ZSB0b2RvcyBsb3MgYXRyaWJ1dG9zIG1lbmNpb25hZG9zIGNvcnJlc3BvbmRlbiBhIGV4w6FtZW5lcyBtw6lkaWNvcyBkb25kZSBzZSBtaWRlIGVsIG5pdmVsIGRlIGhvcm1vbmFzIHkgcHJvdGXDrW5hcyBlbiBsYSBzYW5ncmUsIHBvciB0YW50byBubyBlcyBwb3NpYmxlIG9idGVuZXIgY29tbyByZXN1bHRhZG8gdW4gdmFsb3IgY2VybywgZXN0YSBpbXB1dGFjacOzbiBzZSByZWFsaXphIGNvbiBlbCBmaW4gZGUgbm8gZWxpbWluYXIgbGEgaW5zdGFuY2lhIGNvbXBsZXRhIGRlbCBkYXRhc2V0LCBwdWVzdG8gcXVlIGVuIG11Y2hvcyBjYXNvcyBlc3RhIG1pc21hIGluc3RhbmNpYSBwb3NlZSB2YWxvcmVzIG5vIG51bG9zIHBhcmEgbG9zIGRlbcOhcyBhdHJpYnV0b3MsIGFkaWNpb25hbG1lbnRlIGxhIGNhbnRpZGFkIGRlIHZhbG9yZXMgYE5BYCBubyBlcyBkZW1hc2lhZGEgZW4gY29tcGFyYWNpw7NuIGNvbiBsYSBjYW50aWRhZCBkZSBmaWxhcyAoaW5zdGFuY2lhcykgZGVsIGRhdGFzZXQgY29tbyBzZSBvYnNlcnZhIGVuIGVsIGFudGVyaW9yIGPDs2RpZ28gYWRqdW50by4gRGFkYSBsYSBpbXB1dGFjacOzbiBkZSBlc3RvcyB2YWxvcmVzIHBhcmEgbG9zIGNvcnJlc3BvbmRpZW50ZXMgYXRyaWJ1dG9zLCBlcyBuZWNlc2FyaW8gbWVuY2lvbmFyIHF1ZSBjb21vIGNvbnNlY3VlbmNpYSBlcyBwb3NpYmxlIGVsaW1pbmFyIGxvcyBhdHJpYnV0b3MgKlRTSF9tZWFzdXJlZCwgVDNfbWVhc3VyZWQsIFRUNF9tZWFzdXJlZCwgVDRVX21lYXN1cmVkLCBGVElfbWVhc3VyZWQgKiwgZGViaWRvIGEgcXVlIG5vIHNlcsOhIG5lY2VzYXJpbyBjb25vY2VyIHNpIHVuIHBhY2llbnRlIHNlIHJlYWxpesOzIG8gbm8gdW4gZXhhbWVuIG3DqWRpY28sIGVzdG8gYWhvcmEgc2UgYW5hbGl6YXLDoSBvYnNlcnZhbmRvIGxhcyBpbnN0YW5jaWFzIHBhcmEgbGFzIGN1YWxlcyBsb3MgY29ycmVzcG9uZGllbnRlcyBhdHJpYnV0b3MgcG9zZWFuIHVuIHZhbG9yIGNlcm8KCkFzaW1pc21vLCBzZSBlbGltaW5hcm9uIGxvcyBhdHJpYnV0b3MgY2F0ZWfDs3JpY29zICpUQkcsIFRCR19tZWFzdXJlZCogZGFkbyBxdWUgbGEgY2FudGlkYWQgZGUgdmFsb3JlcyBgTkFgIHBhcmEgZWwgYXRyaWJ1dG8gKlRCRyogZXJhIDg4MjMsIHBvciB0YW50byBubyBlcmEgcG9zaWJsZSB1bmEgaW1wdXRhY2nDs24gZGUgZGF0b3Mgc2luIGFmZWN0YXIgZGUgbWFuZXJhIGNvbnNpZGVyYWJsZSBlbCBkYXRhc2V0LiBQb3Igw7psdGltbywgc2UgZWxpbWluYXJvbiBsb3MgYXRyaWJ1dG9zICpyZWZlcnJhbF9zb3VyY2UgeSBwYXRpZW50X2lkKiBkZWJpZG8gYSBxdWUgbGEgaW5mb3JtYWNpw7NuIGVudHJlZ2FkYSBwb3IgZXN0b3MgYXRyaWJ1dG9zIG5vIGVzIHByb3ZlY2hvc2EuCgpgYGB7cn0KdGh5cm9pZC5kZiA8LSByZXBsYWNlX25hKHRoeXJvaWQuZGYsIGxpc3QoVFNIPTAsIFQzPTAsIFRUND0wLCBUNFU9MCwgRlRJPTApKSAjIEltcHV0YWNpb24KdGh5cm9pZC5kZiA8LSB0aHlyb2lkLmRmWywhbmFtZXModGh5cm9pZC5kZikgJWluJSBjKCJUU0hfbWVhc3VyZWQiLCAiVDNfbWVhc3VyZWQiLCAiVFQ0X21lYXN1cmVkIiwgIlQ0VV9tZWFzdXJlZCIsICJGVElfbWVhc3VyZWQiLCAiVEJHX21lYXN1cmVkIiwgIlRCRyIsICJyZWZlcnJhbF9zb3VyY2UiLCAicGF0aWVudF9pZCIpXSAjIEVsaW1pbmFjaW9uIGF0cmlidXRvcwpzcHJpbnRmKCJDYW50aWRhZCBkZSB2YWxvcmVzIG51bG9zIGVuIGVsIGRhdGFzZXQ6ICVkIiwgc3VtKGlzLm5hKHRoeXJvaWQuZGYpKSkKYGBgCgojIyMgQ2FyYWN0ZXLDrXN0aWNhcyBkZSBsb3MgZGF0b3MKCkxvcyBkaXN0aW50b3MgYXRyaWJ1dG9zIHF1ZSBjb250aWVuZSBlbCBkYXRhc2V0IHNlIHByZXNlbnRhbiBhIGNvbnRpbnVhY2nDs246CgoxLiBhZ2UgOiBlZGFkIGRlbCBwYWNpZW50ZSAoaW50KQoKMi4gc2V4IDogZWwgc2V4byBkZWwgcGFjaWVudGUgKHN0cikKCjMuIG9uX3RoeXJveGluZSA6IHNpIGVsIHBhY2llbnRlIGVzdMOhIHRvbWFuZG8gdGlyb3hpbmEgKGJvb2wpCgo0LiBxdWVyeV9vbl90aHlyb3hpbmUgOiBzaSBlbCBwYWNpZW50ZSBlc3TDoSB0b21hbmRvIHRpcm94aW5hIChib29sKQoKNS4gb25fYW50aXRoeXJvaWRfbWVkcyA6IHNpIGVsIHBhY2llbnRlIGVzdMOhIHRvbWFuZG8gbWVkaWNhbWVudG9zIGFudGl0aXJvaWRlb3MgKGJvb2wpCgo2LiBzaWNrIDogc2kgZWwgcGFjaWVudGUgZXN0w6EgZW5mZXJtbyAoYm9vbCkKCjcuIHByZWduYW50IDogc2kgbGEgcGFjaWVudGUgZXN0w6EgZW1iYXJhemFkYSAoYm9vbCkKCjguIHRoeXJvaWRfc3VyZ2VyeSA6IHNpIGVsIHBhY2llbnRlIHNlIGhhIHNvbWV0aWRvIGEgdW5hIGNpcnVnw61hIGRlIHRpcm9pZGVzIChib29sKQoKOS4gSTEzMV90cmVhdG1lbnQgOiBzaSBlbCBwYWNpZW50ZSBlc3TDoSByZWNpYmllbmRvIHRyYXRhbWllbnRvIEkxMzEgKHBhcmEgZWwgbWFuZWpvIGRlIHRyYXN0b3Jub3MgdGlyb2lkZW9zKSAoYm9vbCkKCjEwLiBxdWVyeV9oeXBvdG9pZGVvIDogc2kgZWwgcGFjaWVudGUgY3JlZSBxdWUgdGllbmUgaGlwb3Rpcm9pZGlzbW8gKGJvb2wpCgoxMS4gcXVlcnlfaHlwZXJ0aHlyb2lkIDogc2kgZWwgcGFjaWVudGUgY3JlZSBxdWUgdGllbmUgaGlwZXJ0aXJvaWRpc21vIChib29sKQoKMTIuIGxpdGhpdW3CoDogc2kgZWwgcGFjaWVudGUgKiBsaXRpbyAoYm9vbCkKCjEzLiBnb2l0cmUgOiBzaSBlbCBwYWNpZW50ZSB0aWVuZSBib2NpbyAoYm9vbCkKCjE0LiB0dW1vciA6IHNpIGVsIHBhY2llbnRlIHRpZW5lIHR1bW9yIChib29sKQoKMTUuIGh5cG9waXR1aXRhcnkgOiBzaSBlbCBwYWNpZW50ZSAqIGdsw6FuZHVsYSBoaXBvcGl0dWl0YXJpYSAoYm9vbCkKCjE2LiBwc3ljaCA6IHNpIHBhY2llbnRlICogcHN5Y2ggKGJvb2wpCgoxNy4gVFNIX21lYXN1cmVkIDogc2kgbGEgVFNIIHNlIG1pZGnDsyBlbiBsYSBzYW5ncmUgKGJvb2wpCgoxOC4gVFNIIDogbml2ZWwgZGUgVFNIIGVuIHNhbmdyZSBzZWfDum4gYW7DoWxpc2lzIGRlIGxhYm9yYXRvcmlvIChmbG9hdCkKCjE5LiBUM19tZWFzdXJlZCA6IHNpIHNlIG1pZGnDsyBUMyBlbiBsYSBzYW5ncmUgKGJvb2wpCgoyMC4gVDMgOiBuaXZlbCBkZSBUMyBlbiBzYW5ncmUgc2Vnw7puIGFuw6FsaXNpcyBkZSBsYWJvcmF0b3JpbyAoZmxvYXQpCgoyMS4gVFQ0X21lYXN1cmVkIDogc2kgc2UgbWlkacOzIFRUNCBlbiBsYSBzYW5ncmUgKGJvb2wpCgoyMi4gVFQ0IDogbml2ZWwgZGUgVFQ0IGVuIHNhbmdyZSBwcm9jZWRlbnRlIGRlIGFuw6FsaXNpcyBkZSBsYWJvcmF0b3JpbyAoZmxvYXQpCgoyMy4gVDRVX21lYXN1cmVkIDogc2kgc2UgbWlkacOzIFQ0VSBlbiBsYSBzYW5ncmUgKGJvb2wpCgoyNC4gVDRVIDogbml2ZWwgZGUgVDRVIGVuIHNhbmdyZSBzZWfDum4gYW7DoWxpc2lzIGRlIGxhYm9yYXRvcmlvIChmbG9hdCkKCjI1LiBGVElfbWVhc3VyZWQgOiBzaSBlbCBGVEkgc2UgbWlkacOzIGVuIGxhIHNhbmdyZSAoYm9vbCkKCjI2LiBGVEkgOiBuaXZlbCBkZSBGVEkgZW4gc2FuZ3JlIHNlZ8O6biBhbsOhbGlzaXMgZGUgbGFib3JhdG9yaW8gKGZsb2F0KQoKMjcuIFRCR19tZWFzdXJlZCA6IHNpIHNlIG1pZGnDsyBUQkcgZW4gbGEgc2FuZ3JlIChib29sKQoKMjguIFRCRyA6IG5pdmVsIGRlIFRCRyBlbiBzYW5ncmUgc2Vnw7puIGFuw6FsaXNpcyBkZSBsYWJvcmF0b3JpbyAoZmxvYXQpCgoyOS4gcmVmZXJyYWxfc291cmNlIDogKHN0cikKCjMwLiB0YXJnZXQgOiBkaWFnbsOzc3RpY28gbcOpZGljbyBkZSBoaXBlcnRpcm9pZGlzbW8gKHN0cikKCjMxLiBwYXRpZW50X2lkIDogaWRlbnRpZmljYWNpw7NuIMO6bmljYSBkZWwgcGFjaWVudGUgKHN0cikKCkNvbW8gc2UgcHVlZGUgYXByZWNpYXIsIGxhIG1heW9yw61hIGRlIGxvcyBhdHJpYnV0b3Mgc29uIGNhdGVnw7NyaWNvcyAoZGUgdGlwbyBib29sKS4gUG9yIG90cm8gbGFkbywgbG9zIGRhdG9zIGRlIHRpcG8gZmxvYXQgYXNvY2lhZG9zIGEgbG9zIG5pdmVsZXMgZW4gZWwgYW7DoWxpc2lzIGRlIHNhbmdyZSBzZSBwb2Ryw61hbiBjb21wYXJhciAocHJldmlhIG5vcm1hbGl6YWNpw7NuKSBwYXJhIGV4dHJhZXIgcmVzdWx0YWRvcy4KClBvciDDumx0aW1vLCBwYXJhIHRlbmVyIHVuIG1lam9yIGVudGVuZGltaWVudG8gZGUgbGEgc2l0dWFjacOzbiBlcyBpbXBvcnRhbnRlIG1lbmNpb25hciBsYXMgcHJpbmNpcGFsZXMgY2FyYWN0ZXLDrXN0aWNhcyBkZSBsYXMgaG9ybW9uYXMgYSBlc3R1ZGlhci4gTGEgdHJpeW9kb3Rpcm9uaW5hIChUMykgeSBsYSB0aXJveGluYSAoVFQ0IG8gVDQpIHNvbiBob3Jtb25hcyBleHRyZW1hZGFtZW50ZSBpbXBvcnRhbnRlcyBlbiBlbCBzaXN0ZW1hIGVuZG9jcmlubywgeSBjdW1wbGVuIHZhcmlhcyBmdW5jaW9uZXMgY2xhdmUgZW4gZWwgb3JnYW5pc21vLCB0YWxlcyBjb21vIGxhIHJlZ3VsYWNpw7NuIGRlbCBtZXRhYm9saXNtbywgbGEgcmVndWxhY2nDs24gZGUgbGEgdGVtcGVyYXR1cmEgY29ycG9yYWwsIGVsIGRlc2Fycm9sbG8geSBjcmVjaW1pZW50bywgZW50cmUgb3Ryb3MuIFBvciBvdHJvIGxhZG8sIGxhIGhvcm1vbmEgZXN0aW11bGFudGUgZGUgbGEgdGlyb2lkZXMgKFRTSCkgdGllbmUgY29tbyBmdW5jacOzbiBwcmluY2lwYWwgbGEgZGUgZXN0aW11bGFyIGxhIGdsw6FuZHVsYSB0aXJvaWRlcyBwYXJhIHF1ZSBwcm9kdXpjYSB5IGxpYmVyZSBsYXMgaG9ybW9uYXMgdGlyb2lkZWFzIChUMyB5IFQ0KSBlbiBsYSBzYW5ncmUuIExvcyB2YWxvcmVzIGFzb2NpYWRvcyBhIFQ0VSwgRlRJIHkgVEJHIHNvbiDDrW5kaWNlcyBxdWUgbXVlc3RyYW4gbG9zIG5pdmVsZXMgZGU6IGNhcHRhY2nDs24gZGUgdGlyb3hpbmEsIHRpcm94aW5hIGxpYnJlIChlbiBsYSBzYW5ncmUpIHkgZ2xvYnVsaW5hIHRyYW5zcG9ydGFkb3JhIGRlIHRpcm94aW5hIChwcm90ZcOtbmEgcXVlIHNlIGVuY3VlbnRyYSBlbiBlbCB0b3JyZW50ZSBzYW5ndcOtbmVvIHkgdGllbmUgbGEgZnVuY2nDs24gZXNwZWPDrWZpY2EgZGUgdW5pciB5IHRyYW5zcG9ydGFyIGxhcyBob3Jtb25hcyB0aXJvaWRlYXMpLCByZXNwZWN0aXZhbWVudGUuCgojIyMgRGlhZ3JhbWFzIGRlIERpc3BlcnNpb24gcGFyYSBBdHJpYnV0b3MgTnVtZXJpY29zCgpgYGB7cn0KbnVtZXJpYy5hdHRycyA8LSB0aHlyb2lkLmRmWyxjKCJhZ2UiLCAiVFNIIiwgIlQzIiwgIlRUNCIsICJUNFUiLCAiRlRJIildCnBhaXJzKG51bWVyaWMuYXR0cnMpCmBgYAoKRW4gYmFzZSBhIGxvIG9ic2VydmFkbyBlbiBsb3MgZGlzdGludG9zIGRpYWdyYW1hcyBkZSBkaXNwZXJzacOzbiBub3MgY29uY2VudHJhcmVtb3MgZW4gbG9zIGRpYWdyYW1hcyBjdXlhIHJlbGFjacOzbiBzZWEgZW50cmUgbG9zIG5pdmVsZXMgZGUgaG9ybW9uYSBUU0ggZW4gbGEgc2FuZ3JlIHkgbG9zIG5pdmVsZXMgZGUgaG9ybW9uYSBlbiBsYSBzYW5ncmUgcGFyYSBUMywgVDQgeSBsYSBwcm90ZWluYSBUQkcsIGVzdG8gcHVlcyBzb24gbG9zIHByaW5jaXBhbGVzIGFnZW50ZXMgZGV0ZWN0b3JlcyBkZSBsYSBlbmZlcm1lZGFkIGRlIGxhIHRpcm9pZGVzLgoKYGBge3J9CmdncGxvdCh0aHlyb2lkLmRmKSArIAogIGdlb21fcG9pbnQoYWVzKHg9VFNILCB5PVQzLCBjb2xvcj10YXJnZXQpKSArCiAgZ2d0aXRsZSgiTml2ZWwgZGUgaG9ybW9uYSBUU0ggdnMgVDMgZW4gbGEgc2FuZ3JlIikgKyB4bGFiKCJUU0giKSArIHlsYWIoIlQzIikgKyBsYWJzKGNvbG9yPSJEaWFnbsOzc3RpY28gbcOpZGljbyBoaXBlcnRpcm9pZGlzbW8iKQoKZ2dwbG90KHRoeXJvaWQuZGYpICsKICBnZW9tX3BvaW50KGFlcyh4PVRTSCwgeT1UVDQsIGNvbG9yPXRhcmdldCkpICsKICBnZ3RpdGxlKCJOaXZlbCBkZSBob3Jtb25hIFRTSCB2cyBUNCBlbiBsYSBzYW5ncmUiKSArIHhsYWIoIlRTSCIpICArIHlsYWIoIlQ0IikgKyBsYWJzKGNvbG9yPSJEaWFnbsOzc3RpY28gbcOpZGljbyBoaXBlcnRpcm9pZGlzbW8iKQpgYGAKCiMjIFByZWd1bnRhcyB5IFByb2JsZW1hcwoKIyMgQW5leG8KCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKYXV0aG9yOiAnKipDYXRhbGluYSBDYXJyYXNjbywgSmF2aWVyYSBEb25vc28sIEpvYXF1w61uIEhlcnJlcmEsIE1hY2FyZW5hIFLDrW9zLCBOYWh1ZWwKICBTYW5odWV6YSoqJwpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIHRvYzogeWVzCiAgICBkZl9wcmludDogcGFnZWQKICBodG1sX25vdGVib29rOgogICAgdG9jOiB5ZXMKICAgIHRoZW1lOiB1bml0ZWQKICBwZGZfZG9jdW1lbnQ6CiAgICB0b2M6IHllcwotLS0KYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9IAprbml0cjo6b3B0c19jaHVuayRzZXQod2FybmluZyA9IEZBTFNFLCBtZXNzYWdlID0gRkFMU0UpIApgYGAKIyBJbmZvcm1lIEhpdG8gMSAtIEdydXBvIDE5CgojIyBMaWJyZXJpYXMgYSBpbXBvcnRhcgoKYGBge3J9CmxpYnJhcnkoZ2dwbG90MikKbGlicmFyeSh0aWR5cikKbGlicmFyeShHR2FsbHkpCmxpYnJhcnkoZ3Rvb2xzKQpsaWJyYXJ5KHJlc2hhcGUyKQpsaWJyYXJ5KGRwbHlyKQpsaWJyYXJ5KGNvcnJwbG90KQpsaWJyYXJ5KGthYmxlRXh0cmEpCmxpYnJhcnkodnRhYmxlKQoKdGh5cm9pZC5kZiA8LSByZWFkLmNzdigiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2luaXQtbmFodWVsL3Byb2plY3QtZGF0YS1taW5pbmcvbWFpbi9kYXRhL3RoeXJvaWRERi5jc3YiKQpgYGAKCiMjIENvbnRleHRvIHkgbW90aXZhY2nDs24KRWwgY29udGV4dG8gZ2lyYSBlbiB0b3JubyBhIGxhIGVuZmVybWVkYWQgZGUgbGEgdGlyb2lkZXMsIHVuYSBnbMOhbmR1bGEgdWJpY2FkYSBlbiBsYSBiYXNlIGRlbCBjdWVsbG8gcXVlIGRlc2VtcGXDsWEgdW4gcGFwZWwgY3LDrXRpY28gZW4gbGEgcHJvZHVjY2nDs24gZGUgaG9ybW9uYXMgZXNlbmNpYWxlcyBwYXJhIGVsIGZ1bmNpb25hbWllbnRvIGRlbCBjdWVycG8uIEVzdGEgZ2zDoW5kdWxhIGVzIGRlIHZpdGFsIGltcG9ydGFuY2lhLCB5YSBxdWUgaW5mbHV5ZSBlbiBsYSBnZW5lcmFjacOzbiBkZSBlbmVyZ8OtYSwgbGEgcmVndWxhY2nDs24gZGVsIG1ldGFib2xpc21vIHkgbGEgdGVtcGVyYXR1cmEgY29ycG9yYWwsIGVudHJlIG90cmFzIGZ1bmNpb25lcyBmdW5kYW1lbnRhbGVzLiBFbiBsYSBhY3R1YWxpZGFkLCBzZWfDum4gbGEgT3JnYW5pemFjacOzbiBNdW5kaWFsIGRlIGxhIFNhbHVkIChPTVMpIHNlIGVzdGltYSBxdWUgYXByb3hpbWFkYW1lbnRlIHVuYXMgNzUwIG1pbGxvbmVzIGRlIHBlcnNvbmFzIHBhZGVjZW4gZGUgYWxndW5hIHBhdG9sb2fDrWEgdGlyb2lkZWEsIGRlIGxhcyBjdWFsZXMgdW4gNjAlIGxvIGRlc2Nvbm9jZS4gCgpMYSBpbXBvcnRhbmNpYSBkZSBlc3RlIHRlbWEgc2UgYmFzYSBwcmluY2lwYWxtZW50ZSBlbiBsYSBwcmV2YWxlbmNpYSwgeWEgcXVlIGVzdGEgZW5mZXJtZWRhZCBlcyBjb23Dum4gZW4gdG9kbyBlbCBtdW5kbywgeSBhZmVjdGEgYSB1biBncmFuIG7Dum1lcm8gZGUgcGVyc29uYXMuIENvbXByZW5kZXIgbWVqb3IgZXN0YSBhZmVjY2nDs24gZXMgZXNlbmNpYWwgcGFyYSBsYSBzYWx1ZCBww7pibGljYSB5IGxhIGF0ZW5jacOzbiBtw6lkaWNhLiBBZGVtw6FzLCBlcyBkZSBzdW1hIGltcG9ydGFuY2lhIGNvbXByZW5kZXIgbG9zIGZhY3RvcmVzIGRlIHJpZXNnbywgY29tbyBsYSBlZGFkLCBlbCBnw6luZXJvIHkgbG9zIGFudGVjZWRlbnRlcyBmYW1pbGlhcmVzLCBwdWVkZSBheXVkYXIgYSBpZGVudGlmaWNhciBncnVwb3MgZGUgcG9ibGFjacOzbiBjb24gbWF5b3IgcHJvYmFiaWxpZGFkIGRlIGRlc2Fycm9sbGFyIGVuZmVybWVkYWRlcyB0aXJvaWRlYXMgeSBwZXJtaXRpciB1bmEgaW50ZXJ2ZW5jacOzbiBwcmV2ZW50aXZhIG3DoXMgZWZlY3RpdmEuCgpBIGNvbnRpbnVhY2nDs24gc2UgZXN0dWRpYXLDoSB1biBkYXRhc2V0IGVzdHJ1Y3R1cmFkbyBzb2JyZSBlc3RhIGFmZWNjacOzbiBkZW5vbWluYWRvICJUaHlyb2lkIERpc2Vhc2UgRGF0YSIuIEVuIMOpbCBzZSBwdWVkZW4gZW5jb250cmFyIGRpdmVyc29zIGRhdG9zIGFzb2NpYWRvcyBhIGxvcyBwYWNpZW50ZXMsIGp1bnRvIGEgc3VzIHJlc3BlY3Rpdm9zIHJlc3VsdGFkb3MgZGUgYW7DoWxpc2lzIGRlIHNhbmdyZSB5IGRpYWduw7NzdGljbyBlZmVjdHVhZG8gcG9yIHVuIHByb2Zlc2lvbmFsLgoKIyMgRXhwbG9yYWNpw7NuIGRlIGRhdG9zCgojIyMgRGltZW5zaW9uZXMgZGVsIGRhdGFzZXQKYGBge3J9CmRpbSh0aHlyb2lkLmRmKQpgYGAKRXMgZGVjaXIsIHNlIHRpZW5lbiA5MTcyIHJlY29yZHMgeSAzMSBhdHJpYnV0b3MuCgojIyMgQ2FyYWN0ZXLDrXN0aWNhcyBkZSBsb3MgYXRyaWJ1dG9zCgpMb3MgZGlzdGludG9zIGF0cmlidXRvcyBxdWUgY29udGllbmUgZWwgZGF0YXNldCBzZSBwcmVzZW50YW4gYSBjb250aW51YWNpw7NuOgoKICAxLiBhZ2UgOiBlZGFkIGRlbCBwYWNpZW50ZSAoaW50KQogIAogIDIuIHNleCA6IGVsIHNleG8gZGVsIHBhY2llbnRlIChzdHIpCiAgCiAgMy4gb25fdGh5cm94aW5lIDogc2kgZWwgcGFjaWVudGUgZXN0w6EgdG9tYW5kbyB0aXJveGluYSAoYm9vbCkKICAKICA0LiBxdWVyeV9vbl90aHlyb3hpbmUgOiBzaSBlbCBwYWNpZW50ZSBlc3TDoSB0b21hbmRvIHRpcm94aW5hIChib29sKQogIAogIDUuIG9uX2FudGl0aHlyb2lkX21lZHMgOiBzaSBlbCBwYWNpZW50ZSBlc3TDoSB0b21hbmRvIG1lZGljYW1lbnRvcyBhbnRpdGlyb2lkZW9zIChib29sKQogIAogIDYuIHNpY2sgOiBzaSBlbCBwYWNpZW50ZSBlc3TDoSBlbmZlcm1vIChib29sKQogIAogIDcuIHByZWduYW50IDogc2kgbGEgcGFjaWVudGUgZXN0w6EgZW1iYXJhemFkYSAoYm9vbCkKICAKICA4LiB0aHlyb2lkX3N1cmdlcnkgOiBzaSBlbCBwYWNpZW50ZSBzZSBoYSBzb21ldGlkbyBhIHVuYSBjaXJ1Z8OtYSBkZSB0aXJvaWRlcyAoYm9vbCkKICAKICA5LiBJMTMxX3RyZWF0bWVudCA6IHNpIGVsIHBhY2llbnRlIGVzdMOhIHJlY2liaWVuZG8gdHJhdGFtaWVudG8gSTEzMSAocGFyYSBlbCBtYW5lam8gZGUgdHJhc3Rvcm5vcyB0aXJvaWRlb3MpIChib29sKQogIAogIDEwLiBxdWVyeV9oeXBvdG9pZGVvIDogc2kgZWwgcGFjaWVudGUgY3JlZSBxdWUgdGllbmUgaGlwb3Rpcm9pZGlzbW8gKGJvb2wpCiAgCiAgMTEuIHF1ZXJ5X2h5cGVydGh5cm9pZCA6IHNpIGVsIHBhY2llbnRlIGNyZWUgcXVlIHRpZW5lIGhpcGVydGlyb2lkaXNtbyAoYm9vbCkKICAKICAxMi4gbGl0aGl1bcKgOiBzaSBlbCBwYWNpZW50ZSAqIGxpdGlvIChib29sKQogIAogIDEzLiBnb2l0cmUgOiBzaSBlbCBwYWNpZW50ZSB0aWVuZSBib2NpbyAoYm9vbCkKICAKICAxNC4gdHVtb3IgOiBzaSBlbCBwYWNpZW50ZSB0aWVuZSB0dW1vciAoYm9vbCkKICAKICAxNS4gaHlwb3BpdHVpdGFyeSA6IHNpIGVsIHBhY2llbnRlICogZ2zDoW5kdWxhIGhpcG9waXR1aXRhcmlhIChib29sKQogIAogIDE2LiBwc3ljaCA6IHNpIHBhY2llbnRlICogcHN5Y2ggKGJvb2wpCiAgCiAgMTcuIFRTSF9tZWFzdXJlZCA6IHNpIGxhIFRTSCBzZSBtaWRpw7MgZW4gbGEgc2FuZ3JlIChib29sKQogIAogIDE4LiBUU0ggOiBuaXZlbCBkZSBUU0ggZW4gc2FuZ3JlIHNlZ8O6biBhbsOhbGlzaXMgZGUgbGFib3JhdG9yaW8gKGZsb2F0KQogIAogIDE5LiBUM19tZWFzdXJlZCA6IHNpIHNlIG1pZGnDsyBUMyBlbiBsYSBzYW5ncmUgKGJvb2wpCiAgCiAgMjAuIFQzIDogbml2ZWwgZGUgVDMgZW4gc2FuZ3JlIHNlZ8O6biBhbsOhbGlzaXMgZGUgbGFib3JhdG9yaW8gKGZsb2F0KQogIAogIDIxLiBUVDRfbWVhc3VyZWQgOiBzaSBzZSBtaWRpw7MgVFQ0IGVuIGxhIHNhbmdyZSAoYm9vbCkKICAKICAyMi4gVFQ0IDogbml2ZWwgZGUgVFQ0IGVuIHNhbmdyZSBwcm9jZWRlbnRlIGRlIGFuw6FsaXNpcyBkZSBsYWJvcmF0b3JpbyAoZmxvYXQpCiAgCiAgMjMuIFQ0VV9tZWFzdXJlZCA6IHNpIHNlIG1pZGnDsyBUNFUgZW4gbGEgc2FuZ3JlIChib29sKQogIAogIDI0LiBUNFUgOiBuaXZlbCBkZSBUNFUgZW4gc2FuZ3JlIHNlZ8O6biBhbsOhbGlzaXMgZGUgbGFib3JhdG9yaW8gKGZsb2F0KQogIAogIDI1LiBGVElfbWVhc3VyZWQgOiBzaSBlbCBGVEkgc2UgbWlkacOzIGVuIGxhIHNhbmdyZSAoYm9vbCkKICAKICAyNi4gRlRJIDogbml2ZWwgZGUgRlRJIGVuIHNhbmdyZSBzZWfDum4gYW7DoWxpc2lzIGRlIGxhYm9yYXRvcmlvIChmbG9hdCkKICAKICAyNy4gVEJHX21lYXN1cmVkIDogc2kgc2UgbWlkacOzIFRCRyBlbiBsYSBzYW5ncmUgKGJvb2wpCiAgCiAgMjguIFRCRyA6IG5pdmVsIGRlIFRCRyBlbiBzYW5ncmUgc2Vnw7puIGFuw6FsaXNpcyBkZSBsYWJvcmF0b3JpbyAoZmxvYXQpCiAgCiAgMjkuIHJlZmVycmFsX3NvdXJjZSA6IChzdHIpCiAgCiAgMzAuIHRhcmdldCA6IGRpYWduw7NzdGljbyBtw6lkaWNvIGRlIGhpcGVydGlyb2lkaXNtbyAoc3RyKQogIAogIDMxLiBwYXRpZW50X2lkIDogaWRlbnRpZmljYWNpw7NuIMO6bmljYSBkZWwgcGFjaWVudGUgKHN0cikKCkNvbW8gc2UgcHVlZGUgYXByZWNpYXIsIGxhIG1heW9yw61hIGRlIGxvcyBhdHJpYnV0b3Mgc29uIGNhdGVnw7NyaWNvcyAoZGUgdGlwbyBib29sKS4gUG9yIG90cm8gbGFkbywgbG9zIGRhdG9zIGRlIHRpcG8gZmxvYXQgYXNvY2lhZG9zIGEgbG9zIG5pdmVsZXMgZW4gZWwgYW7DoWxpc2lzIGRlIHNhbmdyZSBzZSBwb2Ryw61hbiBjb21wYXJhciAocHJldmlhIG5vcm1hbGl6YWNpw7NuKSBwYXJhIGV4dHJhZXIgcmVzdWx0YWRvcy4KCkRlIG1hbmVyYSBtw6FzIGVzcGVjw61maWNhLCBwYXJhIGVsIGF0cmlidXRvICJ0YXJnZXQiIGV4aXN0ZW4gZGl2ZXJzYXMgbGV0cmFzIHF1ZSBpbmRpY2FuIGxvcyBkaXN0aW50b3MgZGlhZ27Ds3N0aWNvcyAoYXF1ZWxsb3MgcXVlIHNvbiBkZSBsYSBmb3JtYSAiWHxZIiBzZSBpbnRlcnByZXRhbiBjb21vICJjb25zaXN0ZW50ZSBjb24gWCwgcGVybyBtw6FzIHByb2JhYmxlIFkiKToKCiAgMS4gIi0iIG5vIGhheSBjb21lbnRhcmlvcyBzb2JyZSB1biBkaWFnbsOzc3RpY28gZXNwZWPDrWZpY28KICAKICBDb25kaWNpb25lcyBkZSBoaXBlcnRpcm9pZGlzbW86CiAgCiAgMi4gIkEiIGhpcGVydGlyb2lkaXNtbwogIDMuICJCIiBUMyB0w7N4aWNvCiAgNC4gIkMiIGJvY2lvIHTDs3hpY28KICA1LiAiRCIgdMOzeGljbyBzZWN1bmRhcmlvCiAgCiAgQ29uZGljaW9uZXMgZGUgaGlwb3Rpcm9pZGlzbW86CiAgCiAgNi4gIkUiIGhpcG90aXJvaWRpc21vCiAgNy4gIkYiIGhpcG90aXJvaWRpc21vIHByaW1hcmlvCiAgOC4gIkciIEhpcG90aXJvaWRpc21vIGNvbXBlbnNhZG8KICA5LiAiSCIgaGlwb3Rpcm9pZGlzbW8gc2VjdW5kYXJpbwogIAogIFByb3Rlw61uYSBkZSB1bmnDs246CiAgCiAgMTAuICJJIiBwcm90ZcOtbmEgZGUgdW5pw7NuIGF1bWVudGFkYQogIDExLiAiSiIgcHJvdGXDrW5hIGRlIHVuacOzbiBkaXNtaW51aWRhCiAgCiAgU2FsdWQgZ2VuZXJhbDoKICAKICAxMi4gIksiIGVuZmVybWVkYWQgbm8gdGlyb2lkZWEgY29uY3VycmVudGUKICAKICBUZXJhcGlhIGRlIHJlZW1wbGF6bzoKICAKICAxMy4gIkwiIGNvbXBhdGlibGUgY29uIHRlcmFwaWEgZGUgcmVlbXBsYXpvCiAgMTQuICJNIiBpbnN1ZmljaWVudGVtZW50ZSByZWVtcGxhemFkbwogIDE1LiAiTiIgc29icmVyZWVtcGxhemFkbwogIAogIFRyYXRhbWllbnRvIGFudGl0aXJvaWRlbzoKICAKICAxNi4gIk8iIG1lZGljYW1lbnRvcyBhbnRpdGlyb2lkZW9zCiAgMTcuICJQIiB0cmF0YW1pZW50byBJMTMxCiAgMTguICJRIiBjaXJ1Z8OtYQogIAogIE1pc2NlbMOhbmVhczoKICAKICAxOS4gIlIiIHJlc3VsdGFkb3MgZGUgZW5zYXlvIGRpc2NvcmRhbnRlcwogIDIwLiAiUyIgVEJHIGVsZXZhZGEKICAyMS4gIlQiIGhvcm1vbmFzIHRpcm9pZGVhcyBlbGV2YWRhcwoKUG9yIMO6bHRpbW8sIHBhcmEgdGVuZXIgdW4gbWVqb3IgZW50ZW5kaW1pZW50byBkZSBsYSBzaXR1YWNpw7NuIGVzIGltcG9ydGFudGUgbWVuY2lvbmFyIGxhcyBwcmluY2lwYWxlcyBjYXJhY3RlcsOtc3RpY2FzIGRlIGxhcyBob3Jtb25hcyBhIGVzdHVkaWFyLiBMYSB0cml5b2RvdGlyb25pbmEgKFQzKSB5IGxhIHRpcm94aW5hIChUVDQgbyBUNCkgc29uIGhvcm1vbmFzIGV4dHJlbWFkYW1lbnRlIGltcG9ydGFudGVzIGVuIGVsIHNpc3RlbWEgZW5kb2NyaW5vLCB5IGN1bXBsZW4gdmFyaWFzIGZ1bmNpb25lcyBjbGF2ZSBlbiBlbCBvcmdhbmlzbW8sIHRhbGVzIGNvbW8gbGEgcmVndWxhY2nDs24gZGVsIG1ldGFib2xpc21vLCBsYSByZWd1bGFjacOzbiBkZSBsYSB0ZW1wZXJhdHVyYSBjb3Jwb3JhbCwgZWwgZGVzYXJyb2xsbyB5IGNyZWNpbWllbnRvLCBlbnRyZSBvdHJvcy4gUG9yIG90cm8gbGFkbywgbGEgaG9ybW9uYSBlc3RpbXVsYW50ZSBkZSBsYSB0aXJvaWRlcyAoVFNIKSB0aWVuZSBjb21vIGZ1bmNpw7NuIHByaW5jaXBhbCBsYSBkZSBlc3RpbXVsYXIgbGEgZ2zDoW5kdWxhIHRpcm9pZGVzIHBhcmEgcXVlIHByb2R1emNhIHkgbGliZXJlIGxhcyBob3Jtb25hcyB0aXJvaWRlYXMgKFQzIHkgVDQpIGVuIGxhIHNhbmdyZS4gTG9zIHZhbG9yZXMgYXNvY2lhZG9zIGEgVDRVLCBGVEkgeSBUQkcgc29uIMOtbmRpY2VzIHF1ZSBtdWVzdHJhbiBsb3Mgbml2ZWxlcyBkZTogY2FwdGFjacOzbiBkZSB0aXJveGluYSwgdGlyb3hpbmEgbGlicmUgKGVuIGxhIHNhbmdyZSkgeSBnbG9idWxpbmEgdHJhbnNwb3J0YWRvcmEgZGUgdGlyb3hpbmEgKHByb3Rlw61uYSBxdWUgc2UgZW5jdWVudHJhIGVuIGVsIHRvcnJlbnRlIHNhbmd1w61uZW8geSB0aWVuZSBsYSBmdW5jacOzbiBlc3BlY8OtZmljYSBkZSB1bmlyIHkgdHJhbnNwb3J0YXIgbGFzIGhvcm1vbmFzIHRpcm9pZGVhcyksIHJlc3BlY3RpdmFtZW50ZS4KCkEgY29udGludWFjacOzbiBzZSBwcmVzZW50ZSB1biByZXN1bWVuIGNvbiBsYXMgbWVkaWRhcyBkZSB0ZW5kZW5jaWEgY2VudHJhbCBlbiBjb25qdW50byBjb24gbGEgcHJvcG9yY2lvbiBkZSB2YWxvcmVzIGBOQWAgcGFyYSBsb3MgYXRyaWJ1dG9zIG51bcOpcmljb3MgZGVsIGRhdGFzZXQ6CgpgYGB7cn0Kc3VtdGFibGUodGh5cm9pZC5kZlssYygiYWdlIiwgIlRTSCIsICJUMyIsICJUVDQiLCAiVDRVIiwgIkZUSSIpXSwgc3VtbSA9IGMoJ21lZGlhbih4KScsICdtZWFuKHgpJywgICAnc2QoeCknLCAnbWluKHgpJywgJ3BjdGlsZSh4KVsyNV0nLCAncGN0aWxlKHgpWzc1XScsICdtYXgoeCknLCAnbm90TkEoeCknLCAncHJvcE5BKHgpJyksIHRpdGxlID0gIk1lZGlkYXMgZGUgVGVuZGVuY2lhIENlbnRyYWwgcGFyYSBkYXRvcyBudW1lcmljb3MiKQpgYGAKCgojIyMgVmFsb3JlcyBkdXBsaWNhZG9zCgpgYGB7cn0Kc3VtKGR1cGxpY2F0ZWQodGh5cm9pZC5kZikpCmBgYAoKU2Ugb2JzZXJ2YSBxdWUgbm8gZXhpc3RlbiB2YWxvcmVzIGR1cGxpY2Fkb3MgZW4gZWwgY29uanVudG8gZGUgZGF0b3MuCgojIyMgVmFsb3JlcyBmYWx0YW50ZXMKClRvdGFsIGRlIHZhbG9yZXMgbnVsb3MgZW4gZWwgZGF0YXNldDoKYGBge3J9CnNwcmludGYoIkNhbnRpZGFkIGRlIHZhbG9yZXMgbnVsb3M6ICVkIiwgc3VtKGlzLm5hKHRoeXJvaWQuZGYpKSkKYGBgCgpWYWxvcmVzIG51bG9zIHBvciBhdHJpYnV0bzoKYGBge3J9CnNhcHBseSh0aHlyb2lkLmRmLCBmdW5jdGlvbih4KSBzdW0oaXMubmEoeCkpKQpgYGAKClNlIG9ic2VydmEgcXVlIGV4aXN0ZW4gbnVsb3MsIGFsZ3Vub3MgZGUgZWxsb3MgY29uY2VudHJhZG9zIGVuIGNpZXJ0b3MgYXRyaWJ1dG9zLiDDiXN0YSBpbmZvcm1hY2nDs24gc2Vydmlyw6EgcGFyYSBlbCBwcm9jZWRpbWllbnRvIGRlIGxpbXBpZXphIGRlIGRhdG9zLgoKIyMjIExpbXBpZXphIGRlIGRhdG9zClNlIG9ic2VydmEgcXVlIGhheSA0IGZpbGFzIHF1ZSB0aWVuZW4gZXJyb3JlcyBlbiBsYSBjb2x1bW5hICJhZ2UiIHBvciBsbyBxdWUgc2UgZGVjaWRlIGVsaW1pbmFybGFzLgpgYGB7cn0KdGh5cm9pZC5kZiA8LSBzdWJzZXQodGh5cm9pZC5kZiwgYWdlIDw9IDEwMCkKYGBgCgpQb3Igb3RybyBsYWRvLCBwYXJhIGVuZnJlbnRhciBsb3MgdmFsb3JlcyBmYWx0YW50ZXMgc2UgYXBsaWPDsyBlbCBtw6l0b2RvIGRlIGltcHV0YWNpw7NuIGRlIGRhdG9zLiBQYXJhIGVzdG8gc2UgcmVlbXBsYXphIGxvcyB2YWxvcmVzIGBOQWAgZGUgbG9zIGF0cmlidXRvcyBudW3DqXJpY29zICpUU0gsIFQzLCBUVDQsIFRVNCB5IEZUSSogcG9yIHZhbG9yZXMgY2VybyAoMCksIGVzdG8gdGVuZHLDoSB1biBlZmVjdG8gbm8gbWVub3IgYWwgbW9tZW50byBkZSBhbmFsaXphciBlbCBkYXRhLCBzaW4gZW1iYXJnbyBzZSBkZWJlIHRlbmVyIGVuIGN1ZW50YSBxdWUgdG9kb3MgbG9zIGF0cmlidXRvcyBtZW5jaW9uYWRvcyBjb3JyZXNwb25kZW4gYSBleMOhbWVuZXMgbcOpZGljb3MgZG9uZGUgc2UgbWlkZSBlbCBuaXZlbCBkZSBob3Jtb25hcyB5IHByb3Rlw61uYXMgZW4gbGEgc2FuZ3JlLCBwb3IgdGFudG8gbm8gZXMgcG9zaWJsZSBvYnRlbmVyIGNvbW8gcmVzdWx0YWRvIHVuIHZhbG9yIGNlcm8sIGVzdGEgaW1wdXRhY2nDs24gc2UgcmVhbGl6YSBjb24gZWwgZmluIGRlIG5vIGVsaW1pbmFyIGxhIGluc3RhbmNpYSBjb21wbGV0YSBkZWwgZGF0YXNldCwgcHVlc3RvIHF1ZSBlbiBtdWNob3MgY2Fzb3MgZXN0YSBtaXNtYSBpbnN0YW5jaWEgcG9zZWUgdmFsb3JlcyBubyBudWxvcyBwYXJhIGxvcyBkZW3DoXMgYXRyaWJ1dG9zLCBhZGljaW9uYWxtZW50ZSBsYSBjYW50aWRhZCBkZSB2YWxvcmVzIGBOQWAgbm8gZXMgZGVtYXNpYWRhIGVuIGNvbXBhcmFjacOzbiBjb24gbGEgY2FudGlkYWQgZGUgZmlsYXMgKGluc3RhbmNpYXMpIGRlbCBkYXRhc2V0IGNvbW8gc2Ugb2JzZXJ2YSBlbiBlbCBhbnRlcmlvciBjw7NkaWdvIGFkanVudG8uIERhZGEgbGEgaW1wdXRhY2nDs24gZGUgZXN0b3MgdmFsb3JlcyBwYXJhIGxvcyBjb3JyZXNwb25kaWVudGVzIGF0cmlidXRvcywgZXMgbmVjZXNhcmlvIG1lbmNpb25hciBxdWUgY29tbyBjb25zZWN1ZW5jaWEgZXMgcG9zaWJsZSBlbGltaW5hciBsb3MgYXRyaWJ1dG9zICpUU0hfbWVhc3VyZWQsIFQzX21lYXN1cmVkLCBUVDRfbWVhc3VyZWQsIFQ0VV9tZWFzdXJlZCwgRlRJX21lYXN1cmVkICosIGRlYmlkbyBhIHF1ZSBubyBzZXLDoSBuZWNlc2FyaW8gY29ub2NlciBzaSB1biBwYWNpZW50ZSBzZSByZWFsaXrDsyBvIG5vIHVuIGV4YW1lbiBtw6lkaWNvLCBlc3RvIGFob3JhIHNlIGFuYWxpemFyw6Egb2JzZXJ2YW5kbyBsYXMgaW5zdGFuY2lhcyBwYXJhIGxhcyBjdWFsZXMgbG9zIGNvcnJlc3BvbmRpZW50ZXMgYXRyaWJ1dG9zIHBvc2VhbiB1biB2YWxvciBjZXJvCgpBc8OtbWlzbW8sIHNlIGVsaW1pbmFyb24gbG9zIGF0cmlidXRvcyBjYXRlZ8Ozcmljb3MgKlRCRywgVEJHX21lYXN1cmVkKiBkYWRvIHF1ZSBsYSBjYW50aWRhZCBkZSB2YWxvcmVzIGBOQWAgcGFyYSBlbCBhdHJpYnV0byAqVEJHKiBlcmEgODgyMywgcG9yIHRhbnRvIG5vIGVyYSBwb3NpYmxlIHVuYSBpbXB1dGFjacOzbiBkZSBkYXRvcyBzaW4gYWZlY3RhciBkZSBtYW5lcmEgY29uc2lkZXJhYmxlIGVsIGRhdGFzZXQuIFBvciDDumx0aW1vLCBzZSBlbGltaW5hcm9uIGxvcyBhdHJpYnV0b3MgKnJlZmVycmFsX3NvdXJjZSB5IHBhdGllbnRfaWQqIGRlYmlkbyBhIHF1ZSBsYSBpbmZvcm1hY2nDs24gZW50cmVnYWRhIHBvciBlc3RvcyBhdHJpYnV0b3Mgbm8gZXMgcHJvdmVjaG9zYS4KCmBgYHtyfQp0aHlyb2lkLmRmIDwtIHJlcGxhY2VfbmEodGh5cm9pZC5kZiwgbGlzdChUU0g9MCwgVDM9MCwgVFQ0PTAsIFQ0VT0wLCBGVEk9MCkpICMgSW1wdXRhY2lvbgp0aHlyb2lkLmRmIDwtIHRoeXJvaWQuZGZbLCFuYW1lcyh0aHlyb2lkLmRmKSAlaW4lIGMoIlRTSF9tZWFzdXJlZCIsICJUM19tZWFzdXJlZCIsICJUVDRfbWVhc3VyZWQiLCAiVDRVX21lYXN1cmVkIiwgIkZUSV9tZWFzdXJlZCIsICJUQkdfbWVhc3VyZWQiLCAiVEJHIiwgInJlZmVycmFsX3NvdXJjZSIsICJwYXRpZW50X2lkIildICMgRWxpbWluYWNpb24gYXRyaWJ1dG9zCnNwcmludGYoIkNhbnRpZGFkIGRlIHZhbG9yZXMgbnVsb3MgZW4gZWwgZGF0YXNldDogJWQiLCBzdW0oaXMubmEodGh5cm9pZC5kZikpKQpgYGAKClBvc3RlcmlvciBhIGVzdGEgbGltcGllemEgcG9kZW1vcyBvYnNlcnZhciBudWV2YW1lbnRlIGxhcyBtZWRpZGFzIGRlIHRlbmRlbmNpYSBjZW50cmFsIHBhcmEgbG9zIHJlc3BlY3Rpdm9zIGF0cmlidXRvcyBudW3DqXJpY29zOgpgYGB7cn0Kc3VtdGFibGUodGh5cm9pZC5kZlssYygiYWdlIiwgIlRTSCIsICJUMyIsICJUVDQiLCAiVDRVIiwgIkZUSSIpXSwgc3VtbSA9IGMoJ21lZGlhbih4KScsICdtZWFuKHgpJywgICAnc2QoeCknLCAnbWluKHgpJywgJ3BjdGlsZSh4KVsyNV0nLCAncGN0aWxlKHgpWzc1XScsICdtYXgoeCknLCAnbm90TkEoeCknLCAncHJvcE5BKHgpJyksIHRpdGxlID0gIk1lZGlkYXMgZGUgVGVuZGVuY2lhIENlbnRyYWwgcGFyYSBkYXRvcyBudW1lcmljb3MiKQpgYGAKCiMjIyBEaWFncmFtYXMgZGUgRGlzcGVyc2lvbiBwYXJhIEF0cmlidXRvcyBOdW3DqXJpY29zCgpgYGB7cn0KbnVtZXJpYy5hdHRycyA8LSB0aHlyb2lkLmRmWyxjKCJhZ2UiLCAiVFNIIiwgIlQzIiwgIlRUNCIsICJUNFUiLCAiRlRJIildCnBhaXJzKG51bWVyaWMuYXR0cnMpCmBgYAoKRW4gYmFzZSBhIGxvIG9ic2VydmFkbyBlbiBsb3MgZGlzdGludG9zIGRpYWdyYW1hcyBkZSBkaXNwZXJzacOzbiBub3MgY29uY2VudHJhcmVtb3MgZW4gbG9zIGRpYWdyYW1hcyBjdXlhIHJlbGFjacOzbiBzZWEgZW50cmUgbG9zIG5pdmVsZXMgZGUgaG9ybW9uYSBUU0ggZW4gbGEgc2FuZ3JlIHkgbG9zIG5pdmVsZXMgZGUgaG9ybW9uYSBlbiBsYSBzYW5ncmUgcGFyYSBUMywgVDQgeSBsYSBwcm90ZWluYSBUQkcsIGVzdG8gcHVlcyBzb24gbG9zIHByaW5jaXBhbGVzIGFnZW50ZXMgZGV0ZWN0b3JlcyBkZSBsYSBlbmZlcm1lZGFkIGRlIGxhIHRpcm9pZGVzLgoKYGBge3J9CmdncGxvdCh0aHlyb2lkLmRmKSArIAogIGdlb21fcG9pbnQoYWVzKHg9VFNILCB5PVQzLCBjb2xvcj10YXJnZXQpKSArCiAgZ2d0aXRsZSgiTml2ZWwgZGUgaG9ybW9uYSBUU0ggdnMgVDMgZW4gbGEgc2FuZ3JlIikgKyB4bGFiKCJUU0giKSArIHlsYWIoIlQzIikgKyBsYWJzKGNvbG9yPSJEaWFnbsOzc3RpY28gbcOpZGljbyBoaXBlcnRpcm9pZGlzbW8iKQoKZ2dwbG90KHRoeXJvaWQuZGYpICsKICBnZW9tX3BvaW50KGFlcyh4PVRTSCwgeT1UVDQsIGNvbG9yPXRhcmdldCkpICsKICBnZ3RpdGxlKCJOaXZlbCBkZSBob3Jtb25hIFRTSCB2cyBUNCBlbiBsYSBzYW5ncmUiKSArIHhsYWIoIlRTSCIpICArIHlsYWIoIlQ0IikgKyBsYWJzKGNvbG9yPSJEaWFnbsOzc3RpY28gbcOpZGljbyBoaXBlcnRpcm9pZGlzbW8iKQpgYGAKCiMjIyBIaXN0b2dyYW1hcyAKU2UgcmVhbGl6YW4gbG9zIGhpc3RvZ3JhbWFzIGJhc2Fkb3MgZW4gZWRhZCB5IGfDqW5lcm8sIGFkZW3DoXMgc2UgaW5jbHV5ZSB1biBoaXN0b2dyYW1hIHF1ZSBjb25zaWRlcmEgbG9zIGRpYWduw7NzdGljb3MgcHJldmlhbWVudGUgZGVzY3JpdG9zLiAKRW4gbGEgcHJpbWVyYSBwYXJ0ZSwgc2UgZGVjaWRlIGNyZWFyIHVuYSBudWV2YSBjb2x1bW5hIHF1ZSB0ZW5nYSBjb25zaWdvIGxhcyBlZGFkZXMgcGVybyBkaXN0cmlidWlkYXMgZW4gcmFuZ29zLCB0b2RvIGVzdG8gY29uIGVsIGZpbiBkZSBwb2RlciBlbmNvbnRyYXIgbWVqb3JlcyByZXN1bHRhZG9zIHBvc3Rlcmlvcm1lbnRlLgpgYGB7cn0KIyBQcmltZXJvIHNlIGNyZWEgdW5hIGNvbHVtbmEgZG9uZGUgc2UgdGVuZ2FuIGxvcyBhw7FvcyBwb3IgcmFuZ29zCnJhbmdvcyA8LSBjKDAsIDE4LCAzMCwgNDAsIDUwLCA2MCw3MCw4MCw5MCwgSW5mKQpldGlxdWV0YXMgPC0gYygiMC0xOCIsICIxOS0zMCIsICIzMS00MCIsICI0MS01MCIsICI1MS02MCIsIjYxLTcwIiwiNzEtODAiLCI4MS05MCIgLCI5MSsiKQojIEFncnVwYSBsYXMgZWRhZGVzIHBvciByYW5nb3MKdGh5cm9pZC5kZiRncnVwb19lZGFkIDwtIGN1dCh0aHlyb2lkLmRmJGFnZSwgYnJlYWtzID0gcmFuZ29zLCBsYWJlbHMgPSBldGlxdWV0YXMsIHJpZ2h0ID0gRkFMU0UpCmBgYApgYGB7cn0KIyBIaXN0b2dyYW1hIGRlIGfDqW5lcm8gcG9yIHJhbmdvIGRlIGVkYWRlcwpnZ3Bsb3QodGh5cm9pZC5kZiwgYWVzKHggPSBncnVwb19lZGFkLCBmaWxsID0gc2V4KSkgKwogIGdlb21fYmFyKHBvc2l0aW9uID0gInN0YWNrIikgKwogIGxhYnModGl0bGUgPSAiRGlzdHJpYnVjacOzbiBkZSBHw6luZXJvIHBvciBSYW5nbyBkZSBFZGFkIix4ID0gIlJhbmdvIGRlIEVkYWQiLHkgPSAiRnJlY3VlbmNpYSIsIGZpbGw9ICJHw6luZXJvIikgKwogIHRoZW1lX21pbmltYWwoKSArCiAgc2NhbGVfZmlsbF9tYW51YWwodmFsdWVzID0gYygiTSIgPSAiIzAwNzk4YyIsICJGIiA9ICIjZDE0OTViIikpCmBgYApBIHBhcnRpciBkZWwgaGlzdG9ncmFtYSwgc2Ugb2JzZXJ2YSBxdWUgZ3JhbiBwYXJ0ZSBkZSBsb3MgcGFjaWVudGVzIHNvbiBkZWwgc2V4byBmZW1lbmlubywgYWRlbcOhcywgc2UgdGllbmUgcXVlIGxhIHBvYmxhY2nDs24gY29uIG1heW9yIGZyZWN1ZW5jaWEgZGVudHJvIGRlIGxvcyBkYXRvcyBlcyBsYSBkZSBlbnRyZSA2MS03MCBhw7FvcywgZXMgZGVjaXIsIGVzdGUgZXN0dWRpbyBzZSBjb25jZW50cmEgZW4gYWR1bHRvcyBtYXlvcmVzLCB5IGxhIG1heW9yw61hIGRlIGVsbG9zIHNvbiBkZWwgc2V4byBmZW1lbmluby4gUG9yIG90cmEgcGFydGUsIHNlIHRpZW5lIGFsZ3VuYXMgYmFycmFzIGRlIGNvbG9yIGdyaXMsIGxvcyBjdWFsZXMgcHJlc2VudGFuIGluZm9ybWFjacOzbiBkZXNjb25vY2lkYSBvIG5vIGVudHJlZ2FkYSBwb3IgcGFydGUgZGUgbG9zIHBhY2llbnRlcy4KCkEgY29udGludWFjacOzbiwgc2UgcHJlc2VudGEgdW4gaGlzdG9ncmFtYSBxdWUgbXVlc3RyYSBsYSBmcmVjdWVuY2lhIGRlIGxvcyBkaWFnbsOzc3RpY29zLCBjYWJlIGRlc3RhY2FyIHF1ZSBlbiB1biBwcmluY2lwaW8gc2UgZGVjaWRlIGFsdGVyYXIgbGEgYmFzZSBkZSBkYXRvcywgZGUgbWFuZXJhIHF1ZSBsb3MgZGF0b3MgcXVlIGFwYXJlY2VuICItIiBzZSBlbGltaW5hbiBwYXJhIGFzw60gcG9kZXIgdmlzdWFsaXphciBkZSBtZWpvciBtYW5lcmEgbG9zIGRhdG9zLgpgYGB7cn0KI1NlIGRlamEgdW5hIG51ZXZhIGRhdGEgZWxpbWluYW5kbyBsb3MgZGF0b3Mgc2luIHJlc3BvbmRlcgpkYXRvc19saW1waW9zIDwtIHRoeXJvaWQuZGYgJT4lCiAgZmlsdGVyKCFncmVwbCgiLSIsIHRhcmdldCkpCgojIHNlIGNyZWEgZWwgaGlzdG9ncmFtYSBjb24gbG9zIGRhdG9zIGxpbXBpb3MKZ2dwbG90KGRhdG9zX2xpbXBpb3MsIGFlcyh4ID0gdGFyZ2V0KSkgKwogIGdlb21fYmFyKGJpbndpZHRoID0gNSwgZmlsbCA9ICIjMDA3OThjIiwgY29sb3IgPSAiYmxhY2siKSArCiAgbGFicyh0aXRsZSA9ICJIaXN0b2dyYW1hIGRlIERpYWduw7NzdGljb3MiLAogICAgICAgeCA9ICJUaXBvIGRlIGRpYWduw7NzdGljbyIsCiAgICAgICB5ID0gIkZyZWN1ZW5jaWEiKSArCiAgdGhlbWVfbWluaW1hbCgpCmBgYApBIHBhcnRpciBkZWwgaGlzdG9ncmFtYSwgc2Ugb2JzZXJ2YSBxdWUgbGEgbWF5b3LDrWEgZGUgbG9zIHBhY2llbnRlcyBlc3TDoW4gZGlhZ27Ds3N0aWNhZG9zIGNvbiAiSyAtIGVuZmVybWVkYWQgbm8gdGlyb2lkZWEgY29uY3VycmVudGUiIHkgbHVlZ28gbGUgc2lndWUgIkcgLSBIaXBvdGlyb2lkaXNtbyBjb21wZW5zYWRvIi4KCgojIyMgUmVsYWNpw7NuIGVudHJlIHZhcmlhYmxlczogQ3JhbWVyJ3MgViwgQU5PVkEgVGVzdCB5IENvcnJlbGFjacOzbiBMaW5lYWwKCkRhZG8gcXVlIG11Y2hhcyBkZSBudWVzdHJhcyB2YXJpYWJsZXMgc29uIGNhdGVnw7NyaWNhcywgbm8gcG9kZW1vcyBjYWxjdWxhciBsYSBjb3JyZWxhY2nDs24gZW50cmUgdmFyaWFibGVzIGNvbW8gbG8gaGFjZW1vcyBjb24gbGFzIHZhcmlhYmxlcyBudW3DqXJpY2FzLiBFcyBwb3IgZWxsbywgcXVlIHV0aWxpemFtb3MgQ3JhbWVyJ3MgVi4gQ3JhbWVyJ3MgViBtaWRlIGxhIGZ1ZXJ6YSBkZSBhc29jaWFjacOzbiBlbnRyZSBkb3MgdmFyaWFibGVzIGNhdGVnw7NyaWNhcy4gVmEgZW50cmUgMCB5IDEsIGRvbmRlIDAgcmVwcmVzZW50YSB1bmEgYXNvY2lhY2nDs24gZMOpYmlsLCB5IDEgdW5hIGZ1ZXJ0ZS4KCmBgYHtyfQpjcmFtZXJzViA8LSBmdW5jdGlvbihjaGkyLCBuLCBwaGkgPSBOVUxMKSB7CiAgayA8LSBtaW4oZGltKHBoaSlbMV0gLSAxLCBkaW0ocGhpKVsyXSAtIDEpCiAgViA8LSBzcXJ0KGNoaTIgLyAobiAqIGspKQogIHJldHVybihWKQp9CgpkYXRhIDwtIHNlbGVjdCh0aHlyb2lkLmRmLCAtYygiVFNIIiwiVDMiLCJUVDQiLCAiVDRVIiwgIkZUSSIsICJncnVwb19lZGFkIikpCgpjb3JyZWxhdGlvbl9tYXRyaXggPC0gbWF0cml4KDAsIG5jb2woZGF0YSksIG5jb2woZGF0YSkpCmNvbG5hbWVzKGNvcnJlbGF0aW9uX21hdHJpeCkgPC0gbmFtZXMoZGF0YSkKcm93bmFtZXMoY29ycmVsYXRpb25fbWF0cml4KSA8LSBuYW1lcyhkYXRhKQoKZm9yKGkgaW4gMTpuY29sKGRhdGEpKSB7CiAgZm9yKGogaW4gMTpuY29sKGRhdGEpKSB7CiAgICBjb250aW5nZW5jeV90YWJsZSA8LSB0YWJsZShkYXRhWyxpXSwgZGF0YVssal0pCiAgICBjaGkyIDwtIGNoaXNxLnRlc3QoY29udGluZ2VuY3lfdGFibGUpJHN0YXRpc3RpYwogICAgY29ycmVsYXRpb25fbWF0cml4W2ksIGpdIDwtIGNyYW1lcnNWKGNoaTIsIG5yb3coZGF0YSksIGNvbnRpbmdlbmN5X3RhYmxlKQogIH0KfQoKbWVsdGVkX2NvcnJlbGF0aW9uIDwtIG1lbHQoY29ycmVsYXRpb25fbWF0cml4KQoKZ2dwbG90KGRhdGEgPSBtZWx0ZWRfY29ycmVsYXRpb24sIGFlcyh4PVZhcjEsIHk9VmFyMikpICsKICBnZW9tX3RpbGUoYWVzKGZpbGw9dmFsdWUpLCBjb2xvcj0nd2hpdGUnKSArCiAgc2NhbGVfZmlsbF9ncmFkaWVudChsb3c9IndoaXRlIiwgaGlnaD0iYmx1ZSIpICsKICB0aGVtZV9taW5pbWFsKCkgKwogIGdndGl0bGUoIkNyYW1lcidzIFYgZW50cmUgdmFyaWFibGVzIGNhdGVnw7NyaWNhcyIpICsKICB0aGVtZShheGlzLnRleHQueCA9IGVsZW1lbnRfdGV4dChhbmdsZSA9IDQ1LCBoanVzdD0xKSwgcGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpCgpgYGAKCkNvbW8gc2UgcHVlZGUgb2JzZXJ2YXIsIGxhcyB2YXJpYWJsZXMgcXVlIHRpZW5lbiB1bmEgZnVlcnphIGRlIGFzb2NpYWNpw7NuIG1heW9yIHNvbiBsYXMgcXVlIHRpZW5lbiB1biBjb2xvciBtw6FzIGF6dWwvbW9yYWRvIG9zY3Vyby4gVW4gZWplbXBsbyBlcyB0YXJnZXQgY29uIG9uX3RoeXJveGluZSwgbyB0YXJnZXQgY29uIHRoeXJvaWRfc3VyZ2VyeS4KClBhcmEgcG9kZXIgb2J0ZW5lciB1bmEgcmVsYWNpw7NuIGVudHJlIHZhcmlhYmxlcyBudW3DqXJpY2FzIHkgY2F0ZWfDs3JpY2FzLCB1dGlsbGl6YW1vcyBlbCB0ZXN0IEFOT1ZBLCBlbCBjdWFsIGFuYWxpemEgbGEgcmVsYWNpw7NuIHVuYSB2YXJpYWJsZSBudW3DqXJpY2EgeSBvdHJhIGNhdGVnw7NyaWNhLiBFbiBlc3RlLCBzZSB0ZXN0ZWEgbGEgaGlww7N0ZXNpcyBudWxhLCBxdWUgY29ycmVzcG9uZGUgYSBxdWUgbGEgbWVkaWEgZGUgbGEgdmFyaWFibGUgbnVtw6lyaWNhIGVzIGxhIG1pc21hIHBhcmEgdG9kYXMgbGFzIGNhdGVnb3LDrWFzIGRlIGxhIHZhcmlhYmxlIGNhdGVnw7NyaWNhLiBMdWVnbywgc2kgZWwgcC12YWx1ZSBlcyBjZXJjYW5vIGEgMCwgbWVub3IgYSB1biBuaXZlbCBkZSBzaWduaWZpY2FuY2lhLCBzZSByZWNoYXphIGxhIGhpcMOzdGVzaXMgbnVsYS4gRXN0byBzdWdlcmVyw61hIHF1ZSBoYXkgdW5hIGRpZmVyZW5jaWEgc2lnbmlmaWNhdGl2YSBlbiBsYXMgbWVkaWFzIGRlIGxhIHZhcmlhYmxlIG51bcOpcmljYSBwYXJhIGNhZGEgY2F0ZWdvcsOtYSBkZSBsYSB2YXJpYWJsZSBjYXRlZ8OzcmljYS4gQWRlbcOhcywgc2Ugb2J0aWVuZSBlbCBlZmZlY3Qgc2l6ZSwgcXVlIG5vcyBlbnRyZWdhIGluZm9ybWFjacOzbiBzb2JyZSBsYSBmdWVyemEgbyBtYWduaXR1ZCBkZSBlc3RhIGRpZmVyZW5jaWEuCgpgYGB7cn0KCmRmPC0gc2VsZWN0KHRoeXJvaWQuZGYsLWMoImdydXBvX2VkYWQiKSkKCiNFc3BlY2lmaWNhciB2YXJpYWJsZXMgbnVtw6lyaWNhcwpudW1lcmljYWxfdmFycyA8LSBjKCJUU0giLCAiVDMiLCAiVFQ0IiwiVDRVIiwgIkZUSSIpCgoKI1ZhcmlhYmxlcyBjYXRlZ8OzcmljYXMKY2F0ZWdvcmljYWxfdmFycyA8LSBzZXRkaWZmKG5hbWVzKGRmKSwgbnVtZXJpY2FsX3ZhcnMpCgpyZXN1bHRzIDwtIGRhdGEuZnJhbWUoKQoKI1BhcmEgY2FkYSBjb21iaW5hY2nDs24gZGUgdmFyIGNhdGVnw7NyaWNhIHkgbnVtw6lyaWNhCmZvcihudW1fdmFyIGluIG51bWVyaWNhbF92YXJzKSB7CiAgICBwX3ZhbHVlcyA8LSBudW1lcmljKCkKICAgIGVmZmVjdF9zaXplcyA8LSBudW1lcmljKCkKICAKICAgIGZvcihjYXRfdmFyIGluIGNhdGVnb3JpY2FsX3ZhcnMpIHsKICAgICAgICBmb3JtdWxhX3N0ciA8LSBwYXN0ZShudW1fdmFyLCAifiIsIGNhdF92YXIpCiAgICAgICAgYW5vdmFfcmVzdWx0IDwtIGFvdihhcy5mb3JtdWxhKGZvcm11bGFfc3RyKSwgZGF0YT1kZikKICAgICAgCiAgICAgICAgI3AtdmFsdWUKICAgICAgICBwX3ZhbHVlcyA8LSBjKHBfdmFsdWVzLCBzdW1tYXJ5KGFub3ZhX3Jlc3VsdClbWzFdXVtbIlByKD5GKSJdXVsxXSkKICAgICAgCiAgICAgICAgI2VmZmVjdCBzaXplIChldGEgc3F1YXJlZCkKICAgICAgICBzc190b3RhbCA8LSBzdW0oKGRmW1tudW1fdmFyXV0gLSBtZWFuKGRmW1tudW1fdmFyXV0pKV4yKQogICAgICAgIGV0YV9zcXVhcmVkIDwtIHN1bW1hcnkoYW5vdmFfcmVzdWx0KVtbMV1dWyJTdW0gU3EiXVsxLF0gLyBzc190b3RhbAogICAgICAgIGVmZmVjdF9zaXplcyA8LSBjKGVmZmVjdF9zaXplcywgZXRhX3NxdWFyZWQpCiAgICB9CgogICAgdGVtcF9yZXN1bHRzIDwtIGRhdGEuZnJhbWUoTnVtZXJpY2FsPW51bV92YXIsIENhdGVnb3JpY2FsPWNhdGVnb3JpY2FsX3ZhcnMsIFBfVmFsdWU9cF92YWx1ZXMsIEVmZmVjdF9TaXplPWVmZmVjdF9zaXplcykKICAgIHJlc3VsdHMgPC0gcmJpbmQocmVzdWx0cywgdGVtcF9yZXN1bHRzKQp9CgoKbWVsdGVkX3Jlc3VsdHMgPC0gbWVsdChyZXN1bHRzLCBpZC52YXJzPWMoIk51bWVyaWNhbCIsICJDYXRlZ29yaWNhbCIpKQoKIyBQbG90IApnZ3Bsb3QobWVsdGVkX3Jlc3VsdHMsIGFlcyh4PUNhdGVnb3JpY2FsLCB5PU51bWVyaWNhbCwgZmlsbD12YWx1ZSkpICsgCiAgICBnZW9tX3RpbGUoKSArCiAgICBmYWNldF93cmFwKH4gdmFyaWFibGUsIHNjYWxlcz0iZnJlZSIsIG5jb2w9MSkgKwogICAgc2NhbGVfZmlsbF9ncmFkaWVudDIobG93PSJibHVlIiwgbWlkPSJ3aGl0ZSIsIGhpZ2g9InJlZCIsIG1pZHBvaW50PTAuNSwgbGltaXQ9YygwLDEpKSArCiAgICB0aGVtZV9taW5pbWFsKCkgKwogICAgdGhlbWUoYXhpcy50ZXh0LnggPSBlbGVtZW50X3RleHQoYW5nbGUgPSA0NSwgaGp1c3Q9MSkpICsKICAgIGxhYnModGl0bGU9IkFOT1ZBIHRlc3QgZW50cmUgZGF0b3MgY2F0ZWfDs3JpY29zIHkgbnVtw6lyaWNvcyIsZmlsbD0iQXNzb2NpYXRpb24gU3RyZW5ndGgiKSsKICAgIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjcpKQpgYGAKCkx1ZWdvLCBzZSBvYnNlcnZhIHF1ZSBwYXJhIGxhIHZhcmlhYmxlIGNhdGVnw7NyaWNhIHRhcmdldCwgcXVlIGNvbnRpZW5lIGxvcyBkaWZlcmVudGVzIGRpYWduw7NzdGljb3MgbcOpZGljb3MgZGFkb3MgYWwgcGFjaWVudGUsIHNlIG9idHV2byB1biBiYWpvIHAtdmFsdWUgcGFyYSBsYXMgdmFyaWFibGVzIG51bcOpcmljYXMgRlRJLCBUVDQsIFRTSCwgVDRVLCBUMywgbG9zIHF1ZSBmdWVyb24gbWVkaWRvcyBlbiBsYSBzYW5ncmUgZGUgbG9zIHBhY2llbnRlcy4gUGVybyBhZGVtw6FzLCBmdWVyb24gZG9uZGUgc2Ugb2J0dXZvIHVuIG1heW9yIGVmZmVjdCBzaXplLgoKVGFtYmnDqW4sIHBhcmEgb2J0ZW5lciBxdcOpIHRhbiByZWxhY2lvbmFkb3MgbGluZWFsbWVudGUgZW50ZXIgc8OtIGVzdMOhbiBsYXMgdmFyaWFibGVzIG51bcOpcmljYXMsIHBvZGVtb3MgY2FsY3VsYXIgbGEgdGFibGEgZGUgY29ycmVsYWNpw7NuIGVudHJlIGVsbGFzLiBNaWVudHJhcyBtw6FzIGNlcmNhbm9zIGEgMSwgZXN0w6FuIG3DoXMgcmVsYWNpb25hZGFzIGVudHJlIHPDrSwgeSBjdWFuZG8gc2UgYWNlcmNhbiBhIDAsIGVzdMOhbiBtZW5vcyByZWxhY2lvbmFkYXMuIEN1YW5kbyBzb24gbmVnYXRpdmFzLCByZXByZXNlbnRhIHF1ZSBwb3IgZWplbXBsbywgY3VhbmRvIHVuYSB2YXJpYWJsZSBhdW1lbnRhLCBsYSBvdHJhIGRpc21pbnV5ZS4KCmBgYHtyfQpkYXRhPC10aHlyb2lkLmRmW2MoIlRUNCIsIlRTSCIsIlQzIiwiRlRJIiwiVDRVIildCk0gPC0gY29yKGRhdGEpCnRpdGxlIDwtICJDb3JyZWxhY2nDs24gZW50cmUgdmFyaWFibGVzIG51bcOpcmljYXMiCmNvcnJwbG90KE0sIG1ldGhvZCA9ICJlbGxpcHNlIixjb2w9Y29sb3JSYW1wUGFsZXR0ZShjKCJyZWQiLCJ3aGl0ZSIsInB1cnBsZSIpKSgxMDApLHRpdGxlPXRpdGxlLG1hcj1jKDAsMCwxLDApKQp0aGVtZShwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC43KSkKCmBgYAoKIyMjIEJveHBsb3Q6IFZhcmlhYmxlcyBudW3DqXJpY2FzIHYvcyBUYXJnZXQKClBvZGVtb3MgdXRpbGl6YXIgYm94cGxvdHMsIHBhcmEgdmlzdWFsaXphciBkZSBtZWpvciBtYW5lcmEgbGEgZGlzdHJpYnVjacOzbiBkZSBsb3MgZGF0b3MgbnVtw6lyaWNvcyBlbnRyZSBsb3MgZGlzdGludG9zIHRpcG9zIGRlIGRpYWduw7NzdGljbyBtw6lkaWNvIChhdHJpYnV0byAidGFyZ2V0IikuCgpgYGB7cn0KZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1UVDQpKSArIAogIGdlb21fYm94cGxvdCgpICsKICBsYWJzKHRpdGxlPSJCb3hwbG90IGRlIFRUNCIsIHg9IlRhcmdldCIsIHk9IlZhbG9yIGRlIFRUNCIpKwogIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKQpgYGAKCmBgYHtyfQpnZ3Bsb3QodGh5cm9pZC5kZiwgYWVzKHg9dGFyZ2V0LCB5PVRTSCkpICsgCiAgZ2VvbV9ib3hwbG90KCkgKwogIGxhYnModGl0bGU9IkJveHBsb3QgZGUgVFNIIiwgeD0iVGFyZ2V0IiwgeT0iVmFsb3IgZGUgVFNIIikrCiAgdGhlbWUocGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpCmBgYAoKYGBge3J9CmdncGxvdCh0aHlyb2lkLmRmLCBhZXMoeD10YXJnZXQsIHk9VDMpKSArIAogIGdlb21fYm94cGxvdCgpICsKICBsYWJzKHRpdGxlPSJCb3hwbG90IGRlIFQzIiwgeD0iVGFyZ2V0IiwgeT0iVmFsb3IgZGUgVDMiKSsKICB0aGVtZShwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC41KSkKYGBgCgpgYGB7cn0KZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1GVEkpKSArIAogIGdlb21fYm94cGxvdCgpICsKICBsYWJzKHRpdGxlPSJCb3hwbG90IGRlIEZUSSIsIHg9IlRhcmdldCIsIHk9IlZhbG9yIGRlIEZUSSIpKwogIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKQpgYGAKYGBge3J9CmdncGxvdCh0aHlyb2lkLmRmLCBhZXMoeD10YXJnZXQsIHk9VDRVKSkgKyAKICBnZW9tX2JveHBsb3QoKSArCiAgbGFicyh0aXRsZT0iQm94cGxvdCBkZSBUNFUiLCB4PSJUYXJnZXQiLCB5PSJUNFUiKSsKICB0aGVtZShwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC41KSkKYGBgCgpgYGB7cn0KZ2dwbG90KHRoeXJvaWQuZGYsIGFlcyh4PXRhcmdldCwgeT1hZ2UpKSArIAogIGdlb21fYm94cGxvdCgpICsKICBsYWJzKHRpdGxlPSJCb3hwbG90IGRlIGVkYWQiLCB4PSJUYXJnZXQiLCB5PSJFZGFkIikrCiAgdGhlbWUocGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpCmBgYAoKCiMjIFByZWd1bnRhcyB5IFByb2JsZW1hcwoKIyMgQ29udHJpYnVjacOzbiBkZSBjYWRhIGludGVncmFudGUKTmFodWVsIFNhbmh1ZXphIHNlIGVuY2FyZ8OzIGRlIGxhIHBhcnRlIGRlIGxpbXBpZXphIGRlIGRhdG9zIHkgbG9zIGRpYWdyYW1hcyBkZSBkaXNwZXJzaW9uIHBhcmEgYXRyaWJ1dG9zIG51bcOpcmljb3MuIENhdGFsaW5hIENhcnJhc2NvIHNlIGVuY2FyZ8OzIGRlIGxhIHJlYWxpemFjacOzbiBkZSBCbG94cGxvdHMgeSB0YWJsYXMgY29ycmVsYWNpb24gKENyYW1lcidzIFYsIEFOT1ZBIHRlc3QgeSBjb3JyZWxhY2nDs24pLiBKb2FxdcOtbiBIZXJyZXJhIHNlIGVuY2FyZ8OzIGRlIHJlYWxpemFyIGVsIGNvbnRleHRvLCBtb3RpdmFjacOzbiB5IGNhcmFjdGVyw61zdGljYXMgcHJpbmNpcGFsZXMgZGUgbG9zIGRhdG9zLiBKYXZpZXJhIERvbm9zbyBzZSBlbmNhcmfDsyBkZSBsYSBjcmVhY2nDs24gZGUgbG9zIGhpc3RvZ3JhbWFzLCBlbCBwcm9jZXNvIGRlIGFncmVnYWNpb24gKHByb21lZGlvIHZhbG9yZXMgZXhhbWVuZXMgbWVkaWNvcykgYWdydXBhbmRvIHBvciByYW5nbyBldGFyaW8geSBsYSBmb3JtdWxhY2nDs24gZGUgcHJlZ3VudGFzIHkgcHJvYmxlbWFzLiBNYWNhcmVuYSBSw61vcwoKCg==</div>
 
 
 
